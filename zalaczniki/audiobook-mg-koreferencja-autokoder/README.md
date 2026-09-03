@@ -10,6 +10,13 @@ przekłada problem, architekturę, dane i wyniki na prosty język. Oddziela rów
 wyniki raportowane przez autora od ograniczeń wykrytych podczas niezależnego
 przeglądu technicznego.
 
+## Pobieranie
+
+[Pobierz pełny audiobook MP3 z GitHub Releases](https://github.com/kamugo/mg2/releases/download/audiobook-corefseg-ae-v1/audiobook-pelny.mp3).
+
+Wydanie GitHub jest zalecaną drogą pobierania. Link do widoku `blob` pokazuje
+stronę HTML, natomiast powyższy adres zwraca bezpośrednio cały plik audio.
+
 Pliki:
 
 - `audiobook.md` — pełny tekst lektorski;
