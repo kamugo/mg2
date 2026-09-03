@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-09-03T13:30:32.002779+00:00",
+  "source": "audiobook.md",
+  "voice": "pl-PL-MarekNeural",
+  "rate": "-5%",
+  "chapters": 15,
+  "word_count": 4909,
+  "files": [
+    {
+      "path": "czesci/01-1-po-co-w-ogole-uczyc-komputer-koreferencji.mp3",
+      "bytes": 1184832,
+      "sha256": "67a04ec502b5be7b6dba5a4d1871aa6783b688ea50e761cf9c1b55f0f0136743"
+    },
+    {
+      "path": "czesci/02-2-wzmianki-klastry-i-najwazniejsze-pulapki.mp3",
+      "bytes": 1318464,
+      "sha256": "e2973f428221cf2fcbe3105b90b4d910446b27d1d16eace0ead58e6c03f47a2d"
+    },
+    {
+      "path": "czesci/03-3-dlaczego-jezyk-prawny-i-prawniczy-jest-wyjatkowo-trud.mp3",
+      "bytes": 1280448,
+      "sha256": "ac46e6c4f2fd266cbdbc91500a34af97adeb4d4da47566aa8ae900bf4cd04e81"
+    },
+    {
+      "path": "czesci/04-4-jak-wczesniej-rozwiazywano-koreferencje.mp3",
+      "bytes": 1157760,
+      "sha256": "7288776c74dd579a0cb13f935881ec01b4f9cd8a46acc93cba28300c31521fbc"
+    },
+    {
+      "path": "czesci/05-5-czym-jest-autokoder-i-dlaczego-u-net-pasuje-do-mapy-r.mp3",
+      "bytes": 1124784,
+      "sha256": "28d81cef56deb4d18ce236ac3944494ef4279130bdd83b88d43a0c879c7d9232"
+    },
+    {
+      "path": "czesci/06-6-jak-dokladnie-dziala-corefseg-ae.mp3",
+      "bytes": 1389888,
+      "sha256": "109a07e94d9a383f659c3342da976c2eecf307afd1ca850bb1564908f3d4ebaf"
+    },
+    {
+      "path": "czesci/07-7-na-czym-polega-prawny-pretrening-dae.mp3",
+      "bytes": 1198368,
+      "sha256": "e1c5ff044dd1262af4a2ea7214d2db9c016401c47bb0f2d88d39c6df0dc9cff4"
+    },
+    {
+      "path": "czesci/08-8-jakich-danych-uzyto-i-czego-w-nich-brakuje.mp3",
+      "bytes": 1211616,
+      "sha256": "ccc3d69ba21f2711ed830a9b2fcf966a3b1bcc8ba5d1c8047723bfe0799df566"
+    },
+    {
+      "path": "czesci/09-9-jak-mierzy-sie-koreferencje-i-dlaczego-jedna-liczba-n.mp3",
+      "bytes": 1164240,
+      "sha256": "bd2cfe558bef95b907f1114deb5cb125b8a20866bdeba2e868e56e0640b52ca4"
+    },
+    {
+      "path": "czesci/10-10-co-pokazaly-wykonane-eksperymenty.mp3",
+      "bytes": 1286928,
+      "sha256": "10d604a9120f04403a8d4c5d35a523a2d18af6fc36592ecc7d52518d54ed727f"
+    },
+    {
+      "path": "czesci/11-11-co-ujawnila-proba-uzycia-oficjalnego-scorera.mp3",
+      "bytes": 1139328,
+      "sha256": "f3b1d3d101116f882438f935869984eb5398729aec719b2eda8647d5b2f0ec07"
+    },
+    {
+      "path": "czesci/12-12-jak-rozumiec-zbior-srebrny-i-porownanie-z-corpipe.mp3",
+      "bytes": 1172592,
+      "sha256": "80955f920073976135224a5ce54804d9ff88e457098d48a5a70eff3ada8472ad"
+    },
+    {
+      "path": "czesci/13-13-najwazniejsze-ograniczenia-architektury-i-kodu.mp3",
+      "bytes": 1214640,
+      "sha256": "6c949f914df136736afc7dd03a1d9315363842aff976a795d2415cf9d08342ea"
+    },
+    {
+      "path": "czesci/14-14-jak-doprowadzic-badanie-do-mocnego-finalu.mp3",
+      "bytes": 1217232,
+      "sha256": "e2d6c67d3bc17faa563bafaeccafd83406754b393df4c80f17c75f90fe689158"
+    },
+    {
+      "path": "czesci/15-15-podsumowanie-bez-technicznego-zargonu.mp3",
+      "bytes": 848304,
+      "sha256": "6bc5585be95265b86b020a0d37c198c72c47b79af2954b0e1a94db885ae1a148"
+    },
+    {
+      "path": "audiobook-pelny.mp3",
+      "bytes": 17909424,
+      "sha256": "b8fe0dcc743c09f26c76c7c26e0077b725c6ee66114e18b412bc17356ecbd316"
+    }
+  ]
+}
