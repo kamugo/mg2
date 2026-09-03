@@ -24,6 +24,17 @@ class LegalSilverCorpusTest(unittest.TestCase):
         }
         self.assertEqual(counts, {"train": 320, "dev": 40, "test": 40})
 
+    def test_exact_document_split_for_two_thousand_documents(self) -> None:
+        counts = {
+            split: sum(
+                split_for_rank(stratum, rank, 50) == split
+                for stratum in range(40)
+                for rank in range(50)
+            )
+            for split in ("train", "dev", "test")
+        }
+        self.assertEqual(counts, {"train": 1600, "dev": 200, "test": 200})
+
     def test_truncation_prefers_complete_sentence(self) -> None:
         text, truncated = truncate_at_boundary(
             "Ala ma kota. Kot ma Alę. Trzecie zdanie jest dłuższe.", max_words=6

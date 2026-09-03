@@ -171,13 +171,34 @@ def _round_robin_candidates(
     return result
 
 
-def split_for_rank(stratum_index: int, rank: int) -> str:
-    """Return an exact 320/40/40 split for 16 strata of 25 documents."""
-    if rank < 20:
+def split_for_rank(stratum_index: int, rank: int, per_stratum: int = 25) -> str:
+    """Return an 80/10/10 split, alternating unavoidable rounding by stratum."""
+    if not 0 <= rank < per_stratum:
+        raise ValueError(f"rank {rank} is outside a stratum of {per_stratum}")
+    train_count = int(per_stratum * 0.8)
+    held_out = per_stratum - train_count
+    dev_count = held_out // 2
+    if held_out % 2 and stratum_index % 2 == 0:
+        dev_count += 1
+    if rank < train_count:
         return "train"
-    if stratum_index % 2 == 0:
-        return "dev" if rank < 23 else "test"
-    return "dev" if rank < 22 else "test"
+    return "dev" if rank < train_count + dev_count else "test"
+
+
+def excluded_document_ids(manifests: Iterable[Path]) -> set[str]:
+    """Load document identifiers that must not be selected for a new corpus."""
+    excluded: set[str] = set()
+    for path in manifests:
+        payload = json.loads(path.resolve().read_text(encoding="utf-8"))
+        records = payload.get("records", [])
+        if not isinstance(records, list):
+            raise RuntimeError(f"No records list in exclusion manifest: {path}")
+        excluded.update(
+            str(record["doc_id"])
+            for record in records
+            if isinstance(record, dict) and record.get("doc_id")
+        )
+    return excluded
 
 
 def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
@@ -186,6 +207,7 @@ def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
     docs_dir.mkdir(parents=True, exist_ok=True)
     records: list[dict[str, Any]] = []
     strata = [(publisher, year) for year in args.years for publisher in args.publishers]
+    excluded_ids = excluded_document_ids(args.exclude_manifest)
 
     for stratum_index, (publisher, year) in enumerate(strata):
         print(f"Collecting {publisher}/{year} ...", flush=True)
@@ -199,6 +221,8 @@ def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
                 break
             position = int(item["pos"])
             doc_id = f"{publisher}-{year}-{position}"
+            if doc_id in excluded_ids:
+                continue
             source_format = "html" if item.get("textHTML") else "pdf"
             url = f"https://api.sejm.gov.pl/eli/acts/{publisher}/{year}/{position}/text.{source_format}"
             try:
@@ -222,7 +246,7 @@ def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
             excerpt, truncated = truncate_at_boundary(full_text, args.max_words)
             if len(excerpt) < args.min_chars:
                 continue
-            split = split_for_rank(stratum_index, accepted)
+            split = split_for_rank(stratum_index, accepted, args.per_stratum)
             text_path = docs_dir / f"{doc_id}.txt"
             metadata_path = docs_dir / f"{doc_id}.metadata.json"
             text_path.write_text(excerpt + "\n", encoding="utf-8")
@@ -278,8 +302,16 @@ def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
             "publishers": args.publishers,
             "per_stratum": args.per_stratum,
             "seed": args.seed,
-            "max_words": args.max_words,
-            "personal_title_exclusions": PERSONAL_TITLE_PATTERNS,
+                "max_words": args.max_words,
+                "personal_title_exclusions": PERSONAL_TITLE_PATTERNS,
+                "excluded_document_ids": len(excluded_ids),
+                "exclusion_manifests": [
+                    {
+                        "path": str(path),
+                        "sha256": _sha256_file(path.resolve()),
+                    }
+                    for path in args.exclude_manifest
+                ],
         },
         "license_note": "Official acts from Sejm ELI; verify the current reuse rules and personal-data policy before redistribution.",
         "records": records,
@@ -561,8 +593,8 @@ def annotate_documents(args: argparse.Namespace, records: list[dict[str, Any]]) 
         download_method=DownloadMethod.REUSE_RESOURCES,
     )
 
-    jsonl_path = processed_dir / "legal-silver-400.jsonl"
-    conllu_path = processed_dir / "legal-silver-400.conllu"
+    jsonl_path = processed_dir / f"{args.corpus_name}.jsonl"
+    conllu_path = processed_dir / f"{args.corpus_name}.conllu"
     review_rows: list[dict[str, str]] = []
     document_rows: list[dict[str, str]] = []
     totals: Counter[str] = Counter()
@@ -651,6 +683,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--stage", choices=("collect", "annotate", "all"), default="all")
     parser.add_argument("--raw-dir", type=Path, default=Path("data/raw/legal-silver-400"))
     parser.add_argument("--processed-dir", type=Path, default=Path("data/processed/legal-silver-400"))
+    parser.add_argument("--corpus-name", default="legal-silver-400")
     parser.add_argument("--years", nargs="+", type=int, default=list(DEFAULT_YEARS))
     parser.add_argument("--publishers", nargs="+", default=list(DEFAULT_PUBLISHERS))
     parser.add_argument("--per-stratum", type=int, default=25)
@@ -658,6 +691,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-words", type=int, default=900)
     parser.add_argument("--min-chars", type=int, default=700)
     parser.add_argument("--timeout", type=int, default=60)
+    parser.add_argument(
+        "--exclude-manifest",
+        type=Path,
+        action="append",
+        default=[],
+        help="Raw corpus manifest whose document ids must be excluded; repeatable.",
+    )
     parser.add_argument("--cpu", action="store_true")
     return parser
 
