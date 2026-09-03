@@ -1,0 +1,12 @@
+{
+  "variant": "baseline",
+  "seed": 20260903,
+  "examples": 3339,
+  "epochs": 5,
+  "trainable_parameters": 232321,
+  "final_loss": 0.43390539288520813,
+  "device": "cuda",
+  "peak_gpu_memory_bytes": 174600704,
+  "synthetic_data": false,
+  "elapsed_seconds": 26.723315700888634
+}

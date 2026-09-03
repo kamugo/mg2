@@ -1,0 +1,148 @@
+\chapter{Koreferencja --- podstawy teoretyczne i lingwistyczne}
+\label{chap:koreferencja}
+
+Koreferencja łączy wyrażenia językowe ze wspólnym referentem i pozwala przejść od lokalnej analizy zdań do reprezentacji encji obecnych w całym dokumencie \cite{jurafsky_2025_speech}. Jej opis wymaga rozróżnienia poziomu tekstu, relacji między wzmiankami oraz wynikowej partycji. W rozdziale uporządkowano te pojęcia, przedstawiono główne zjawiska referencyjne, a następnie omówiono trudności charakterystyczne dla języka polskiego. Szczególną uwagę poświęcono reprezentacji Polish Coreference Corpus i CorefUD, ponieważ determinuje ona zarówno uczenie, jak i interpretację przyszłych wyników.
+
+\section{Definicje i reprezentacja zadania}
+\label{sec:definicje-coref}
+
+\subsection{Referent, wzmianka i encja}
+
+Referentem nazywa się obiekt, o którym mówi nadawca: może nim być osoba, organizacja, miejsce, rzecz, zdarzenie albo pojęcie utworzone w dyskursie. Wzmianka jest fragmentem tekstu użytym do wskazania referenta. Nie należy utożsamiać tych poziomów. Napis ,,sąd'' może wystąpić wielokrotnie i w zależności od dokumentu wskazywać instytucję, skład orzekający albo budynek. Odwrotnie, jeden referent może być wskazywany przez różne napisy: ,,ABC sp. z o.o.'', ,,wykonawca'', ,,spółka'' i ,,ona''.
+
+W typowej reprezentacji obliczeniowej wzmianka ma granicę początku i końca, wyróżnioną głowę oraz opcjonalny typ. Wzmianki nie muszą być rozłączne. W wyrażeniu ,,prezes spółki'' cały span może oznaczać osobę, a zagnieżdżona ,,spółka'' --- organizację. Polska anotacja dopuszcza również wzmianki nieciągłe i podmioty zerowe \cite{ogrodniczuk_2014_pcc,ogrodniczuk_2019_referencyjne}. Reprezentowanie wzmianki wyłącznie parą indeksów początku i końca jest zatem wygodne, lecz nie obejmuje wszystkich przypadków bez rozszerzeń.
+
+Encja w wyniku systemu jest klastrem wzmianek uznanych za koreferencyjne. Każda przewidziana wzmianka powinna należeć dokładnie do jednego klastra, a klastry w obrębie dokumentu powinny tworzyć partycję. Nie wynika z tego, że system odtwarza pełny obiekt rzeczywistości. Klaster jest śladem referenta w analizowanym dokumencie; poza dokumentem identyczny napis może odnosić się do kogoś innego.
+
+\subsection{Poprzednik i łańcuch koreferencyjny}
+
+W opisie anafory używa się pojęć anafory i poprzednika. Anafora jest wyrażeniem, którego interpretacja zależy od wcześniejszego kontekstu, a poprzednik dostarcza podstawy tej interpretacji. Dla zdania ,,Powód złożył pozew, a następnie go uzupełnił'' poprzednikiem niewyrażonego podmiotu czasownika ,,uzupełnił'' jest ,,Powód'', natomiast zaimek ,,go'' odnosi się do pozwu. Kolejność tekstowa ułatwia definicję, ale nie jest warunkiem każdej relacji referencyjnej.
+
+Model typu mention-pair podejmuje decyzję dla pary wzmianek. Model mention-ranking wybiera dla każdej anafory najlepszy wcześniejszy poprzednik albo decyzję pustą, jeżeli rozpoczyna ona nową encję. Zbiór lokalnych krawędzi musi następnie zostać domknięty do klastrów. Niezależne klasyfikacje mogą naruszyć przechodniość: system połączy $m_1$ z $m_2$ i $m_2$ z $m_3$, lecz odrzuci parę $m_1,m_3$. Wynik klastrowy wymaga jednoznacznej decyzji globalnej. Rozwój od par do rankingu i modeli globalnych wynikał właśnie z ograniczeń lokalnych decyzji \cite{soon_2001_machine,denis_2008_specialized,wiseman_2016_global}.
+
+Łańcuch koreferencyjny jest uporządkowanym tekstowo widokiem jednego klastra. Pojęcie ,,łańcuch'' podkreśla kolejność wystąpień, a ,,klaster'' --- równoważność elementów. W niniejszej pracy oba terminy odnoszą się do tej samej encji dokumentowej, o ile nie wskazano inaczej. Singleton jest klastrem zawierającym jedną wzmiankę. Obecność singletonów zależy od schematu anotacji, dlatego ich włączenie do oceny musi być jawne.
+
+\subsection{Detekcja wzmianek i klasteryzacja}
+
+Zadanie end-to-end składa się z co najmniej dwóch problemów. Najpierw należy wykryć wzmianki, następnie ustalić ich tożsamość referencyjną. Błąd pierwszego etapu ogranicza drugi: niewykrytej anafory nie można poprawnie przydzielić do klastra, a nadmiarowa wzmianka może tworzyć fałszywe połączenia. Z tego powodu ocena klasteryzacji nie zastępuje osobnego precision, recall i F1 detekcji wzmianek.
+
+Starsze potoki używały osobnych detektorów fraz nominalnych i klasyfikatorów par. Neuronowe modele end-to-end enumerują spany, nadają im oceny i wspólnie optymalizują wybór wzmianki oraz poprzednika \cite{lee_2017_e2e,lee_2018_higher}. Złożoność rośnie wraz z liczbą kandydatów, dlatego stosuje się przycinanie spanów lub reprezentację słowową \cite{dobrovolskii_2021_word,kirstain_2021_s2e}. Decyzja o jednostce wejścia nie jest detalem implementacyjnym: wpływa na obsługę zagnieżdżeń, zer, długich dokumentów i błędów granic.
+
+W zadaniu z podanymi złotymi wzmiankami ocenia się wyłącznie klasteryzację. Ustawienie to izoluje jakość łączenia, ale jest łatwiejsze od pełnego potoku. W ustawieniu przewidywanych wzmianek scorer musi najpierw dopasować wzmianki złote i systemowe. Można wymagać identycznych granic, częściowego pokrycia albo zgodnej głowy. Wyników uzyskanych w różnych ustawieniach nie należy zestawiać bez ponownego przeliczenia jednym narzędziem.
+
+\section{Zjawiska koreferencyjne}
+\label{sec:zjawiska-coref}
+
+\subsection{Anafora, katafora i identyczność}
+
+Najczęstsza anafora wskazuje element wprowadzony wcześniej. W przykładzie ,,Sąd wydał postanowienie. Organ uzasadnił je na piśmie'' wyrażenie ,,organ'' może wskazywać sąd, a ,,je'' --- postanowienie. Rozstrzygnięcie wymaga cech gramatycznych i wiedzy o kontekście. Najbliższa wzmianka nie zawsze jest właściwym poprzednikiem, szczególnie gdy między elementami łańcucha znajdują się cytaty lub opis innych uczestników.
+
+Katafora działa w przeciwnym kierunku: wyrażenie zależne pojawia się przed pełniejszym wskazaniem, na przykład ,,Zanim złożył wyjaśnienia, oskarżony zapoznał się z aktami''. Liniowy model ograniczony do wcześniejszych kandydatów może reprezentować taki przypadek dopiero po potraktowaniu późniejszej wzmianki jako podstawowej albo przez klasteryzację niezależną od kierunku. W korpusie kierunek technicznej krawędzi nie powinien zmieniać faktu, że obie wzmianki należą do jednej encji.
+
+Koreferencja tożsamościowa zachodzi, gdy wyrażenia wskazują ten sam referent. Nie każda relacja anaforyczna spełnia ten warunek. W wyrażeniu ,,samochód i jego silnik'' zaimek dzierżawczy sygnalizuje relację część--całość, ale samochód nie jest silnikiem. Z kolei ,,trzech sędziów'' oraz ,,skład'' mogą tworzyć relację zbiorową zależną od schematu anotacji. Ograniczenie głównego eksperymentu do tożsamości zapobiega mieszaniu odmiennych struktur semantycznych.
+
+\subsection{Typy realizacji językowej}
+
+Wzmianki nominalne obejmują nazwy własne, deskrypcje określone i nieokreślone oraz terminy definiowane lokalnie. Nazwa własna dostarcza silnego sygnału powierzchniowego, ale odmiana i wariant pisowni osłabiają prostą identyczność napisów. Deskrypcja ,,skarżący'' zależy od roli w postępowaniu, natomiast ,,powyższa nieruchomość'' łączy sygnał anaforyczny z głową pospolitą. Termin ,,Wykonawca'' może uzyskać specjalne znaczenie wyłącznie na mocy definicji zawartej wcześniej w dokumencie.
+
+Wzmianki zaimkowe mają mniej treści leksykalnej i silniej zależą od kontekstu. Rodzaj, liczba, osoba i przypadek ograniczają zbiór kandydatów, lecz nie gwarantują poprawnego wyboru. Zaimek może mieć kilka gramatycznie zgodnych poprzedników. Formy wskazujące ,,ten'', ,,taki'', ,,powyższy'' oraz archaizujące ,,tenże'' są częste w stylu urzędowym i prawniczym. Zaimek względny może jednocześnie łączyć zdania i uczestniczyć w łańcuchu referencyjnym.
+
+Podmiot zerowy nie ma jawnego spanu słownego. W zdaniach ,,Powód wniósł apelację. Zażądał uchylenia wyroku'' końcówka czasownika drugiego zdania koduje osobę, liczbę i rodzaj, a referent jest odzyskiwany z kontekstu. Jeśli system nie tworzy pustych węzłów, taki element łańcucha pozostaje niewidoczny. W CorefUD zera mogą być reprezentowane jako puste węzły CoNLL-U, co pozwala je oceniać, ale wymaga specjalnej reguły dopasowania \cite{nedoluzhko_2022_corefud}.
+
+Tabela~\ref{tab:typy-coref} zestawia podstawowe realizacje istotne dla projektu. Przykłady skonstruowano na potrzeby objaśnienia i nie pochodzą z korpusu.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Wybrane realizacje koreferencji w polskim tekście prawniczym}
+  \label{tab:typy-coref}
+  \begin{tabular}{p{0.20\textwidth}p{0.43\textwidth}p{0.27\textwidth}}
+    \toprule
+    Typ & Przykład & Główny sygnał i trudność \\
+    \midrule
+    nazwa--nazwa & ,,ABC sp. z o.o.'' --- ,,spółka ABC'' & fleksja, skróty i wariant zapisu \\
+    nazwa--rola & ,,Jan Kowalski'' --- ,,powód'' & rola wynika z dokumentu, nie z nazwy \\
+    termin definiowany & ,,ABC, zwana Wykonawcą'' --- ,,Wykonawca'' & definicja ma zasięg lokalny \\
+    zaimek & ,,nieruchomość'' --- ,,ona'' & zgodność ogranicza, ale nie wybiera jednoznacznie \\
+    podmiot zerowy & ,,Powód wniósł pozew. [On] Zażądał odsetek.'' & brak jawnego tokenu wzmianki \\
+    odwołanie tekstowe & ,,§ 4 ust. 2'' --- ,,powyższe postanowienie'' & referentem jest fragment dokumentu \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Zagnieżdżenia, nieciągłość i zasięg}
+
+Zagnieżdżone wzmianki powodują, że ten sam token uczestniczy w kilku kandydatach. Fraza ,,pełnomocnik powoda'' może odnosić się do pełnomocnika, a jej składnik ,,powoda'' do innej osoby. Usunięcie wszystkich spanów zawierających się w dłuższych upraszcza model, ale obniża recall i zmienia definicję zadania. Analogicznie wzmianka nieciągła nie daje się opisać jednym przedziałem bez włączenia obcych tokenów.
+
+Zasięg referencji może przekraczać zdanie, akapit i lokalne okno modelu. Dokument prawniczy zawiera przytoczenia, wyliczenia i uzasadnienia rozdzielające kolejne wskazania tej samej strony. Model krótkiego kontekstu może nie widzieć pierwszej nazwy, gdy napotka późniejszą rolę albo zaimek. Dzielenie dokumentu na okna wymaga późniejszego scalania encji bez tworzenia połączeń między odrębnymi dokumentami.
+
+\section{Specyfika języka polskiego}
+\label{sec:polski-coref}
+
+\subsection{Fleksja i uzgodnienie}
+
+Polszczyzna ma rozbudowaną fleksję. Jedna jednostka leksykalna występuje w różnych przypadkach, liczbach i rodzajach, na przykład ,,sąd'', ,,sądu'', ,,sądowi'' i ,,sądem''. Porównanie surowych form nie wystarcza, dlatego istotne są lematy, głowy składniowe i reprezentacje kontekstowe. Sama lematyzacja także nie rozwiązuje problemu: pospolity lemat ,,sąd'' może odnosić się do różnych instytucji lub składów w jednym dokumencie.
+
+Uzgodnienie rodzaju, liczby i osoby jest użytecznym sygnałem dla zaimków i podmiotów zerowych. Nie powinno jednak działać jako bezwzględny filtr. Konstrukcje predykatywne, nazwy organizacji, skróty, rzeczowniki zbiorowe i zmiana sposobu konceptualizacji referenta mogą prowadzić do powierzchniowej niezgodności. W rozwiązaniach uczonych cechy morfosyntaktyczne są zatem informacją wejściową, której wagę określa model, a nie zestawem nieodwołalnych zakazów.
+
+\subsection{Elipsa podmiotu}
+
+Możliwość pominięcia zaimka osobowego odróżnia polski potok od wielu ustawień projektowanych głównie dla angielskiego. Forma ,,złożył'' wskazuje trzecioosobowego wykonawcę rodzaju męskiego w liczbie pojedynczej, ale nie mówi, który z kilku zgodnych kandydatów wykonał czynność. Informacja składniowa i ciągłość tematu stają się ważniejsze od obecności jawnego spanu.
+
+Zera wpływają na oba etapy zadania. Detektor musi zdecydować, czy w ogóle utworzyć wzmiankę, oraz przypisać jej położenie umożliwiające porównanie ze złotą anotacją. Resolver wybiera następnie encję. Pomyłki nie są równoważne: brak zera obniża recall, a stworzenie zera przy bezosobowej konstrukcji wprowadza fałszywą wzmiankę. CorefUD stosuje specjalne dopasowanie pustych węzłów, ponieważ ich numery powierzchniowe w odpowiedzi systemu nie muszą pokrywać się ze złotem.
+
+\subsection{Swobodny szyk i odległość}
+
+Funkcja składniowa jest w polszczyźnie słabiej związana z pozycją niż w języku angielskim. Kolejność składników może podkreślać informację nową i znaną, dlatego najbliższa poprzedzająca fraza nominalna nie zawsze jest najlepszym kandydatem. Heurystyka recency działa jako baseline, lecz wymaga uzupełnienia zależnościami składniowymi i kontekstem.
+
+W dokumentach prawniczych trudność pogłębia długa odległość. Nazwa strony może pojawić się w komparycji, a jej rola wrócić dopiero po wielostronicowym opisie stanu faktycznego. Powtórzenia szablonowe w różnych częściach dokumentu są podobne powierzchniowo, mimo że nie zawsze wskazują tę samą encję. Model powinien odróżniać sygnał struktury dokumentu od sygnału tożsamości.
+
+\subsection{Polskie zasoby i konsekwencje anotacyjne}
+
+Polish Coreference Corpus (PCC) obejmuje teksty wielu gatunków i zawiera nominalne zależności referencyjne, zagnieżdżenia, nieciągłości oraz podmioty zerowe \cite{ogrodniczuk_2014_pcc,ogrodniczuk_2019_referencyjne}. Jest podstawowym źródłem nadzorowanym dla polszczyzny, ale nie jest korpusem prawniczym. Wynik na PCC mierzy więc zdolność do ogólnej polskiej koreferencji, nie transfer domenowy sam w sobie.
+
+CorefUD harmonizuje różne korpusy w rozszerzeniu formatu CoNLL-U i udostępnia wspólne splity oraz scorer \cite{nedoluzhko_2022_corefud}. Polska część pochodzi z PCC. Kolejne edycje wspólnych zadań zmieniały domyślny sposób dopasowania z częściowego na zgodność głowy, dlatego numer wyniku bez wersji danych i ustawienia scorera jest niepełny. W projekcie przyjęto head-match jako ustawienie główne, exact-match jako analizę dodatkową i jawne raportowanie singletonów.
+
+Wersja zasobu jest częścią definicji eksperymentu. Oryginalne PCC i jego wydanie zharmonizowane nie mogą zostać bezpośrednio połączone tylko dlatego, że opisują wspólny materiał. Konwersja może zmieniać granice wzmianek, sposób zapisu głowy, podmioty zerowe oraz podział na zbiory. Powtórzenie tego samego dokumentu w train i test pochodzących z dwóch wydań prowadziłoby do przecieku trudnego do zauważenia na poziomie pojedynczych plików. W konsekwencji zamraża się jeden release, przechowuje jego manifest i dzieli dane według identyfikatorów dokumentów.
+
+Format CoNLL-U zapisuje warstwę koreferencji obok tokenów i zależności składniowych. Ułatwia to połączenie głowy wzmianki z cechami morfologicznymi oraz reprezentację pustego węzła. Jednocześnie narzuca wymaganie zgodności tokenizacji między złotem a odpowiedzią systemu. Predykcja nie może dowolnie zmienić form ani granic zdań, ponieważ scorer najpierw sprawdza ich wyrównanie. Rozdzielenie konwertera danych od modelu pozwala kontrolować tę własność przed uczeniem.
+
+\subsection{Dopasowanie wzmianek i porównywalność}
+
+Przy exact-match złota i przewidziana wzmianka odpowiadają sobie tylko wtedy, gdy mają identyczny zbiór tokenów. Ustawienie jest rygorystyczne i łączy jakość detekcji granic z jakością późniejszej klasteryzacji. Head-match uznaje zgodność wskazanych głów, dzięki czemu system nie jest karany tak samo za dodanie podrzędnego określenia jak za wybór innej encji. Partial-match dopuszcza częściowe pokrycie i wymaga reguły jednoznacznego przypisania, gdy kilka spanów nakłada się na ten sam fragment.
+
+Wybór dopasowania nie powinien następować po obejrzeniu wyniku testowego. Każde ustawienie może zmienić nie tylko F1 detekcji, lecz także skład klastrów przekazanych do MUC, B³ i CEAF. Z tego powodu wyniki systemów ocenionych innymi wersjami scorera lub inną regułą granic są kontekstem historycznym, a nie bezpośrednim rankingiem. W projekcie wszystkie własne warianty są oceniane tym samym przypiętym narzędziem.
+
+Singletony stanowią drugi istotny wybór. Ich zachowanie premiuje detektor tworzący poprawne pojedyncze wzmianki, lecz korpusy różnią się kompletnością tej anotacji. Usunięcie singletonów z metryk klastrowych ułatwia porównanie systemów, ale nie zwalnia z raportowania detekcji. Dlatego wynik główny pomija singletony zgodnie z ustawieniem CorefUD, a osobna analiza detekcji uwzględnia pełen zbiór wzmianek. Taki podział wskazuje, czy poprawa pochodzi z lepszego odnajdywania wyrażeń, czy z poprawnego łączenia już znalezionych elementów.
+
+Polskie narzędzia historyczne potwierdzają znaczenie cech językowych. BARTEK adaptował architekturę statystyczną do PCC, natomiast IKAR łączył drzewa decyzyjne z regułami dotyczącymi nazw, fraz nominalnych i zaimków \cite{kopec_2012_bartek,broda_2012_ikar}. Późniejsze prace objęły sieci głębokie oraz wspólne zadanie wielojęzyczne \cite{niton_2018_deep,saputa_2022_polish}. Wyników tych systemów nie przenosi się bezpośrednio do współczesnego ustawienia, ponieważ różniły się dane, definicje relacji i detekcja wzmianek \cite{kaczmarek_2015_evaluation}. Stanowią one jednak uzasadnienie dla baseline’ów leksykalnych i klasyfikatora par.
+
+Tabela~\ref{tab:konsekwencje-polskiego} wiąże własności polszczyzny z decyzjami modelowymi i ewaluacyjnymi. Zestawienie pokazuje, że żadna pojedyncza cecha nie rozwiązuje zadania.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Konsekwencje własności polszczyzny dla systemu koreferencyjnego}
+  \label{tab:konsekwencje-polskiego}
+  \begin{tabular}{p{0.23\textwidth}p{0.34\textwidth}p{0.33\textwidth}}
+    \toprule
+    Własność & Konsekwencja modelowa & Konsekwencja ewaluacyjna \\
+    \midrule
+    bogata fleksja & lemat, morfologia i embedding kontekstowy zamiast formy & analiza nazw i deskrypcji osobno \\
+    podmiot zerowy & detektor pustych węzłów i cechy czasownika & osobny recall zer i ustalona metoda dopasowania \\
+    swobodny szyk & zależności składniowe, brak twardej reguły bliskości & analiza według odległości poprzednika \\
+    zagnieżdżenia & zachowanie wielu spanów ze wspólnymi tokenami & jawna reguła granic i singletonów \\
+    daleka anafora & okna z nakładaniem oraz scalanie encji & wynik według długości dokumentu i odległości \\
+    role lokalne & reprezentacja kontekstu całego dokumentu & osobna analiza terminów definiowanych \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Granice pojęcia w projekcie}
+\label{sec:granice-coref}
+
+W pracy nie utożsamia się koreferencji z podobieństwem semantycznym. Dwie wzmianki o tej samej roli w różnych sprawach są podobne, lecz nie są koreferencyjne. Dwie wzmianki o tej samej osobie mogą natomiast mieć małe podobieństwo leksykalne. Ta różnica jest kluczowa dla autokodera: przestrzeń latentna grupująca ogólnie podobne role nie musi tworzyć właściwych encji. Ostateczna decyzja wymaga kontekstu dokumentu i nadzorowanego celu koreferencyjnego.
+
+Nie zakłada się również, że wszystkie relacje będą możliwe do odtworzenia na podstawie tekstu dostępnego w oknie. Część referencji zależy od struktury dokumentu lub wiedzy prawnej, a część anotacji może być niejednoznaczna. Protokół anotacji powinien rozdzielać przypadek trudny od błędu systemu. Wyniki należy interpretować wraz z jakością detekcji i analizą klas zjawisk.
+
+\section{Podsumowanie}
+
+Zdefiniowano wzmiankę, poprzednik, encję, łańcuch i partycję oraz rozdzielono detekcję wzmianek od ich klasteryzacji. Omówiono anaforę, kataforę, nazwy, deskrypcje, zaimki, zera, zagnieżdżenia i daleki zasięg. Wykazano, że polska fleksja, elipsa podmiotu i swobodny szyk osłabiają proste dopasowanie powierzchniowe, a jednocześnie dostarczają użytecznych cech morfosyntaktycznych. PCC i CorefUD wyznaczają praktyczną reprezentację zadania, lecz brak domeny prawnej w danych ogólnych uzasadnia badanie adaptacji przedstawione w dalszych rozdziałach.

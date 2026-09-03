@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-09-03T04:18:23.902109+00:00",
+  "documents": 400,
+  "corpipe_surface_mentions": 55977,
+  "stanza_surface_mentions": 52924,
+  "exact_common_spans": 38082,
+  "exact_span_precision_vs_stanza": 0.680315129428158,
+  "exact_span_recall_vs_stanza": 0.7195601239513264,
+  "shared_span_pair_agreement": 0.6651865260061657,
+  "comparable_within_cluster_pairs": 35357,
+  "agreement_bands": {
+    "high": 3199,
+    "low": 3522,
+    "medium": 2120,
+    "singleton-supported": 17870,
+    "singleton-unsupported": 10581
+  },
+  "model": {
+    "name": "ufal/corpipe26-onestage-corefud1.4-base-260702",
+    "segment": 1024,
+    "checkpoint_sha256": "023759452da9ffe53c3de06bf517027422d481973388949a2efed937c9638bf5",
+    "license": "CC BY-NC-SA 4.0"
+  },
+  "inputs": {
+    "corpipe_conllu_sha256": "e3771ab65eb52f00f42d07a1cdd717e5228d1347403273656447642b7f1fbebc",
+    "stanza_conllu_sha256": "cfecd317fb11e1acbe20eb8b4748520e27956db145e8c22fff322c0256631ff3",
+    "stanza_jsonl_sha256": "8b576c5dfe1885e269e0286fe76b7b5451d9b65f2c0f65caf390630542485007"
+  },
+  "interpretation": "Agreement between two automatic systems on unreviewed legal text; not accuracy."
+}

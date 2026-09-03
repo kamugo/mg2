@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-09-03T04:12:31.929572+00:00",
+  "status": "passed",
+  "documents": 400,
+  "unique_document_ids": 400,
+  "split_documents": {
+    "train": 320,
+    "dev": 40,
+    "test": 40
+  },
+  "sentences": 3364,
+  "tokens": 155641,
+  "clusters": 36989,
+  "mentions": 53034,
+  "surface_mentions": 53034,
+  "zero_mentions": 0,
+  "conllu_roundtrip_mentions": 53034,
+  "replacement_characters": 0
+}

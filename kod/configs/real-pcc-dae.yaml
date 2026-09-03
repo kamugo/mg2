@@ -1,0 +1,27 @@
+seed: 20260903
+deterministic: true
+output_dir: ../wyniki/real-pcc/dae
+data:
+  synthetic: false
+  tensor_file: data/processed/corefud-1.4/herbert-real/train.pt
+model:
+  variant: dae
+  input_dim: 768
+  hidden_dim: 256
+  latent_dim: 128
+  pair_feature_dim: 8
+  matrix_channels: 8
+training:
+  device: auto
+  epochs: 5
+  batch_size: 8
+  gradient_accumulation: 1
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  mixed_precision: true
+loss:
+  positive_weight: 28.526677031975613
+  reconstruction_weight: 0.1
+  mask_probability: 0.15
+  noise_std: 0.01

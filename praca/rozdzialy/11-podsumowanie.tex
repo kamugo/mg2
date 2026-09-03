@@ -1,0 +1,62 @@
+\chapter{Podsumowanie i wnioski}
+\label{chap:podsumowanie}
+
+Celem pracy było zbadanie możliwości zastosowania autokodera do koreferencji w polskich tekstach prawniczych oraz porównanie tego podejścia z metodami klasycznymi, neuronowymi i dużym modelem językowym. Zbudowano podstawy teoretyczne, przeprowadzono kwerendę, zaprojektowano dane i protokół, zaimplementowano trzy warianty modelu oraz wspólną ewaluację. Wykonano również zredukowaną próbę E1--E5. Zakres wykonania pozwala ocenić wykonalność techniczną, ale nie pozwala potwierdzić głównej tezy na danych naturalnych.
+
+\section{Odpowiedzi na pytania badawcze}
+
+\subsection{PB1: wpływ domenowego autokodera odszumiającego}
+
+PB1 pytało, czy dodanie autokodera uczonego na danych domenowych poprawia CoNLL F1 i LEA względem tego samego enkodera oraz dekodera bez autokodera. Po próbie syntetycznej wykonano pilot na naturalnym Polish-PCC z zamrożonym HerBERT-em. DAE uzyskał 0,5510 CoNLL F1 i 0,5007 LEA, a kontrola odpowiednio 0,5606 i 0,5078. Jednocześnie DAE poprawił parowy F1 z 0,5585 do 0,5763. Pilot spełnia warunek naturalnych polskich etykiet, lecz nie warunek domenowego pretrainingu ani testu prawnego.
+
+PB1 pozostaje nierozstrzygnięte. Nie przyjęto ani nie odrzucono hipotezy o poprawie, ponieważ wynik pochodzi z jednego seedu, złotych wzmianek i ogólnej domeny. Ujemna różnica 0,0096 CoNLL F1 stanowi jednak mocniejsze ostrzeżenie niż test syntetyczny: cel rekonstrukcyjny może konkurować z celem relacyjnym i nie należy zakładać korzyści autokodera. Rozstrzygnięcie wymaga domenowej adaptacji, wielu seedów, sparowanego bootstrapu oraz uzgodnionego legal-test.
+
+\subsection{PB2: sposób zastosowania autokodera}
+
+PB2 dotyczyło kompromisu jakości, parametrów, czasu i pamięci między kompresją wzmianek a segmentacją macierzy. W próbie technicznej E5 uzyskał średnio 0,89270 CoNLL F1 i 0,87164 LEA, więcej niż E4, lecz mniej niż E3. U-Net miał 30\,001 trenowanych parametrów i największy rozrzut seedów, a DAE 4\,257 parametrów. Różnice czasu na bardzo małej próbie były zdominowane przez narzut wykonania i nie stanowią profilu pełnego systemu.
+
+PB2 również pozostaje nierozstrzygnięte. Na danych syntetycznych żaden autokoder nie zdominował kontroli, a segmentacja była bardziej zmienna. Nie wykonano ablacji skip-connections, wagi rekonstrukcji, wymiaru latentnego ani kary przechodniości. Do odpowiedzi potrzebne są naturalne dokumenty, wspólny enkoder i pomiar pełnego potoku, w tym ekstrakcji embeddingów.
+
+\subsection{PB3: selektywna hybryda z LLM}
+
+PB3 pytało, czy hybryda ogranicza liczbę tokenów, koszt i czas bez istotnej utraty jakości wobec LLM-only. Zaimplementowano adapter odpowiedzi JSON oraz selektor wykorzystujący margines decyzji i błąd rekonstrukcji. Nie wykonano jednak E6 i E7 z powodu braku klucza API, zamrożonego modelu i końcowego audytu PII. Nie istnieją więc pomiary jakości, tokenów, ceny ani opóźnienia.
+
+PB3 pozostaje nierozstrzygnięte. Sama implementacja limitu 16 przypadków nie dowodzi redukcji kosztu, ponieważ koszt zależy od liczby tokenów i ponowień. Hybryda może zostać uznana za zasadną dopiero po wykazaniu co najmniej 80\% redukcji zapytań bez straty CoNLL oraz po kontroli prywatności. Symulacji LLM nie uznano za dopuszczalny zamiennik.
+
+\section{Weryfikacja tezy}
+
+Teza zakładała statystycznie istotną poprawę jakości przez domenowy autokoder oraz niższy koszt adaptacji niż dla LLM-only. Na podstawie wykonanych badań tezy nie potwierdzono. Nie została ona również obalona w sensie zaplanowanego testu, ponieważ nie przeprowadzono jego dwóch kluczowych części: ewaluacji na złotych polskich tekstach prawnych i porównania z rzeczywistym LLM.
+
+Rozróżnienie braku potwierdzenia od obalenia jest istotne. Ujemny wynik na generatorze dotyczy małej architektury uczonej na sztucznych prototypach. Nie dotyczy mechanizmu domenowego opisanego w tezie. Jednocześnie nie wolno na tej podstawie formułować pozytywnego wniosku o potencjale autokodera. Status tezy określono jako otwarty, z kompletnym protokołem jej falsyfikacji.
+
+\section{Wkład pracy}
+
+Pierwszym wkładem jest uporządkowanie literatury o koreferencji, polszczyźnie, NLP prawniczym, autokoderach i LLM. Oddzielono wyniki porównywalne od liczb uzyskanych na innych zadaniach, językach i scorerach. Bibliografia została zweryfikowana przez DOI lub URL, a źródła bez pewnej wartości liczbowej nie zostały uzupełnione z pamięci.
+
+Drugim wkładem jest formalizacja problemu oraz projekt dwóch sposobów użycia autokodera. DAE kompresuje i rekonstruuje reprezentacje wzmianek, natomiast U-Net segmentuje wielokanałową macierz relacji. Oba warianty współdzielą format wejścia, dekoder klastrów i procedurę oceny z kontrolą neuronową. Zaprojektowano też selektywną hybrydę, w której zewnętrzny model otrzymuje tylko przypadki niskiego marginesu lub wysokiego błędu rekonstrukcji.
+
+Trzecim wkładem jest odtwarzalny szkielet eksperymentalny. Zaimplementowano konfiguracje YAML, seedy, checkpointy, logi, metryki, dokumentowy bootstrap, baseline’y oraz integrację z przypiętym oficjalnym CorefUD scorerem. Zredukowane E1--E5 wygenerowały surowe JSON-y i wyrównane pliki CoNLL-U. Testy obejmują wszystkie architektury, selektor, trening, metryki i parser wyniku.
+
+Czwartym wkładem jest jawne udokumentowanie braków. Nie nadano wynikom syntetycznym statusu wyników badawczych, nie wpisano zerowego kosztu nieuruchomionego LLM i nie utworzono przykładów prawnych bez podwójnej anotacji. Taka granica zwiększa możliwość późniejszej replikacji i chroni przed pozorną kompletnością.
+
+\section{Ograniczenia}
+
+Najważniejszym ograniczeniem jest brak ukończonego zbioru prawnego. Nie obliczono statystyk, zgodności anotatorów ani wyników E8. Pełny Polish-PCC i rzeczywisty HerBERT włączono do dodatkowego pilota, lecz ocena korzysta ze złotych granic wzmianek i niepokrywających się okien po 48 elementów. Wynik mention-level nie mierzy utraty relacji między oknami ani jakości detekcji end-to-end.
+
+Nie wykonano pretrainingu domenowego, pełnych ablacji A1--A7, pięciu seedów ani dokumentowego bootstrapu różnic na danych naturalnych. Pomiar treningu głowic nie obejmuje jednorazowego kosztu kodowania HerBERT-em. t-SNE przedstawia jeden dokument syntetyczny i nie pozwala wnioskować o globalnej geometrii przestrzeni.
+
+Porównanie z LLM jest wyłącznie projektowe. Zewnętrzne modele są wersjonowane przez dostawcę, koszt zależy od cennika, a dokumenty mogą zawierać dane osobowe. Bez audytu i świadomej decyzji nie powinny być wysyłane do API. Ograniczona liczba dokumentów prawnych po anotacji nadal zawęzi trafność zewnętrzną do wybranego rodzaju orzeczeń.
+
+\section{Zalecany ciąg dalszy badań}
+
+Wydanie CorefUD 1.4, plik licencji, sumy kontrolne i tensory HerBERT zostały zamrożone w pilocie. Następnym krokiem pozostaje ukończenie podwójnej anotacji 24 dokumentów prawnych, rozstrzygnięcie sporów i obliczenie Krippendorffa $\alpha$. Dopiero po audycie jakości można utworzyć niezmienne splity domenowe.
+
+Kolejnym krokiem powinno być wykonanie E1--E5 dla pięciu seedów na wspólnych danych. Próg, checkpoint i hiperparametry należy dobrać wyłącznie na dev. Po każdym porównaniu trzeba uruchomić sparowany bootstrap dokumentowy i korektę Holma. Następnie można wykonać ablacje wagi rekonstrukcji, kodu, skip-connections i przechodniości.
+
+E6 i E7 powinny zostać uruchomione dopiero po audycie PII, zamrożeniu promptu, identyfikatora modelu i cennika. Należy raportować zależność jakości od odsetka przypadków przekazywanych do LLM dla wielu budżetów selektora, nie tylko jeden punkt. Analiza błędów powinna obejmować role procesowe, terminy definiowane, cytaty, zera i dalekie zależności na przykładach uzgodnionych przez anotatorów.
+
+\section{Konkluzja}
+
+Wykazano, że autokoder może zostać włączony do porównywalnego potoku koreferencji jako kompresor wzmianek albo segmentator macierzy. Nie wykazano, że poprawia jakość polskich tekstów prawniczych. W naturalnym pilocie DAE poprawił lokalny parowy F1, ale przegrał z prostszą kontrolą o 0,0096 CoNLL F1; na akcie ELI mylił koreferencję z powtórzeniami redakcyjnymi. Wynik wspiera ostrożne badanie hipotezy, nie wdrożenie autokodera jako domyślnie lepszej metody.
+
+Najbardziej uzasadnionym rezultatem jest zatem gotowy protokół rozstrzygnięcia oraz działająca infrastruktura, a nie pozytywna odpowiedź na tezę. Po uzupełnieniu danych i eksperymentów możliwe będzie jednoznaczne przyjęcie albo odrzucenie PB1--PB3 według kryteriów ustalonych przed wynikami.

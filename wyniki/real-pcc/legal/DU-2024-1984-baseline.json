@@ -1,0 +1,547 @@
+{
+  "source_file": "C:\\Users\\Kamil\\mg2\\kod\\data\\raw\\eli-smoke\\DU-2024-1984.txt",
+  "checkpoint": "C:\\Users\\Kamil\\mg2\\wyniki\\real-pcc\\baseline\\model.pt",
+  "threshold_from_general_domain_calibration": 0.94,
+  "detector": {
+    "sentences": 6,
+    "tokens": 332,
+    "mention_candidates": 104,
+    "rule": "Stanza: contiguous PROPN groups plus NOUN/PRON and selected relative/demonstrative lemmas"
+  },
+  "windows": 3,
+  "non_singleton_chains": 11,
+  "chains": [
+    {
+      "window": 2,
+      "mean_pair_probability": 0.9669921875,
+      "mentions": [
+        {
+          "id": "legal:m71",
+          "entity_id": "candidate-71",
+          "start": 197,
+          "end": 198,
+          "head": 197,
+          "text": "r",
+          "form": "r",
+          "lemma": "rok",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 2,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m78",
+          "entity_id": "candidate-78",
+          "start": 233,
+          "end": 234,
+          "head": 233,
+          "text": "r",
+          "form": "r",
+          "lemma": "rok",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 3,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m83",
+          "entity_id": "candidate-83",
+          "start": 254,
+          "end": 255,
+          "head": 254,
+          "text": "r",
+          "form": "r",
+          "lemma": "rok",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 3,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m89",
+          "entity_id": "candidate-89",
+          "start": 281,
+          "end": 282,
+          "head": 281,
+          "text": "r",
+          "form": "r",
+          "lemma": "rok",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 4,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m94",
+          "entity_id": "candidate-94",
+          "start": 303,
+          "end": 304,
+          "head": 303,
+          "text": "r",
+          "form": "r",
+          "lemma": "rok",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 4,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 2,
+      "mean_pair_probability": 0.956103515625,
+      "mentions": [
+        {
+          "id": "legal:m64",
+          "entity_id": "candidate-64",
+          "start": 172,
+          "end": 173,
+          "head": 172,
+          "text": "zł",
+          "form": "zł",
+          "lemma": "złoty",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 2,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m70",
+          "entity_id": "candidate-70",
+          "start": 194,
+          "end": 195,
+          "head": 194,
+          "text": "zł",
+          "form": "zł",
+          "lemma": "złoty",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 2,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m77",
+          "entity_id": "candidate-77",
+          "start": 230,
+          "end": 231,
+          "head": 230,
+          "text": "zł",
+          "form": "zł",
+          "lemma": "złoty",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 3,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m82",
+          "entity_id": "candidate-82",
+          "start": 251,
+          "end": 252,
+          "head": 251,
+          "text": "zł",
+          "form": "zł",
+          "lemma": "złoty",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 3,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m90",
+          "entity_id": "candidate-90",
+          "start": 286,
+          "end": 287,
+          "head": 286,
+          "text": "zł",
+          "form": "zł",
+          "lemma": "złoty",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 4,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 1,
+      "mean_pair_probability": 0.98193359375,
+      "mentions": [
+        {
+          "id": "legal:m6",
+          "entity_id": "candidate-6",
+          "start": 11,
+          "end": 12,
+          "head": 11,
+          "text": "rozporządzenie",
+          "form": "rozporządzenie",
+          "lemma": "rozporządzenie",
+          "upos": "NOUN",
+          "gender": "Neut",
+          "number": "Sing",
+          "sentence": 1,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m16",
+          "entity_id": "candidate-16",
+          "start": 27,
+          "end": 28,
+          "head": 27,
+          "text": "rozporządzenia",
+          "form": "rozporządzenia",
+          "lemma": "rozporządzenie",
+          "upos": "NOUN",
+          "gender": "Neut",
+          "number": "Sing",
+          "sentence": 2,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m34",
+          "entity_id": "candidate-34",
+          "start": 86,
+          "end": 87,
+          "head": 86,
+          "text": "rozporządzeniu",
+          "form": "rozporządzeniu",
+          "lemma": "rozporządzenie",
+          "upos": "NOUN",
+          "gender": "Neut",
+          "number": "Sing",
+          "sentence": 2,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 2,
+      "mean_pair_probability": 0.9583333333333334,
+      "mentions": [
+        {
+          "id": "legal:m51",
+          "entity_id": "candidate-51",
+          "start": 119,
+          "end": 120,
+          "head": 119,
+          "text": "poz",
+          "form": "poz",
+          "lemma": "poze",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 2,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m53",
+          "entity_id": "candidate-53",
+          "start": 129,
+          "end": 130,
+          "head": 129,
+          "text": "poz",
+          "form": "poz",
+          "lemma": "poze",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 2,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m55",
+          "entity_id": "candidate-55",
+          "start": 139,
+          "end": 140,
+          "head": 139,
+          "text": "poz",
+          "form": "poz",
+          "lemma": "poze",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 2,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 2,
+      "mean_pair_probability": 0.9342447916666666,
+      "mentions": [
+        {
+          "id": "legal:m72",
+          "entity_id": "candidate-72",
+          "start": 201,
+          "end": 202,
+          "head": 201,
+          "text": "latach",
+          "form": "latach",
+          "lemma": "rok",
+          "upos": "NOUN",
+          "gender": "Masc",
+          "number": "Plur",
+          "sentence": 2,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m84",
+          "entity_id": "candidate-84",
+          "start": 258,
+          "end": 259,
+          "head": 258,
+          "text": "latach",
+          "form": "latach",
+          "lemma": "rok",
+          "upos": "NOUN",
+          "gender": "Masc",
+          "number": "Plur",
+          "sentence": 3,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m95",
+          "entity_id": "candidate-95",
+          "start": 307,
+          "end": 308,
+          "head": 307,
+          "text": "latach",
+          "form": "latach",
+          "lemma": "rok",
+          "upos": "NOUN",
+          "gender": "Masc",
+          "number": "Plur",
+          "sentence": 4,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 1,
+      "mean_pair_probability": 0.98828125,
+      "mentions": [
+        {
+          "id": "legal:m2",
+          "entity_id": "candidate-2",
+          "start": 2,
+          "end": 3,
+          "head": 2,
+          "text": "Ministrów",
+          "form": "Ministrów",
+          "lemma": "minister",
+          "upos": "NOUN",
+          "gender": "Masc",
+          "number": "Plur",
+          "sentence": 1,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m36",
+          "entity_id": "candidate-36",
+          "start": 88,
+          "end": 89,
+          "head": 88,
+          "text": "Ministrów",
+          "form": "Ministrów",
+          "lemma": "minister",
+          "upos": "NOUN",
+          "gender": "Masc",
+          "number": "Plur",
+          "sentence": 2,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 1,
+      "mean_pair_probability": 0.9794921875,
+      "mentions": [
+        {
+          "id": "legal:m14",
+          "entity_id": "candidate-14",
+          "start": 22,
+          "end": 23,
+          "head": 22,
+          "text": "samorządom",
+          "form": "samorządom",
+          "lemma": "samorząd",
+          "upos": "NOUN",
+          "gender": "Masc",
+          "number": "Plur",
+          "sentence": 1,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m47",
+          "entity_id": "candidate-47",
+          "start": 106,
+          "end": 107,
+          "head": 106,
+          "text": "samorządom",
+          "form": "samorządom",
+          "lemma": "samorząd",
+          "upos": "NOUN",
+          "gender": "Masc",
+          "number": "Plur",
+          "sentence": 2,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 1,
+      "mean_pair_probability": 0.97314453125,
+      "mentions": [
+        {
+          "id": "legal:m13",
+          "entity_id": "candidate-13",
+          "start": 20,
+          "end": 21,
+          "head": 20,
+          "text": "Osób",
+          "form": "Osób",
+          "lemma": "osoba",
+          "upos": "NOUN",
+          "gender": "Fem",
+          "number": "Plur",
+          "sentence": 1,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m46",
+          "entity_id": "candidate-46",
+          "start": 104,
+          "end": 105,
+          "head": 104,
+          "text": "Osób",
+          "form": "Osób",
+          "lemma": "osoba",
+          "upos": "NOUN",
+          "gender": "Fem",
+          "number": "Plur",
+          "sentence": 2,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 1,
+      "mean_pair_probability": 0.96484375,
+      "mentions": [
+        {
+          "id": "legal:m1",
+          "entity_id": "candidate-1",
+          "start": 1,
+          "end": 2,
+          "head": 1,
+          "text": "Rady",
+          "form": "Rady",
+          "lemma": "rada",
+          "upos": "NOUN",
+          "gender": "Fem",
+          "number": "Sing",
+          "sentence": 1,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m35",
+          "entity_id": "candidate-35",
+          "start": 87,
+          "end": 88,
+          "head": 87,
+          "text": "Rady",
+          "form": "Rady",
+          "lemma": "rada",
+          "upos": "NOUN",
+          "gender": "Fem",
+          "number": "Sing",
+          "sentence": 2,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 2,
+      "mean_pair_probability": 0.955078125,
+      "mentions": [
+        {
+          "id": "legal:m76",
+          "entity_id": "candidate-76",
+          "start": 223,
+          "end": 224,
+          "head": 223,
+          "text": "brzmienie",
+          "form": "brzmienie",
+          "lemma": "brzmienie",
+          "upos": "NOUN",
+          "gender": "Neut",
+          "number": "Sing",
+          "sentence": 3,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m88",
+          "entity_id": "candidate-88",
+          "start": 274,
+          "end": 275,
+          "head": 274,
+          "text": "brzmienie",
+          "form": "brzmienie",
+          "lemma": "brzmienie",
+          "upos": "NOUN",
+          "gender": "Neut",
+          "number": "Sing",
+          "sentence": 4,
+          "is_empty": false
+        }
+      ]
+    },
+    {
+      "window": 2,
+      "mean_pair_probability": 0.9482421875,
+      "mentions": [
+        {
+          "id": "legal:m80",
+          "entity_id": "candidate-80",
+          "start": 241,
+          "end": 242,
+          "head": 241,
+          "text": "pkt",
+          "form": "pkt",
+          "lemma": "punkt",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 3,
+          "is_empty": false
+        },
+        {
+          "id": "legal:m87",
+          "entity_id": "candidate-87",
+          "start": 271,
+          "end": 272,
+          "head": 271,
+          "text": "pkt",
+          "form": "pkt",
+          "lemma": "punkt",
+          "upos": "NOUN",
+          "gender": null,
+          "number": null,
+          "sentence": 4,
+          "is_empty": false
+        }
+      ]
+    }
+  ],
+  "status": "qualitative-domain-transfer-only; no legal gold annotations"
+}

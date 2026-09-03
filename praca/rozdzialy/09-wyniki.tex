@@ -1,0 +1,148 @@
+\chapter{Wyniki i ich analiza}
+\label{chap:wyniki}
+
+W rozdziale rozdzielono trzy rodzaje rezultatów. Pierwszym są wyniki technicznej próby całego potoku na danych syntetycznych. Drugim jest pilot na naturalnym Polish-PCC z rzeczywistymi reprezentacjami HerBERT. Trzecim jest jakościowa kontrola transferu na pojedynczym akcie ELI bez złotej anotacji. Tylko drugi rodzaj pozwala ilościowo ocenić klastrowanie polskich wzmianek, lecz nadal nie jest testem domeny prawnej ani pełnym eksperymentem wielu seedów.
+
+\section{Zakres wykonanych uruchomień}
+\label{sec:zakres-wynikow}
+
+Wykonano E1--E5. E1 i E2 są deterministycznymi baseline’ami i zostały uruchomione raz. E3--E5 wykonano dla pięciu seedów: 20260903, 20260917, 20261001, 20261015 i 20261029. Zbiór treningowy zawierał 24 syntetyczne dokumenty, a testowy 12. Dla danych użyto stałych, odrębnych seedów 700001 i 700002, aby zmiana seedu modelu nie zmieniała zarazem przykładów testowych.
+
+Każdy przebieg E3--E5 zapisał konfigurację, checkpoint, log straty, predykcję i złoty plik CoNLL-U. Wyniki obliczono oficjalnym CorefUD scorerem przypiętym do rewizji \texttt{4fd7b0e0c661aeeff88bc60c19ef507b84d1b590}, w ustawieniu head-match, z zależnościowym dopasowaniem zer i bez singletonów w metrykach klastrowych. Detekcja wzmianek obejmowała singletony. W ten sposób sprawdzono tę samą ścieżkę wykonania, która jest przeznaczona dla pełnego eksperymentu.
+
+Nie wykonano E6 ani E7. Brakowało klucza API, zamrożonego identyfikatora modelu i cennika, a tekst prawny nie przeszedł końcowego audytu PII. Nie wykonano E8, ponieważ 24 planowane dokumenty prawne nie zostały podwójnie zanotowane i uzgodnione. W miejsce liczb pozostawiono polecenia reprodukcyjne i przyczyny braku. Nie zastosowano losowej symulacji odpowiedzi LLM, gdyż mierzyłaby ona zachowanie generatora zastępczego, nie badanego systemu.
+
+Po zakończeniu pierwotnych uruchomień wykonano dodatkowy pilot naturalny. CorefUD 1.4 podzielono dokumentowo na 1244 dokumenty treningowe, 219 kalibracyjnych oraz niezmieniony dev liczący 183 dokumenty. Zamrożony HerBERT utworzył reprezentacje 768-wymiarowe. Porównano kontrolę bez DAE i DAE dla jednego seedu oraz pięciu epok. Próg 0,94 wybrano wyłącznie na kalibracji.
+
+\section{Pilot na naturalnym Polish-PCC}
+\label{sec:pilot-pcc-real}
+
+Tabela~\ref{tab:wyniki-pcc-real} zawiera wynik rzeczywistego uruchomienia na 500 niepokrywających się oknach dev, obejmujących 19,299 wzmianek. Granice wzmianek były złote, a każde okno wyeksportowano do projekcji mention-level i oceniono przypiętym oficjalnym scorerem CorefUD. Wyniku nie należy utożsamiać z oceną pełnych, niepodzielonych dokumentów ani z detekcją wzmianek end-to-end.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Wyniki pilota na Polish-PCC-dev; jeden seed, złote wzmianki i okna po 48 wzmianek}
+  \label{tab:wyniki-pcc-real}
+  \begin{tabular}{lrrrrrrr}
+    \toprule
+    Wariant & pary F1 & MUC & $B^3$ & CEAF$_e$ & LEA & BLANC & CoNLL \\
+    \midrule
+    kontrola & 0,5585 & 0,6508 & 0,5558 & 0,4751 & 0,5078 & 0,4923 & \textbf{0,5606} \\
+    DAE & \textbf{0,5763} & 0,6411 & 0,5490 & 0,4631 & 0,5007 & 0,4856 & 0,5510 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+DAE zwiększył parowy F1 o 0,0178, ale zmniejszył CoNLL F1 o 0,0096 i LEA o 0,0071. Oznacza to, że większa precyzja lokalnych decyzji parowych nie przełożyła się na lepszą globalną partycję encji. Kontrola miała 232,321 trenowanych parametrów, a DAE 595,073. Czas pięciu epok wyniósł odpowiednio 26,72 i 37,34 s, bez jednorazowego kosztu ekstrakcji HerBERT. W jednym seedzie nie potwierdzono przewagi autokodera według metryki głównej; bez replikacji i dokumentowego bootstrapu nie przeprowadzono testu istotności.
+
+\section{Jakość na próbie syntetycznej}
+\label{sec:jakosc-syntetyczna}
+
+Tabela~\ref{tab:wyniki-syntetyczne} zawiera wszystkie dostępne agregaty. Odchylenie standardowe dla E1 i E2 wynosi zero wyłącznie dlatego, że wykonano jeden deterministyczny przebieg. Nie jest to oszacowanie stabilności na próbkach dokumentów.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Wyniki zredukowanych uruchomień na danych syntetycznych; wartości nie są wynikami badawczymi}
+  \label{tab:wyniki-syntetyczne}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    Eksperyment & $n$ & CoNLL F1 & SD & LEA F1 & SD \\
+    \midrule
+    E1 head/lemma-match & 1 & 0,97080 & 0,00000 & 0,96830 & 0,00000 \\
+    E2 regresja par & 1 & 1,00000 & 0,00000 & 1,00000 & 0,00000 \\
+    E3 głowica neuronowa & 5 & 0,94632 & 0,03265 & 0,94034 & 0,03638 \\
+    E4 DAE + głowica & 5 & 0,85544 & 0,02842 & 0,82396 & 0,03220 \\
+    E5 macierzowy U-Net & 5 & 0,89270 & 0,05866 & 0,87164 & 0,07066 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+E2 uzyskał wynik idealny, a E1 wynik 0,9708. Nie oznacza to, że metody klasyczne rozwiązują polską koreferencję. Generator tworzy prototypy encji, a jawne cechy leksykalne baseline’ów są z tym identyfikatorem celowo skorelowane. Próba jest więc łatwa dokładnie dla metod używających podobieństwa i zgodności. Rezultat potwierdza, że scorer otrzymuje poprawnie wyrównane klastry, ale nie wyznacza dolnej granicy na korpusie naturalnym.
+
+Kontrola E3 osiągnęła najwyższą średnią spośród wariantów neuronowych. E4 stracił względem niej 0,09088 CoNLL F1 i 0,11638 LEA F1. E5 stracił odpowiednio 0,05362 i 0,06870. Na tej próbie dodatkowa rekonstrukcja ani splotowa segmentacja macierzy nie poprawiły wyniku. Jest to prawidłowy negatywny wynik testu integracyjnego: kod nie wymusza przewagi metod proponowanych.
+
+Rysunek~\ref{fig:jakosc-syntetyczna} przedstawia tylko jedną tezę: E4 i E5 nie przewyższają E3 w wykonanej próbie syntetycznej. Słupki błędu są odchyleniami pięciu seedów, a nie przedziałami ufności na populacji dokumentów.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{s13-jakosc-syntetyczna.pdf}
+  \caption{Średni CoNLL F1 wariantów neuronowych na danych syntetycznych. Źródło: własne uruchomienia zredukowane.}
+  \label{fig:jakosc-syntetyczna}
+\end{figure}
+
+Rozrzut E3 obejmował wartości od 0,9189 do 1,0000. Dla E4 zakres wyniósł 0,8349--0,9049, a dla E5 0,8060--0,9502. E5 miał największe odchylenie, zarówno dla CoNLL, jak i LEA. Przy zaledwie 24 dokumentach treningowych bardziej pojemny model splotowy jest wrażliwy na inicjalizację. Nie można jednak oddzielić wpływu pojemności, progu i funkcji straty bez zaplanowanych ablacji.
+
+Kryterium sukcesu E4 wymagało przewagi co najmniej 0,01 CoNLL bez spadku LEA większego niż 0,005. Próba syntetyczna tego kryterium nie spełnia. Nie uznano jednak PB1 za obalone, ponieważ konfiguracja nie zawierała domenowego pretrainingu ani rzeczywistych embeddingów HerBERT. Tak samo E5 nie spełnił kryterium dodatniego przedziału różnicy LEA, lecz bez dokumentowego bootstrapu na naturalnym teście nie przeprowadzono formalnego testu hipotezy.
+
+\subsection{Interpretacja składowych metryk}
+
+Wartości zagregowane nie wyjaśniają samodzielnie mechanizmu błędu. Dla E4 w każdym z pięciu przebiegów recall MUC wynosił 1,0. Jednocześnie precision MUC mieściło się między 0,8491 a 0,9000. Podobny układ wystąpił dla B³ i LEA. Model niemal zawsze zachowywał złote połączenia, lecz dodawał połączenia między encjami. CEAF$_e$ reagował na to niższym recall, ponieważ jedno-do-jednego dopasowanie nie mogło przypisać scalonego klastra do dwóch złotych encji naraz. BLANC dodatkowo ujawnił utratę poprawnych decyzji niekoreferencyjnych.
+
+Detekcja wzmianek miała F1 równe 1,0 we wszystkich przebiegach, ponieważ wejściem były złote, syntetyczne wzmianki. Wartości CoNLL nie obejmują zatem typowego dla systemu end-to-end błędu granic ani brakującej wzmianki. W pełnym eksperymencie wynik w ustawieniu gold mentions powinien być raportowany obok ustawienia predicted mentions. Różnica między nimi określi, ile jakości traci detektor, a ile klasteryzator.
+
+Nie obliczono przedziału ufności dla średniej po seedach. Pięć wartości opisuje wrażliwość optymalizacji, natomiast bootstrap dokumentowy opisuje zmienność testu. Łączenie obu źródeł w jeden przedział wymagałoby hierarchicznej procedury i większej liczby obserwacji. Zgodnie z protokołem należy więc osobno raportować średnią i odchylenie seedów oraz sparowany bootstrap dokumentów dla wybranego checkpointu każdego seedu.
+
+\section{Koszt techniczny}
+\label{sec:koszt-wynikow}
+
+Tabela~\ref{tab:koszt-syntetyczny} przedstawia pomiary diagnostyczne. Czasy są bardzo krótkie i obejmują inne proporcje narzutu niż pełne uczenie. Nie zostały wykonane oddzielne rozgrzewki inferencji, dlatego wartości służą wykrywaniu regresji rzędu wielkości, a nie porównaniu wdrożeniowemu.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Koszt wariantów neuronowych w uruchomieniu syntetycznym}
+  \label{tab:koszt-syntetyczny}
+  \begin{tabular}{lrrr}
+    \toprule
+    Wariant & Parametry trenowane & Trening [s] & Inferencja [s] \\
+    \midrule
+    E3 & 2\,289 & 0,504 & 0,0050 \\
+    E4 & 4\,257 & 0,278 & 0,0065 \\
+    E5 & 30\,001 & 0,429 & 0,0175 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+E5 ma około trzynastokrotnie więcej trenowanych parametrów niż E3 i około siedmiokrotnie więcej niż E4. Jego zmierzona inferencja trwała około 3,5 raza dłużej niż w E3. Różnica treningu nie zachowuje kolejności liczby parametrów, co pokazuje dominację rozgrzewki GPU, cache i małej liczby batchy. Średni raportowany szczyt pamięci wynosił około 68 MB dla wszystkich trzech wariantów; jest to przede wszystkim koszt środowiska i małych tensorów, nie oszacowanie pamięci pełnego enkodera.
+
+Koszt E1 wyniósł około 0,00053 s, a łączny fit i inferencja E2 około 0,01138 s. W pełnym porównaniu do czasu należy doliczyć ekstrakcję reprezentacji, tokenizację i dekodowanie. Dla LLM potrzebne są dodatkowo tokeny, liczba wywołań, ponowienia, opóźnienie i koszt według cennika z datą. Ponieważ E6 i E7 nie zostały uruchomione, żadna wartość zerowa nie została im przypisana.
+
+\section{Wizualizacja przestrzeni latentnej}
+\label{sec:latent-wyniki}
+
+Rysunek~\ref{fig:tsne-latent} pokazuje t-SNE kodów DAE dla jednego, deterministycznie wybranego dokumentu o ośmiu wzmiankach i dwóch encjach. Użyto checkpointu E4 dla seedu 20260903 i danych testowych o seedzie 700002. Kolor pochodzi ze złotej macierzy, a etykieta punktu jest technicznym identyfikatorem wzmianki.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{s13-tsne-latent-syntetyczny.pdf}
+  \caption{t-SNE kodów DAE w jednym dokumencie syntetycznym. Źródło: własny checkpoint E4.}
+  \label{fig:tsne-latent}
+\end{figure}
+
+W tej projekcji trzy wzmianki encji 0 zostały oddzielone od pięciu wzmianek encji 1 wzdłuż drugiego wymiaru. Jest to zgodne z konstrukcją generatora opartą na prototypach. Nie dowodzi, że kod nauczył się kategorii prawnych ani że odległości na rysunku odpowiadają odległościom w 16-wymiarowej przestrzeni. t-SNE zachowuje przede wszystkim lokalne sąsiedztwa i może zmieniać globalną geometrię. Rysunek służy kontroli jakości reprezentacji, a nie oszacowaniu metryki.
+
+\section{Analiza błędów}
+\label{sec:analiza-bledow}
+
+W E4 dla seedu 20260903 recall MUC, B³ i LEA wyniósł 1,0, podczas gdy precision było niższe. Dominuje zatem nadmierne scalanie, nie rozcinanie złotych encji. Konkretny przypadek wystąpił w dokumencie \texttt{reduced-2}. Złoto przypisało \texttt{m0} do encji 0, a \texttt{m1}, \texttt{m2} i \texttt{m3} do encji 1. System przypisał wszystkie cztery wzmianki do encji 0. Detekcja wzmianek pozostała idealna, więc błąd powstał na poziomie relacji i domknięcia przechodniego.
+
+Ten sam wzorzec wystąpił w kilku dokumentach: pojedyncza krawędź ponad progiem 0,5 łączyła dwa poprawne klastry, po czym union-find scalał wszystkie ich elementy. Wyjaśnia to jednoczesny pełny recall i spadek precision. Do diagnozy pełnego modelu potrzebne są krzywe progowe na dev, kalibracja oraz liczba naruszeń przechodniości przed dekodowaniem. Nie wolno dobierać progu na przedstawionym teście.
+
+Przypadek \texttt{reduced-2} pokazuje też ograniczenie samego formatu przykładu. Nazwy \texttt{m0}--\texttt{m3} nie niosą treści językowej, więc nie da się przypisać błędu do fleksji, roli albo odległości. Można wskazać operację modelu i skutek w klastrze, lecz nie kategorię lingwistyczną. Dopiero test prawny pozwoli zakodować typ wzmianki, odległość zdań, obecność cytatu oraz relację rola--nazwa i porównać częstości błędów.
+
+W E5 największa zmienność wskazuje inny problem: segmentacja macierzy przy małej liczbie przykładów nie ma wystarczającej liczby struktur do uogólnienia. Kanał podobieństwa jest silny, ale pozostałe kanały zawierają syntetyczny szum. Skip-connections mogą przenosić oba rodzaje sygnału. Ablacje A1 i A7 są potrzebne, by rozdzielić wpływ połączeń skrótowych i kary przechodniości.
+
+\subsection{Jakościowa kontrola transferu na akcie ELI}
+
+Model zastosowano do Dz.U. 2024 poz. 1984. Stanza wskazała 104 kandydatów w 332 tokenach, a DAE utworzył 14 łańcuchów niejednoelementowych. Nie obliczono P/R/F1, ponieważ dokument nie ma uzgodnionej złotej anotacji. Przegląd służy wyłącznie diagnozie. Trafne wydają się powiązania dwóch wystąpień słowa \emph{samorządom} oraz powtórzeń fragmentów nazwy instytucji: \emph{Ministrów}, \emph{Funduszu}, \emph{Rehabilitacji} i \emph{Osób}. Jednocześnie fragmentaryczne granice pokazują błąd detektora, który nie zbudował pełnych nazw \emph{Rada Ministrów} i \emph{Państwowy Fundusz Rehabilitacji Osób Niepełnosprawnych}.
+
+Wyraźnie błędne kandydatury lub połączenia objęły skróty jednostek \emph{r} i \emph{zł}, wyrazy \emph{się}, \emph{dnia} i \emph{ust} oraz szablonowe \emph{brzmienie}. Najważniejszym nadmiernym scaleniem był łańcuch form \emph{rozporządzenie}, \emph{rozporządzenia}, \emph{rozporządzeniu}: tekst odróżnia akt zmieniający z 2024 r. od aktu zmienianego z 2003 r., czego model nie uchwycił. Transfer zachowuje więc podobieństwo leksykalne i fleksyjne, ale myli koreferencję z powtórzeniem redakcyjnym. Pełna analiza kategorii błędów nadal wymaga podwójnie anotowanego legal-test.
+
+\section{Odpowiedzi możliwe na obecnym etapie}
+
+PB1, dotyczące poprawy po domenowym DAE, pozostaje nierozstrzygnięte. Naturalny pilot ogólnodomenowy wskazał spadek CoNLL F1 i LEA po dodaniu DAE, ale nie obejmuje domenowego pretrainingu, wielu seedów ani złotego testu prawnego. PB2 również pozostaje nierozstrzygnięte, ponieważ na danych naturalnych nie uruchomiono wariantu macierzowego i ablacji. PB3 nie może zostać ocenione bez rzeczywistych wywołań LLM i wspólnego kosztu.
+
+Wyniki pozwalają natomiast sformułować trzy wnioski inżynierskie. Po pierwsze, cały potok od tensora do oficjalnego scorera jest wykonywalny i deterministycznie odtwarzalny. Po drugie, zaproponowane modele nie otrzymują sztucznie zagwarantowanej przewagi; w kontroli syntetycznej przegrywają z prostszymi wariantami. Po trzecie, analiza błędów może zostać przeprowadzona na wyrównanych dokumentach i wskazuje na potrzebę kalibracji progu oraz kontroli nadmiernych scaleń. Wnioski badawcze muszą poczekać na dane naturalne.
+
+\section{Podsumowanie}
+
+Wykonano zredukowane E1--E5 oraz naturalny pilot kontroli i DAE na Polish-PCC. W pojedynczym seedzie DAE poprawił parowy F1, lecz uzyskał niższe CoNLL F1 i LEA niż kontrola. Jakościowy transfer na jeden akt ELI ujawnił zarówno poprawne podobieństwa fleksyjne, jak i liczne powtórzenia niereferencyjne oraz fragmentaryczne granice wzmianek. E6--E8 pozostają niewykonane w znaczeniu wcześniej zamrożonego protokołu, ponieważ nadal brakuje uzgodnionego legal-test, wielu seedów i wywołań LLM.

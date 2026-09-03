@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-09-03T04:13:41.269634+00:00",
+  "key": "C:\\Users\\Kamil\\mg2\\kod\\data\\processed\\legal-silver-400\\corpipe26\\stanza-silver.conllu",
+  "key_sha256": "cfecd317fb11e1acbe20eb8b4748520e27956db145e8c22fff322c0256631ff3",
+  "system": "C:\\Users\\Kamil\\mg2\\kod\\data\\processed\\legal-silver-400\\corpipe26\\corpipe26-silver.conllu",
+  "system_sha256": "e3771ab65eb52f00f42d07a1cdd717e5228d1347403273656447642b7f1fbebc",
+  "match": "exact",
+  "keep_singletons": true,
+  "interpretation": "Model agreement on unreviewed legal text; Stanza predictions are not gold, so these scores are not accuracy.",
+  "scores": {
+    "muc": {
+      "precision": 0.5109,
+      "recall": 0.6053000000000001,
+      "f1": 0.5540999999999999
+    },
+    "b_cubed": {
+      "precision": 0.5807,
+      "recall": 0.6397999999999999,
+      "f1": 0.6088
+    },
+    "ceafe": {
+      "precision": 0.5868,
+      "recall": 0.5916,
+      "f1": 0.5892000000000001
+    },
+    "lea": {
+      "precision": 0.5001,
+      "recall": 0.5273,
+      "f1": 0.5133
+    },
+    "blanc": {
+      "precision": 0.4311,
+      "recall": 0.5159,
+      "f1": 0.46909999999999996
+    },
+    "conll_f1": 0.584,
+    "mention_detection": {
+      "precision": 0.6762999999999999,
+      "recall": 0.7178,
+      "f1": 0.6965
+    }
+  }
+}

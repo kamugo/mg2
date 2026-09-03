@@ -1,0 +1,181 @@
+{
+  "status": "completed_real_data_pilot",
+  "tensor_manifest": {
+    "created_at": "2026-09-03T02:36:53.512728+00:00",
+    "seed": 20260903,
+    "calibration_fraction": 0.15,
+    "max_mentions": 48,
+    "words_per_segment": 192,
+    "segment_stride": 176,
+    "encoder_batch_size": 16,
+    "document_batch_size": 64,
+    "encoder": "allegro/herbert-base-cased",
+    "encoder_revision": "50e33e0567be0c0b313832314c586e3df0dc2297",
+    "encoder_frozen": true,
+    "input_sha256": {
+      "train": "e5a3526eac3d75999129bd624900a4eb2b47ce2e63faab3f9a69ee57592fa6d5",
+      "dev": "e2d3544307f837c285b968111ac4f2a7af7a27db35bb1a08a358a82a799bf993"
+    },
+    "splits": {
+      "train": {
+        "documents": 1244,
+        "windows": 3339,
+        "mentions": 131949
+      },
+      "calibration": {
+        "documents": 219,
+        "windows": 559,
+        "mentions": 22185
+      },
+      "dev": {
+        "documents": 183,
+        "windows": 500,
+        "mentions": 19299
+      }
+    },
+    "evaluation_scope": "gold mentions; clustering in non-overlapping mention windows"
+  },
+  "training": {
+    "baseline": {
+      "variant": "baseline",
+      "seed": 20260903,
+      "examples": 3339,
+      "epochs": 5,
+      "trainable_parameters": 232321,
+      "final_loss": 0.43390539288520813,
+      "device": "cuda",
+      "peak_gpu_memory_bytes": 174600704,
+      "synthetic_data": false,
+      "elapsed_seconds": 26.723315700888634
+    },
+    "dae": {
+      "variant": "dae",
+      "seed": 20260903,
+      "examples": 3339,
+      "epochs": 5,
+      "trainable_parameters": 595073,
+      "final_loss": 0.5816860198974609,
+      "device": "cuda",
+      "peak_gpu_memory_bytes": 182927360,
+      "synthetic_data": false,
+      "elapsed_seconds": 37.33621790073812
+    }
+  },
+  "evaluation": {
+    "baseline": {
+      "threshold": 0.94,
+      "pairwise": {
+        "precision": 0.4869299081832322,
+        "recall": 0.6547699365807583,
+        "f1": 0.5585129341351825,
+        "true_positive": 9705,
+        "false_positive": 10226,
+        "false_negative": 5117
+      },
+      "official": {
+        "muc": {
+          "precision": 0.7298,
+          "recall": 0.5872999999999999,
+          "f1": 0.6507999999999999
+        },
+        "b_cubed": {
+          "precision": 0.606,
+          "recall": 0.5133,
+          "f1": 0.5558
+        },
+        "ceafe": {
+          "precision": 0.691,
+          "recall": 0.36200000000000004,
+          "f1": 0.47509999999999997
+        },
+        "lea": {
+          "precision": 0.5518,
+          "recall": 0.4702,
+          "f1": 0.5078
+        },
+        "blanc": {
+          "precision": 0.5999,
+          "recall": 0.4793,
+          "f1": 0.49229999999999996
+        },
+        "conll_f1": 0.5606,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      }
+    },
+    "dae": {
+      "threshold": 0.94,
+      "pairwise": {
+        "precision": 0.5218866272707375,
+        "recall": 0.6435029010929699,
+        "f1": 0.5763490241102182,
+        "true_positive": 9538,
+        "false_positive": 8738,
+        "false_negative": 5284
+      },
+      "official": {
+        "muc": {
+          "precision": 0.7391,
+          "recall": 0.5660000000000001,
+          "f1": 0.6411
+        },
+        "b_cubed": {
+          "precision": 0.6192,
+          "recall": 0.49310000000000004,
+          "f1": 0.5489999999999999
+        },
+        "ceafe": {
+          "precision": 0.6770999999999999,
+          "recall": 0.3518,
+          "f1": 0.4631
+        },
+        "lea": {
+          "precision": 0.5631,
+          "recall": 0.4508,
+          "f1": 0.5007
+        },
+        "blanc": {
+          "precision": 0.6177,
+          "recall": 0.4582,
+          "f1": 0.48560000000000003
+        },
+        "conll_f1": 0.551,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      }
+    },
+    "dae_minus_baseline": {
+      "pairwise_f1": 0.017836089975035607,
+      "conll_f1": -0.009599999999999942,
+      "muc_f1": -0.009699999999999931,
+      "b_cubed_f1": -0.006800000000000028,
+      "ceafe_f1": -0.011999999999999955,
+      "lea_f1": -0.007099999999999995,
+      "blanc_f1": -0.006699999999999928
+    },
+    "scope": {
+      "mention_boundaries": "gold",
+      "documents": "non-overlapping windows of at most 48 mentions",
+      "official_scorer": "CorefUD scorer on a mention-level projection",
+      "domain": "general Polish-PCC, not legal gold"
+    }
+  },
+  "legal_transfer": {
+    "document": "Dz.U. 2024 poz. 1984",
+    "dae_non_singleton_chains": 14,
+    "baseline_non_singleton_chains": 11,
+    "detector": {
+      "sentences": 6,
+      "tokens": 332,
+      "mention_candidates": 104,
+      "rule": "Stanza: contiguous PROPN groups plus NOUN/PRON and selected relative/demonstrative lemmas"
+    },
+    "status": "qualitative-domain-transfer-only; no legal gold annotations"
+  }
+}

@@ -1,0 +1,29 @@
+seed: 20260903
+deterministic: true
+output_dir: ../wyniki/s08-runs/E4
+data:
+  synthetic: true
+  seed: 700001
+  examples: 24
+  max_mentions: 8
+model:
+  variant: dae
+  input_dim: 32
+  hidden_dim: 24
+  latent_dim: 16
+  pair_feature_dim: 6
+  matrix_channels: 6
+training:
+  device: auto
+  epochs: 3
+  batch_size: 4
+  gradient_accumulation: 1
+  learning_rate: 0.002
+  weight_decay: 0.001
+  max_grad_norm: 1.0
+  mixed_precision: true
+loss:
+  positive_weight: 2.0
+  reconstruction_weight: 0.1
+  mask_probability: 0.15
+  noise_std: 0.01

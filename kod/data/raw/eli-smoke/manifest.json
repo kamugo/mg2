@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-09-03T02:40:41.975647+00:00",
+  "records": [
+    {
+      "source": "eli",
+      "url": "https://api.sejm.gov.pl/eli/acts/DU/2024/1984/text.html",
+      "file": "DU-2024-1984.txt",
+      "metadata_file": "DU-2024-1984.metadata.json",
+      "bytes": 1670,
+      "sha256": "e3545aaae4d79575158db3add4d85678575463ffc13972d214d0afd7b9443652",
+      "license_basis": "official document; verify art. 4 and PII policy"
+    }
+  ]
+}

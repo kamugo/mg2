@@ -1,0 +1,35 @@
+{
+  "created_at": "2026-09-03T02:36:53.512728+00:00",
+  "seed": 20260903,
+  "calibration_fraction": 0.15,
+  "max_mentions": 48,
+  "words_per_segment": 192,
+  "segment_stride": 176,
+  "encoder_batch_size": 16,
+  "document_batch_size": 64,
+  "encoder": "allegro/herbert-base-cased",
+  "encoder_revision": "50e33e0567be0c0b313832314c586e3df0dc2297",
+  "encoder_frozen": true,
+  "input_sha256": {
+    "train": "e5a3526eac3d75999129bd624900a4eb2b47ce2e63faab3f9a69ee57592fa6d5",
+    "dev": "e2d3544307f837c285b968111ac4f2a7af7a27db35bb1a08a358a82a799bf993"
+  },
+  "splits": {
+    "train": {
+      "documents": 1244,
+      "windows": 3339,
+      "mentions": 131949
+    },
+    "calibration": {
+      "documents": 219,
+      "windows": 559,
+      "mentions": 22185
+    },
+    "dev": {
+      "documents": 183,
+      "windows": 500,
+      "mentions": 19299
+    }
+  },
+  "evaluation_scope": "gold mentions; clustering in non-overlapping mention windows"
+}

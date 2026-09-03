@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-09-03T03:58:19.001740+00:00",
+  "purpose": "Model-agreement pilot; Stanza silver is not a gold reference.",
+  "selection": "round-robin over 16 publisher/year strata",
+  "documents": [
+    {
+      "doc_id": "MP-2021-1110",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Orzeczenie"
+    }
+  ],
+  "files": {
+    "stanza-silver.conllu": "7643b7171c9b6eb9ff81f8dfd00ca4c2a4bd856cc9233d1e2895077f7eff48bb",
+    "input.conllu": "c1373f8dce4fab7bf43d813f909e7aea2a2b136c7135ca048cf8fa37a7b69aea"
+  }
+}

@@ -1,0 +1,152 @@
+\chapter{Specyfika tekstów prawniczych i sformułowanie problemu badawczego}
+\label{chap:prawo}
+
+Ogólna definicja koreferencji z rozdziału~\ref{chap:koreferencja} nie uwzględnia sposobu, w jaki dokument prawny wprowadza role, definicje i odwołania. Domena wpływa zarówno na rozkład języka, jak i na warunki techniczne: dokumenty są długie, zawierają cytaty i szablony, a orzeczenia mogą być anonimizowane. W rozdziale opisano te własności, sformalizowano wejście i wyjście systemu oraz powiązano pytania badawcze z trzema projektowanymi rodzinami modeli. Szczegóły warstw i treningu pozostawiono rozdziałowi implementacyjnemu.
+
+\section{Cechy dokumentów prawniczych}
+\label{sec:cechy-prawa}
+
+\subsection{Role i terminy definiowane}
+
+Tekst prawniczy często wskazuje osobę przez rolę pełnioną w konkretnej sprawie. Nazwa ,,Anna Nowak'' może następnie występować jako ,,powódka'', ,,skarżąca'' albo ,,wnioskodawczyni''. Zgodność nie wynika z ogólnego słownika: rolę przypisuje treść dokumentu i może ona zmienić się między instancjami. Ten sam rzeczownik w dwóch sprawach wskazuje różne osoby, dlatego klastrów nigdy nie tworzy się ponad granicą dokumentu.
+
+Podobny mechanizm występuje w umowach i aktach. Konstrukcja ,,ABC sp. z o.o., zwana dalej Wykonawcą'' ustanawia alias o lokalnym zasięgu. Późniejsze wystąpienie ,,Wykonawca'' należy połączyć z nazwą, choć głowy leksykalne są różne. Jeżeli definicja dotyczy zbioru podmiotów, alias nie staje się automatycznie koreferencyjny z każdym członkiem. System musi reprezentować zasięg definicji i odróżniać tożsamość od relacji należenia do grupy.
+
+Role i aliasy są jednocześnie szansą dla adaptacji domenowej. Powtarzalne konstrukcje definicyjne oraz zestaw ról procesowych tworzą regularności możliwe do poznania bez etykiet koreferencji. Rekonstrukcja domenowych reprezentacji może zachować ich schemat. Nie przesądza to jednak o poprawnej decyzji: podobne role w różnych dokumentach nie są tym samym referentem, a dwie role w jednym dokumencie mogą wskazywać jedną osobę tylko po uwzględnieniu kontekstu.
+
+\subsection{Długie zależności, cytaty i szablony}
+
+Orzeczenie może wprowadzić stronę na początku, opisać stan faktyczny, przytoczyć przepisy i dopiero później powrócić do niej zaimkiem lub nazwą roli. Pełny poprzednik wypada wtedy poza okno standardowego enkodera. Obcięcie tekstu usuwa zależność, a dzielenie na okna wymaga zachowania globalnych identyfikatorów i późniejszego scalania klastrów.
+
+Cytat zmienia perspektywę wypowiedzi. Zaimek ,,ja'' w zeznaniu należy interpretować względem mówiącego, nie autora całego dokumentu. Dwa cytaty różnych świadków nie powinny zostać połączone przez identyczną formę. Przytoczony przepis może wprowadzać encje potrzebne tylko wewnątrz cytatu albo takie, do których później odwołuje się uzasadnienie. Schemat anotacji musi rozstrzygnąć zasięg, zanim model zostanie oceniony.
+
+Szablonowość wzmacnia podobieństwo powierzchniowe bez gwarancji tożsamości. Zwroty takie jak ,,Sąd zważył, co następuje'' powtarzają się w wielu dokumentach. Model uczony bez kontroli splitu może zapamiętać duplikat dokumentu albo standardowy fragment, zamiast nauczyć się relacji. Deduplikacja i grupowanie po identyfikatorze sprawy są zatem elementami metodologii, a nie tylko czyszczeniem danych.
+
+\subsection{Anonimizacja i dane osobowe}
+
+Anonimizacja usuwa sygnały, które zwykle ułatwiają koreferencję. Ten sam znacznik ,,X.Y.'' lub ,,dane usunięte'' może zastępować kilka różnych osób, a różne znaczniki mogą dotyczyć tej samej osoby. Identyczność napisu nie jest dowodem tożsamości. Potrzebne są role, związki składniowe oraz ciągłość narracji.
+
+Publikowane orzeczenie nie musi być pozbawione wszystkich danych osobowych. Mogą pozostać nazwiska sędziów, pełnomocników, nazwy spółek lub informacje umożliwiające identyfikację pośrednią. Skan wzorców PESEL, adresu, telefonu, e-maila i daty urodzenia stanowi tylko filtr wstępny. Ręczny audyt próbki jest konieczny, a tekst o niepewnym statusie nie może zostać wysłany do zewnętrznego LLM.
+
+\subsection{Odwołania do dokumentu}
+
+Referentem może być fragment tekstu, a nie osoba ani przedmiot świata. Wyrażenie ,,powyższe postanowienie'' może wskazywać konkretny paragraf, ,,niniejsza ustawa'' --- cały akt, a ,,to żądanie'' --- wcześniej opisaną czynność procesową. Granica między koreferencją encji, dyskursem i relacją semantyczną zależy od instrukcji.
+
+W projekcie przyjęto koreferencję tożsamościową encji dokumentowych. Paragraf i jednoznaczne późniejsze wskazanie tego paragrafu mogą znaleźć się w jednym klastrze. Relacja część--całość, mostkowanie oraz ogólne podobieństwo tematu pozostają poza głównym wynikiem. Tabela~\ref{tab:trudnosci-prawo} zestawia konsekwencje dla systemu.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Trudności koreferencji w dokumentach prawniczych}
+  \label{tab:trudnosci-prawo}
+  \begin{tabular}{p{0.23\textwidth}p{0.34\textwidth}p{0.33\textwidth}}
+    \toprule
+    Zjawisko & Przykład skonstruowany & Wymaganie \\
+    \midrule
+    rola procesowa & ,,Anna Nowak'' --- ,,powódka'' & kontekst dokumentowy i typ roli \\
+    termin definiowany & ,,ABC, dalej Wykonawca'' & rozpoznanie definicji i jej zasięgu \\
+    anonimizacja & dwa wystąpienia ,,X.Y.'' & zakaz samego surface-match \\
+    odwołanie tekstowe & ,,§ 4'' --- ,,powyższe postanowienie'' & typ DOCUMENT/PROVISION \\
+    daleki poprzednik & strona przed długim cytatem & okna i scalanie dokumentowe \\
+    zmiana perspektywy & ,,ja'' w dwóch zeznaniach & identyfikacja mówiącego \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Modele bazowe dla domeny}
+\label{sec:modele-bazowe-prawo}
+
+Enkoder musi dostarczyć reprezentacje polskiego tekstu, ale jego wybór podlega również licencji i budżetowi. HerBERT base cased ma architekturę klasy BERT-base, słownik około 50 tysięcy jednostek i był uczony na około 8,6 miliarda tokenów; karta modelu wskazuje licencję CC BY 4.0 \cite{mroczkowski_2021_herbert,allegro_2026_herbert}. Został przyjęty jako główny enkoder. Otwarte wagi nie oznaczają jednak prawa do automatycznego kopiowania wszystkich korpusów wykorzystanych w pretrainingu.
+
+Polish RoBERTa udostępnia wariant base i large oraz repozytorium na LGPL-3.0 \cite{dadas_2020_roberta}. Stanowi wariant enkodera w ablacji po zachowaniu licencji konkretnego checkpointu. Sprawdzone karty PolBERT nie zawierały jednoznacznego pola licencyjnego, dlatego wagi wyłączono do czasu potwierdzenia warunków \cite{kleczek_2020_polbert}. Techniczna możliwość pobrania nie została utożsamiona z uprawnieniem do użycia.
+
+Longformer zastępuje pełną uwagę kombinacją uwagi lokalnej i globalnej, dzięki czemu koszt rośnie liniowo z długością sekwencji \cite{beltagy_2020_longformer}. LED udostępnia okno do 16\,384 tokenów w sprawdzonym checkpoincie \cite{allenai_2026_led}. Modele te tworzą punkt odniesienia dla długiego kontekstu, ale większe okno zwiększa pamięć i nie rozwiązuje automatycznie zagnieżdżonych wzmianek ani zer. Polski Longformer pozostaje wariantem warunkowym po zamrożeniu licencji checkpointu.
+
+\section{Znaczenie klas błędów}
+\label{sec:bledy-prawne}
+
+Błąd koreferencji nie ma jednej postaci. Fałszywe rozdzielenie występuje, gdy dwie wzmianki tej samej encji trafiają do różnych klastrów. System ekstrakcji może wtedy przypisać część czynności nazwanej stronie, a część anonimowej roli, nie rozpoznając ich ciągłości. W streszczeniu powoduje to powtórzenie jednej osoby jako dwóch uczestników. W wyszukiwaniu zmniejsza kompletność odpowiedzi.
+
+Fałszywe scalenie łączy różne encje. W dokumencie prawniczym jest zwykle groźniejsze interpretacyjnie: działania powoda mogą zostać przypisane pozwanemu, dwa cytaty różnym świadkom, a dwa przepisy jednemu postanowieniu. Union-find wzmacnia skutki pojedynczej dodatniej krawędzi, ponieważ scala całe składowe. Z tego powodu analizuje się nie tylko średnie F1, ale także nadmierne łączenie dużych klastrów.
+
+Błąd detekcji ma postać braku wzmianki albo wzmianki nadmiarowej. Niewykryty podmiot zerowy nie może zostać naprawiony przez późniejszy resolver. Nadmiarowy span może utworzyć singleton albo zostać przyłączony do prawidłowej encji i zanieczyścić jej treść. Exact-match i head-match inaczej klasyfikują niedokładną granicę, dlatego wynik detekcji należy podawać dla obu ustawień.
+
+Błąd typu nie zawsze zmienia sam klaster, lecz utrudnia analizę. Zaklasyfikowanie przepisu jako osoby może nie obniżyć CoNLL F1, jeśli tożsamość połączeń pozostaje poprawna, ale czyni strukturę bezużyteczną dla dalszej ekstrakcji. Typ wzmianki nie jest głównym celem scorera, lecz służy do przekrojów błędów i kontroli danych.
+
+Błąd zasięgu pojawia się, gdy system łączy identyczne role ponad granicami dokumentu lub nie respektuje lokalnej definicji. Architektura i format danych eliminują pierwszą możliwość przez osobne partycje dokumentowe. Druga wymaga kontekstu i nie może zostać rozwiązana globalnym słownikiem aliasów.
+
+\section{Przesunięcie domenowe}
+\label{sec:przesuniecie-domenowe}
+
+Przesunięcie między ogólnym PCC a prawem ma kilka wymiarów. Pierwszym jest słownictwo: role procesowe, nazwy jednostek redakcyjnych i formuły definicyjne mają inną częstość niż w prasie czy prozie. Drugim jest struktura: akty zawierają hierarchiczne artykuły i wyliczenia, a orzeczenia komparycję, sentencję i uzasadnienie. Trzecim jest długość, która zwiększa odległość między wzmiankami.
+
+Czwarty wymiar dotyczy rozkładu typów. W prawie częściej istotne są dokumenty, przepisy, organizacje i role, a nie tylko osoby i miejsca. Piąty wynika z anonimizacji, która zastępuje nazwy powtarzalnymi znacznikami. Szósty tworzą cytaty: tekst może osadzać cudzą wypowiedź albo przepis o własnych referentach. Model uczony ogólnie może zachować poprawną gramatykę, a jednocześnie mylić domenowe sygnały.
+
+Pretraining DAE nie rozwiązuje wszystkich tych zmian. Uczy rozkładu embeddingów, więc może dostosować się do słownictwa i stylu bez etykiet. Nie otrzymuje jednak automatycznie informacji, które dwa wystąpienia są identyczne. Końcowa głowica nadal wymaga nadzorowanej koreferencji. Ten podział jest zamierzony: pozwala sprawdzić, czy tanie uczenie domeny pomaga przy niewielkim zbiorze anotowanym.
+
+Przesunięcie może mieć także charakter źródłowy wewnątrz domeny. Ustawa i orzeczenie różnią się funkcją, strukturą i obecnością prywatnych uczestników. Jeśli audyt wykluczy JuDDGES-pl i pozostaną wyłącznie akty ELI, wniosek trzeba ograniczyć do legislacji. Nie wolno nazywać takiego wyniku ogólnym rezultatem dla wszystkich tekstów prawniczych.
+
+Do oceny transferu potrzebne są dwa testy: ogólny Polish-PCC i osobny test domenowy. Poprawa tylko na danych ogólnych nie dowodzi adaptacji prawnej. Poprawa tylko na 5 dokumentach prawnego testu może być niestabilna, dlatego bootstrap ma jednostkę dokumentu, a przedziały trzeba interpretować ostrożnie.
+
+\section{Formalizacja problemu}
+\label{sec:formalizacja}
+
+Niech dokument będzie sekwencją tokenów
+\[
+D=(t_1,\ldots,t_L).
+\]
+Złoty zbiór wzmianek ma postać
+\[
+G=\{g_i=(s_i,e_i,h_i,\tau_i)\}_{i=1}^{N},
+\]
+gdzie $s_i$ i $e_i$ oznaczają granice, $h_i$ głowę, a $\tau_i$ typ. Podmiot zerowy jest pustą wzmianką zakotwiczoną przy orzeczeniu. System przewiduje zbiór $M=\{m_j\}_{j=1}^{\hat N}$ oraz partycję
+\[
+\Pi(M)=\{C_1,\ldots,C_K\}.
+\]
+Każda wzmianka należy do dokładnie jednego klastra. Relacja $R(m_i,m_j)=1$ zachodzi wtedy i tylko wtedy, gdy obie wzmianki należą do wspólnego $C_k$; jest zwrotna, symetryczna i przechodnia.
+
+Dla wzmianki $m_i$ rozważa się zbiór wcześniejszych kandydatów oraz symbol pusty:
+\[
+Y_i=\{\epsilon,1,\ldots,i-1\}.
+\]
+Ocena łączy sygnał jakości wzmianki $s_m$ i zgodności poprzednika $s_a$. Rozkład ma postać
+\[
+p(y_i=j\mid D)=
+\frac{\exp s(i,j)}
+{\sum_{j'\in Y_i}\exp s(i,j')}.
+\]
+Jeżeli kilka wcześniejszych wzmianek należy do złotego klastra, funkcja celu marginalizuje ich prawdopodobieństwa zamiast wskazywać jeden arbitralny poprzednik. Predykcyjne krawędzie są domykane przez union-find dopiero po zastosowaniu progu dobranego na dev.
+
+Formalizacja rozdziela detekcję od klasteryzacji. Błąd granicy mierzy osobne precision, recall i F1, a jakość partycji --- MUC, B³, CEAF$_e$, LEA i BLANC. CoNLL F1 jest średnią F1 pierwszych trzech metryk. Jednostką bootstrapu jest dokument, ponieważ pary w jednym dokumencie nie są niezależne.
+
+\subsection{Wymagania wobec wyjścia}
+
+Predykcja musi zachować identyfikator dokumentu, granice i głowę każdej wzmianki oraz jednoznaczny identyfikator klastra. Sama lista dodatnich par nie wystarcza, jeżeli zawiera sprzeczność lub nie pozwala odtworzyć partycji. Format powinien dać się bezstratnie wyeksportować do CorefUD, aby oficjalny scorer otrzymał tę samą tokenizację co złoto.
+
+Dla każdego odrzuconego kandydata nie wymaga się uzasadnienia, ale surowe logity muszą umożliwiać dobór progu na dev. Hybryda dodatkowo zapisuje, które decyzje przekazano do LLM, jaki był margines i czy odpowiedź przeszła walidację. Brak poprawnego JSON powoduje zachowanie lokalnej predykcji, nie arbitralne łączenie.
+
+Wyjście nie może tworzyć encji między dokumentami ani identyfikatorów spoza listy wzmianek. Maska wyłącza padding oraz niedopuszczalne pary. Te warunki są sprawdzane przed scorerem, ponieważ wysoki wynik na części poprawnie sformatowanych dokumentów nie kompensuje awarii pozostałych.
+
+\section{Hipotezy projektowe}
+\label{sec:hipotezy-projektowe}
+
+Pierwszy wariant traktuje cechy par wzmianek jako wielokanałową macierz $M\times M$. U-Net segmentuje relacje, a wyjście jest symetryzowane. Hipoteza zakłada, że lokalne wzorce bloków pomagają wykorzystać strukturę klastra. Ryzykiem jest arbitralność kolejności wzmianek i koszt $O(M^2)$.
+
+Drugi wariant używa DAE. HerBERT tworzy embedding wzmianki, koder kompresuje go do przestrzeni latentnej, a dekoder rekonstruuje czyste wejście po maskowaniu i szumie. Scorer par otrzymuje dwa kody, ich iloczyn, różnicę i cechy relacyjne. Hipoteza zakłada, że pretraining na nieetykietowanym tekście prawniczym zachowa regularności domeny bez kosztu pełnej anotacji.
+
+Trzeci wariant jest selektywną hybrydą. Margines między dwoma kandydatami oraz błąd rekonstrukcji określają przypadki przekazywane do LLM. Limit wynosi 16 kandydatów na dokument. Odpowiedź ma zamknięty schemat i jest akceptowana tylko przy poprawnych identyfikatorach. Celem nie jest zastąpienie resolvera, lecz ograniczenie liczby drogich zapytań.
+
+Samodzielne klastrowanie DEC/IDEC odrzucono. Liczba encji jest dokumentowo zmienna, a globalne centroidy ról prowadziłyby do podobieństwa zamiast tożsamości. Dobór $K$ ze złota byłby przeciekiem. Kompresję pozostawiono w DAE, lecz ostateczną decyzję uczy się nadzorowanie.
+
+\subsection{Operacjonalizacja pytań}
+
+PB1 wymaga pary ablation: tego samego enkodera, głowicy, kandydatów i klasteryzatora z DAE oraz bez DAE. Pretraining wykorzystuje dokumenty niepowiązane z testem. Rozstrzygają CoNLL F1 i LEA oraz sparowany bootstrap. Niższy błąd rekonstrukcji nie stanowi kryterium potwierdzenia, jeśli nie prowadzi do poprawy koreferencji.
+
+PB2 porównuje DAE z macierzowym U-Net i kontrolą bez autokodera. Raportuje się liczbę trenowanych parametrów, czas, szczyt pamięci i opóźnienie. Wariant o najwyższym F1 nie jest automatycznie najlepszym kompromisem, jeżeli wymaga nieproporcjonalnego kosztu. Brak dominacji co najmniej w jakości i jednym wymiarze kosztu oznacza brak jednoznacznego zwycięzcy.
+
+PB3 zestawia resolver lokalny, LLM-only i hybrydę. Wspólny test i scorer chronią przed zmianą definicji zadania. Hybryda musi ograniczyć liczbę tokenów lub wywołań, zachowując jakość. Odmowa wysłania dokumentu z PII jest poprawnym zachowaniem systemu, a nie brakującą obserwacją do zastąpienia sztuczną liczbą.
+
+Wszystkie trzy pytania wymagają negatywnego kryterium. Jeżeli różnica nie jest istotna, nie interpretuje się znaku średniej jako potwierdzenia. Jeżeli jedna metryka rośnie, a LEA ujawnia pogorszenie dużych encji, wniosek musi wskazać konflikt. Jeśli pełne dane nie powstaną, pytania pozostają nierozstrzygnięte zamiast otrzymać odpowiedź z testów syntetycznych.
+
+\section{Podsumowanie}
+
+Wskazano, że role, definicje, anonimizacja, cytaty, odwołania tekstowe i długość dokumentu tworzą przesunięcie domenowe wykraczające poza ogólne trudności polszczyzny. Przyjęto HerBERT jako enkoder główny przy konserwatywnej kontroli licencji. Zadanie zapisano jako detekcję wzmianek i dokumentową partycję encji, a trzy hipotezy powiązano z U-Net, DAE oraz selektywnym LLM. Dane potrzebne do ich sprawdzenia opisano w kolejnym rozdziale.

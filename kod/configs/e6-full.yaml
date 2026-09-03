@@ -1,0 +1,7 @@
+mode: official
+key: data/processed/legal-test.gold.conllu
+system: predictions/e6-hybrid.system.conllu
+scorer_dir: vendor/corefud-scorer
+match: head
+keep_singletons: false
+output: ../wyniki/E6-full.json

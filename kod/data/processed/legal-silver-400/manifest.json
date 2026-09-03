@@ -1,0 +1,160 @@
+{
+  "schema_version": "legal-coref-silver-1.0",
+  "created_at": "2026-09-03T03:54:52.086791+00:00",
+  "annotation_status": "silver-unreviewed",
+  "documents": 400,
+  "split_documents": {
+    "dev": 40,
+    "test": 40,
+    "train": 320
+  },
+  "publishers": {
+    "DU": 200,
+    "MP": 200
+  },
+  "years": {
+    "2017": 50,
+    "2018": 50,
+    "2019": 50,
+    "2020": 50,
+    "2021": 50,
+    "2022": 50,
+    "2023": 50,
+    "2024": 50
+  },
+  "act_types": {
+    "Apel": 2,
+    "Dokument wypowiedzenia": 4,
+    "Karta": 1,
+    "Komunikat": 32,
+    "Obwieszczenie": 48,
+    "Ogłoszenie": 27,
+    "Opinia": 1,
+    "Orzeczenie": 39,
+    "Oświadczenie": 2,
+    "Oświadczenie rządowe": 52,
+    "Porozumienie": 6,
+    "Postanowienie": 27,
+    "Protokół": 6,
+    "Raport": 1,
+    "Rezolucja": 3,
+    "Rozporządzenie": 26,
+    "Stanowisko": 3,
+    "Traktat": 1,
+    "Uchwała": 28,
+    "Układ": 1,
+    "Umowa międzynarodowa": 40,
+    "Ustawa": 25,
+    "Zarządzenie": 25
+  },
+  "annotation": {
+    "library": "stanza",
+    "library_version": "1.14.0",
+    "language": "pl",
+    "processors": "tokenize,coref",
+    "coref_package": "udcoref_xlm-roberta-lora",
+    "model_sha256": "317a1789169ff1565b4c6cf64a74e7c7a1c531975b84d10c0f45738f6c81a8c1",
+    "device": "cuda-if-available",
+    "confidence_disclaimer": "review_priority_band is heuristic and is not a calibrated model probability"
+  },
+  "totals": {
+    "clusters": 36989,
+    "mentions": 53034,
+    "sentences": 3364,
+    "tokens": 155641,
+    "zero_mentions": 0
+  },
+  "review_priority_bands": {
+    "high": 3013,
+    "low": 2516,
+    "medium": 1603,
+    "singleton": 29857
+  },
+  "outputs": [
+    {
+      "file": "legal-silver-400.jsonl",
+      "bytes": 62764079,
+      "sha256": "8b576c5dfe1885e269e0286fe76b7b5451d9b65f2c0f65caf390630542485007"
+    },
+    {
+      "file": "legal-silver-400.conllu",
+      "bytes": 7297803,
+      "sha256": "9eb1df1f8d5038891f703c237b25d678d9622622136e6123508ef7a436bb7efc"
+    },
+    {
+      "file": "review_mentions.csv",
+      "bytes": 18515900,
+      "sha256": "58620dd2ad76e571dd415ee7b70f2562629b2a0cb5e4ec20620904a4d332f162"
+    },
+    {
+      "file": "review_chains.csv",
+      "bytes": 17967900,
+      "sha256": "97d5d55b2e5e2e458bbf8318e25dfd87b483b2fb5619945e454b0168e32d2844"
+    },
+    {
+      "file": "review_documents.csv",
+      "bytes": 108348,
+      "sha256": "dbd70e90bd725052b3f781ff10fb7839827d4c442daf0047df2b3f566a33fb13"
+    },
+    {
+      "file": "validation.json",
+      "bytes": 425,
+      "sha256": "a1d6cea5cbc95c8418c58c49e4265c360051088ac34c1e5a5a2dace0e80755de"
+    },
+    {
+      "file": "splits/train.jsonl",
+      "bytes": 49071421,
+      "sha256": "844118b4664b203408bf821a511bfc2b2894a168bd9d94859ef90dfd52ae69b1"
+    },
+    {
+      "file": "splits/train.conllu",
+      "bytes": 5713821,
+      "sha256": "a0d016a958d4e49c37667358b4837be14132207f284036f246b1296824fb0a0a"
+    },
+    {
+      "file": "splits/dev.jsonl",
+      "bytes": 6917134,
+      "sha256": "aa9f27c72a9c4fc8b10d4169e0f600e98917a2eaee37cd6158ee07ca9491fc60"
+    },
+    {
+      "file": "splits/dev.conllu",
+      "bytes": 801062,
+      "sha256": "d46490fcbb966677e68a0e18ad6ccbc8b2e0f2c9bb2d89e5323a4218bb6ad7e0"
+    },
+    {
+      "file": "splits/test.jsonl",
+      "bytes": 6775524,
+      "sha256": "26f32c3ec54f66eec954ec9c8e8fcfd7c95704fad8447bcbe234a3ede76d9f78"
+    },
+    {
+      "file": "splits/test.conllu",
+      "bytes": 782920,
+      "sha256": "b335a2699482c8929b3c9219c27849ed45517e348be2062b296bd32eed62741a"
+    },
+    {
+      "file": "corpipe26/corpipe26-silver.conllu",
+      "bytes": 6289837,
+      "sha256": "e3771ab65eb52f00f42d07a1cdd717e5228d1347403273656447642b7f1fbebc"
+    }
+  ],
+  "finalized_at": "2026-09-03T04:12:31.931660+00:00",
+  "validation": {
+    "created_at": "2026-09-03T04:12:31.929572+00:00",
+    "status": "passed",
+    "documents": 400,
+    "unique_document_ids": 400,
+    "split_documents": {
+      "train": 320,
+      "dev": 40,
+      "test": 40
+    },
+    "sentences": 3364,
+    "tokens": 155641,
+    "clusters": 36989,
+    "mentions": 53034,
+    "surface_mentions": 53034,
+    "zero_mentions": 0,
+    "conllu_roundtrip_mentions": 53034,
+    "replacement_characters": 0
+  }
+}

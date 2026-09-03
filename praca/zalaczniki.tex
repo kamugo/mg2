@@ -1,0 +1,37 @@
+\chapter{Materiały reprodukcyjne}
+\label{app:reprodukcja}
+
+\section{Karta reprodukcji}
+
+Pełna karta reprodukcji znajduje się w osobnym pliku:
+\begin{center}
+  \path{zalaczniki/karta-reprodukcji.md}.
+\end{center}
+Określa środowisko, stan danych, kolejność poleceń, oczekiwane artefakty i granice odtwarzalności. Minimalna kontrola instalacji obejmuje następujące polecenia:
+
+\begin{verbatim}
+cd kod
+python -m unittest discover -s tests -v
+python train.py --config configs/smoke.yaml
+python scripts/run_reduced_experiments.py `
+  --output-root ../wyniki
+python scripts/wykresy.py
+\end{verbatim}
+
+Kompilację dokumentu wykonuje się z katalogu \texttt{praca} przez \texttt{pdflatex main.tex}, \texttt{biber main} i dwa kolejne przebiegi \texttt{pdflatex main.tex}. Wykonane uruchomienie zredukowane wymaga Pythona 3.11, PyTorch 2.6.0+cu124 i oficjalnego scorera CorefUD w rewizji zapisanej w karcie.
+
+\section{Protokół anotacji}
+
+Kompletny protokół znajduje się w pliku \path{zalaczniki/protokol-anotacji.md}. Definiuje jednostkę dokumentu, wzmiankę, encję, zera, role, cytaty, przypadki wyłączone, tryb podwójnej anotacji oraz rozstrzyganie sporów. Wymagane produkty to złoty plik CoNLL-U, dziennik rozstrzygnięć i raport zgodności. Protokół nie został zastąpiony jednoosobową anotacją na potrzeby domknięcia tekstu pracy.
+
+\section{Dziennik założeń}
+
+Pełny dziennik znajduje się w pliku \texttt{DZIENNIK\_ZALOZEN.md}. Zapisano w nim między innymi limit 128 wzmianek w oknie, kod DAE o wymiarze 128, początkowo zamrożony HerBERT, budżet 16 przypadków LLM na dokument oraz oddzielenie syntetycznej weryfikacji od wyniku badawczego. Każde założenie ma uzasadnienie, wpływ i sposób późniejszej weryfikacji.
+
+\section{Mapa artefaktów}
+
+Kod modeli znajduje się w \path{kod/src/models/coreference.py}, trening w \path{kod/train.py}, ewaluacja w \path{kod/eval.py}, a generowanie wykresów w \path{kod/scripts/wykresy.py}. Konfiguracje są w \path{kod/configs}; surowe raporty E1--E5 oraz środowisko uruchomienia zapisano w \path{wyniki}. Oficjalny scorer jest przechowywany w \path{kod/vendor/corefud-scorer}. Taki podział pozwala ponowić obliczenia bez przepisywania parametrów z tekstu pracy.
+
+\section{Stan brakujących artefaktów}
+
+Repozytorium zawiera zamrożone CorefUD 1.4, tensory HerBERT, checkpointy oraz wyniki pilota kontroli i DAE. Nadal nie zawiera pliku \path{legal-test.gold.conllu}, predykcji pełnych E6--E8 ani danych uwierzytelniających API. Braki te są raportowanym stanem, nie wartością zerową. Karta reprodukcji podaje warunki pełnego eksperymentu.

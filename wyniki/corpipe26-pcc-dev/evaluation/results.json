@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-09-03T04:10:34.877079+00:00",
+  "key": "C:\\Users\\Kamil\\mg2\\kod\\data\\raw\\corefud-1.4\\extracted\\CorefUD-1.4-public\\data\\CorefUD_Polish-PCC\\pl_pcc-corefud-dev.conllu",
+  "key_sha256": "e426f7d4fdd61ff633b04c685376e0153c3c3c092ab7a2a9cee0141ed1d0b1be",
+  "system": "C:\\Users\\Kamil\\mg2\\wyniki\\corpipe26-pcc-dev\\pl_pcc-corefud-dev.15.conllu",
+  "system_sha256": "ac80ed6249d287e93a09f58ae1e2073149fd3df4f1f28c6d405f65cea9af03da",
+  "match": "head",
+  "keep_singletons": false,
+  "interpretation": "Gold CorefUD Polish-PCC dev evaluation. CorPipe is end-to-end; the project DAE comparison uses gold mentions and therefore has an easier mention-detection setting.",
+  "scores": {
+    "muc": {
+      "precision": 0.7866,
+      "recall": 0.7863,
+      "f1": 0.7864
+    },
+    "b_cubed": {
+      "precision": 0.7226,
+      "recall": 0.7109000000000001,
+      "f1": 0.7167
+    },
+    "ceafe": {
+      "precision": 0.6601,
+      "recall": 0.7136,
+      "f1": 0.6858
+    },
+    "lea": {
+      "precision": 0.69,
+      "recall": 0.6781999999999999,
+      "f1": 0.684
+    },
+    "blanc": {
+      "precision": 0.7533,
+      "recall": 0.6925,
+      "f1": 0.7216
+    },
+    "conll_f1": 0.7297,
+    "mention_detection": {
+      "precision": 0.9345,
+      "recall": 0.9277,
+      "f1": 0.9311
+    }
+  }
+}

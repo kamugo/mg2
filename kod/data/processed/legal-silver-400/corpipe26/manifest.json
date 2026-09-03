@@ -1,0 +1,2516 @@
+{
+  "created_at": "2026-09-03T03:58:47.596537+00:00",
+  "purpose": "Model-agreement pilot; Stanza silver is not a gold reference.",
+  "selection": "round-robin over 16 publisher/year strata",
+  "documents": [
+    {
+      "doc_id": "DU-2017-2001",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2017-1178",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Protokół"
+    },
+    {
+      "doc_id": "DU-2018-41",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Oświadczenie"
+    },
+    {
+      "doc_id": "MP-2018-1103",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2019-285",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Protokół"
+    },
+    {
+      "doc_id": "MP-2019-713",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2020-1533",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2020-712",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Protokół"
+    },
+    {
+      "doc_id": "DU-2021-507",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Porozumienie"
+    },
+    {
+      "doc_id": "MP-2021-487",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Apel"
+    },
+    {
+      "doc_id": "DU-2022-577",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Porozumienie"
+    },
+    {
+      "doc_id": "MP-2022-967",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Apel"
+    },
+    {
+      "doc_id": "DU-2023-1564",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "MP-2023-1468",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2024-1078",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2024-922",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2017-81",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2017-938",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2018-1367",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Porozumienie"
+    },
+    {
+      "doc_id": "MP-2018-1019",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Porozumienie"
+    },
+    {
+      "doc_id": "DU-2019-1456",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2019-1087",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "DU-2020-184",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "MP-2020-749",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Rezolucja"
+    },
+    {
+      "doc_id": "DU-2021-1870",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Raport"
+    },
+    {
+      "doc_id": "MP-2021-334",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Karta"
+    },
+    {
+      "doc_id": "DU-2022-1306",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Protokół"
+    },
+    {
+      "doc_id": "MP-2022-284",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Oświadczenie"
+    },
+    {
+      "doc_id": "DU-2023-2421",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Protokół"
+    },
+    {
+      "doc_id": "MP-2023-295",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Stanowisko"
+    },
+    {
+      "doc_id": "DU-2024-162",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Protokół"
+    },
+    {
+      "doc_id": "MP-2024-205",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2017-262",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2017-919",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2018-1640",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "MP-2018-842",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2019-1506",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "MP-2019-29",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2020-1335",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2020-1078",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Traktat"
+    },
+    {
+      "doc_id": "DU-2021-1521",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2021-525",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Opinia"
+    },
+    {
+      "doc_id": "DU-2022-1104",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2022-130",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2023-2748",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2023-836",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2024-772",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "MP-2024-574",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2017-88",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2017-47",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2018-17",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Dokument wypowiedzenia"
+    },
+    {
+      "doc_id": "MP-2018-378",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2019-941",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Dokument wypowiedzenia"
+    },
+    {
+      "doc_id": "MP-2019-444",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2020-2186",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2020-1129",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Układ"
+    },
+    {
+      "doc_id": "DU-2021-2326",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2021-1110",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2022-2695",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2022-276",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2023-946",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2023-547",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2024-95",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2024-728",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2017-2117",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2017-1038",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2018-1237",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2018-972",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2019-861",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2019-1169",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2020-1800",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2020-1104",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Stanowisko"
+    },
+    {
+      "doc_id": "DU-2021-19",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2021-51",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Rezolucja"
+    },
+    {
+      "doc_id": "DU-2022-1585",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2022-265",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2023-2764",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2023-232",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2024-1883",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2024-675",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2017-1885",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2017-696",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2018-549",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2018-280",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2019-2040",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2019-293",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2020-1179",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2020-647",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2021-895",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2021-812",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2022-1812",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2022-423",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2023-2740",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2023-942",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2024-567",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2024-586",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2017-2375",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2017-800",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2018-136",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2018-704",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2019-949",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2019-125",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2020-2123",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2020-477",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2021-1491",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2021-1003",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2022-2139",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2022-925",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2023-2492",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2023-508",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2024-128",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2024-660",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2017-142",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2017-872",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2018-1290",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2018-882",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2019-986",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2019-286",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2020-1036",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2020-104",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2021-1747",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2021-129",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2022-1299",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2022-1117",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2023-1723",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2023-471",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2024-1674",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2024-189",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2017-935",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2017-265",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2018-2038",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2018-251",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2019-1861",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2019-33",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2020-636",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2020-948",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2021-842",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2021-757",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2022-1485",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2022-1222",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2023-2107",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2023-58",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2024-18",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2024-206",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2017-1489",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2017-829",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Porozumienie"
+    },
+    {
+      "doc_id": "DU-2018-94",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2018-973",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Porozumienie"
+    },
+    {
+      "doc_id": "DU-2019-1286",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2019-43",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2020-988",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "MP-2020-329",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2021-583",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2021-1071",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2022-2480",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2022-90",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2023-982",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2023-821",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2024-1695",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2024-1028",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2017-2277",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2017-1039",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2018-1078",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2018-625",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2019-365",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "MP-2019-426",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2020-9",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2020-1055",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2021-22",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2021-1199",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2022-2211",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2022-627",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2023-1636",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2023-832",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2024-344",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "MP-2024-40",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2017-1214",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2017-578",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2018-329",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2018-994",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2019-937",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Dokument wypowiedzenia"
+    },
+    {
+      "doc_id": "MP-2019-37",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2020-1336",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2020-493",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2021-246",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2021-1056",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2022-535",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2022-1106",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2023-1218",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2023-504",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2024-300",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2024-861",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2017-1227",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2017-25",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2018-1641",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2018-1116",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2019-2196",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2019-193",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2020-1001",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2020-567",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2021-1773",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2021-928",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2022-904",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2022-825",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2023-927",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2023-919",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2024-1884",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2024-287",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2017-2361",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2017-309",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2018-810",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2018-463",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2019-1407",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2019-893",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2020-318",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2020-82",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2021-515",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2021-945",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Rezolucja"
+    },
+    {
+      "doc_id": "DU-2022-883",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2022-1285",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2023-2608",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2023-240",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2024-142",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2024-215",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2017-1767",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2017-409",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2018-2070",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2018-1206",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2019-2039",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2019-755",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2020-2400",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2020-404",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Stanowisko"
+    },
+    {
+      "doc_id": "DU-2021-1088",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2021-813",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2022-1282",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2022-1195",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2023-1003",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2023-745",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2024-731",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2024-665",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2017-2346",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2017-825",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2018-1136",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2018-1288",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2019-1726",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2019-1140",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2020-1043",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2020-391",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2021-1817",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2021-296",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2022-584",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2022-1175",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2023-221",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2023-50",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2024-412",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2024-491",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2017-476",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2017-1016",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2018-1241",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2018-397",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2019-569",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2019-968",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2020-709",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2020-940",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2021-696",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2021-526",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2022-2790",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2022-843",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2023-2025",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2023-49",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2024-1592",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2024-1029",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2017-1137",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2017-614",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2018-185",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2018-1068",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2019-119",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2019-439",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2020-967",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2020-761",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2021-754",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2021-765",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2022-907",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2022-841",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2023-1711",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2023-997",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2024-96",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2024-680",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2017-513",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2017-1010",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2018-90",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2018-839",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2019-774",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Dokument wypowiedzenia"
+    },
+    {
+      "doc_id": "MP-2019-105",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2020-1047",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2020-612",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2021-1551",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2021-479",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2022-2414",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2022-129",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2023-1452",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2023-53",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2024-52",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "MP-2024-472",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2017-819",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2017-290",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2018-1694",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2018-207",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2019-1242",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2019-408",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2020-1482",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2020-753",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2021-2179",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2021-230",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2022-2040",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2022-918",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2023-739",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2023-1034",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2024-1265",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2024-817",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2017-1496",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2017-837",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2018-203",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2018-760",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2019-377",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2019-889",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2020-1061",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2020-292",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2021-1539",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2021-764",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2022-756",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2022-904",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2023-564",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2023-158",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2024-1779",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2024-890",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2017-597",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2017-883",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2018-836",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2018-611",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2019-1139",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2019-879",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2020-190",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2020-490",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2021-1522",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2021-999",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2022-1991",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "MP-2022-561",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2023-1784",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2023-99",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2024-1635",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2024-1059",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2017-1343",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2017-871",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Komunikat"
+    },
+    {
+      "doc_id": "DU-2018-15",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2018-352",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2019-271",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Ustawa"
+    },
+    {
+      "doc_id": "MP-2019-646",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2020-1228",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2020-658",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2021-1423",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2021-1001",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2022-1364",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2022-788",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Uchwała"
+    },
+    {
+      "doc_id": "DU-2023-1235",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2023-278",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2024-138",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2024-647",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2017-36",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2017-176",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2018-1638",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2018-1244",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2019-2203",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2019-366",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2020-1859",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2020-103",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2021-1929",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2021-1007",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2022-575",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2022-415",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "DU-2023-722",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2023-1019",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2024-1241",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2024-464",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2017-1194",
+      "publisher": "DU",
+      "year": 2017,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2017-631",
+      "publisher": "MP",
+      "year": 2017,
+      "act_type": "Ogłoszenie"
+    },
+    {
+      "doc_id": "DU-2018-2105",
+      "publisher": "DU",
+      "year": 2018,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2018-942",
+      "publisher": "MP",
+      "year": 2018,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "DU-2019-451",
+      "publisher": "DU",
+      "year": 2019,
+      "act_type": "Rozporządzenie"
+    },
+    {
+      "doc_id": "MP-2019-575",
+      "publisher": "MP",
+      "year": 2019,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "DU-2020-1075",
+      "publisher": "DU",
+      "year": 2020,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "MP-2020-376",
+      "publisher": "MP",
+      "year": 2020,
+      "act_type": "Orzeczenie"
+    },
+    {
+      "doc_id": "DU-2021-151",
+      "publisher": "DU",
+      "year": 2021,
+      "act_type": "Obwieszczenie"
+    },
+    {
+      "doc_id": "MP-2021-741",
+      "publisher": "MP",
+      "year": 2021,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2022-1307",
+      "publisher": "DU",
+      "year": 2022,
+      "act_type": "Oświadczenie rządowe"
+    },
+    {
+      "doc_id": "MP-2022-35",
+      "publisher": "MP",
+      "year": 2022,
+      "act_type": "Postanowienie"
+    },
+    {
+      "doc_id": "DU-2023-2034",
+      "publisher": "DU",
+      "year": 2023,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2023-852",
+      "publisher": "MP",
+      "year": 2023,
+      "act_type": "Zarządzenie"
+    },
+    {
+      "doc_id": "DU-2024-1730",
+      "publisher": "DU",
+      "year": 2024,
+      "act_type": "Umowa międzynarodowa"
+    },
+    {
+      "doc_id": "MP-2024-643",
+      "publisher": "MP",
+      "year": 2024,
+      "act_type": "Komunikat"
+    }
+  ],
+  "files": {
+    "stanza-silver.conllu": "cfecd317fb11e1acbe20eb8b4748520e27956db145e8c22fff322c0256631ff3",
+    "input.conllu": "04dad4a1a64306925ad11537d9474505dd3d324c0bb2383eca134aae8021d8e7"
+  },
+  "finalized_at": "2026-09-03T04:18:25.034750+00:00",
+  "annotation_status": "silver-unreviewed",
+  "primary_annotation": {
+    "name": "ufal/corpipe26-onestage-corefud1.4-base-260702",
+    "segment": 1024,
+    "checkpoint_sha256": "023759452da9ffe53c3de06bf517027422d481973388949a2efed937c9638bf5",
+    "license": "CC BY-NC-SA 4.0"
+  },
+  "agreement": {
+    "created_at": "2026-09-03T04:18:23.902109+00:00",
+    "documents": 400,
+    "corpipe_surface_mentions": 55977,
+    "stanza_surface_mentions": 52924,
+    "exact_common_spans": 38082,
+    "exact_span_precision_vs_stanza": 0.680315129428158,
+    "exact_span_recall_vs_stanza": 0.7195601239513264,
+    "shared_span_pair_agreement": 0.6651865260061657,
+    "comparable_within_cluster_pairs": 35357,
+    "agreement_bands": {
+      "high": 3199,
+      "low": 3522,
+      "medium": 2120,
+      "singleton-supported": 17870,
+      "singleton-unsupported": 10581
+    },
+    "model": {
+      "name": "ufal/corpipe26-onestage-corefud1.4-base-260702",
+      "segment": 1024,
+      "checkpoint_sha256": "023759452da9ffe53c3de06bf517027422d481973388949a2efed937c9638bf5",
+      "license": "CC BY-NC-SA 4.0"
+    },
+    "inputs": {
+      "corpipe_conllu_sha256": "e3771ab65eb52f00f42d07a1cdd717e5228d1347403273656447642b7f1fbebc",
+      "stanza_conllu_sha256": "cfecd317fb11e1acbe20eb8b4748520e27956db145e8c22fff322c0256631ff3",
+      "stanza_jsonl_sha256": "8b576c5dfe1885e269e0286fe76b7b5451d9b65f2c0f65caf390630542485007"
+    },
+    "interpretation": "Agreement between two automatic systems on unreviewed legal text; not accuracy."
+  },
+  "outputs": [
+    {
+      "file": "corpipe26-silver.conllu",
+      "bytes": 6289837,
+      "sha256": "e3771ab65eb52f00f42d07a1cdd717e5228d1347403273656447642b7f1fbebc"
+    },
+    {
+      "file": "stanza-silver.conllu",
+      "bytes": 7297803,
+      "sha256": "cfecd317fb11e1acbe20eb8b4748520e27956db145e8c22fff322c0256631ff3"
+    },
+    {
+      "file": "corpipe26-silver.jsonl",
+      "bytes": 61575919,
+      "sha256": "ce001d8b3143018d619c4a7a1b79f200b23b82672b6c13096b76ea4149f59ab7"
+    },
+    {
+      "file": "review_corpipe_chains.csv",
+      "bytes": 14012053,
+      "sha256": "429c9cf8e151d587c1a0396edecf29ebb252dd98c0163e0801a6b8ab828ae754"
+    },
+    {
+      "file": "review_corpipe_mentions.csv",
+      "bytes": 15839180,
+      "sha256": "762060ed2959d0fbb209b328ff272d3272306e611f3e4d39e1e2c931fe197380"
+    },
+    {
+      "file": "review_sample_100.csv",
+      "bytes": 58535,
+      "sha256": "beccbd613a154b850d3f968642027bf3ad4f56c665523b4e8f95f0081973456c"
+    },
+    {
+      "file": "agreement-summary.json",
+      "bytes": 1201,
+      "sha256": "53559a57631f0536dc017c374b1e5b634c11455322028a7d4bab04a5b6655a67"
+    },
+    {
+      "file": "splits/train.jsonl",
+      "bytes": 48164811,
+      "sha256": "b7a79b59fc3217d5bbae9e70f7c06b4d0ae30e3f9793a772e797505789e85440"
+    },
+    {
+      "file": "splits/train.conllu",
+      "bytes": 5052238,
+      "sha256": "eedca52599843b70321977f57c052d16d9fcd9b67a910233657ce6665c450a69"
+    },
+    {
+      "file": "splits/dev.jsonl",
+      "bytes": 6794744,
+      "sha256": "47288a4b4d30ac0f2b389426f581f1fce7418166544a8790c488c44b69a95690"
+    },
+    {
+      "file": "splits/dev.conllu",
+      "bytes": 711901,
+      "sha256": "ca318cd83c16d89f969acaa31f17a552a231570218f97f03db5f626a78f49d50"
+    },
+    {
+      "file": "splits/test.jsonl",
+      "bytes": 6616364,
+      "sha256": "22bb795c3d37f49a5e6c07e939928eda8aa975f4b3d0354928ddcf5abaa9a2c3"
+    },
+    {
+      "file": "splits/test.conllu",
+      "bytes": 692929,
+      "sha256": "95e935161145c6155ff33ce195c9738632b6aa8f775da5426267298dfaf9b411"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda": "12.4",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "seeds": [
+      20260903,
+      20260917,
+      20261001,
+      20261015,
+      20261029
+    ],
+    "train_data_seed": 700001,
+    "test_data_seed": 700002,
+    "train_documents": 24,
+    "test_documents": 12,
+    "synthetic_data": true,
+    "cublas_workspace_config": ":4096:8",
+    "corefud_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590"
+  },
+  "aggregate": {
+    "experiment": "E2",
+    "completed_runs": 1,
+    "conll_f1_mean": 1.0,
+    "conll_f1_std": 0.0,
+    "lea_f1_mean": 1.0,
+    "lea_f1_std": 0.0
+  },
+  "runs": [
+    {
+      "experiment": "E2",
+      "seed": 20260903,
+      "training_and_inference_seconds": 0.011379599571228027,
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "b_cubed": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "ceafe": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "lea": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "blanc": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "conll_f1": 1.0,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 100.00  F1: 100.00\nbcub\nRecall: 100.00  Precision: 100.00  F1: 100.00\nceafe\nRecall: 100.00  Precision: 100.00  F1: 100.00\nlea\nRecall: 100.00  Precision: 100.00  F1: 100.00\nblanc\nRecall: 100.00  Precision: 100.00  F1: 100.00\nCoNLL score: 100.00\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    }
+  ]
+}

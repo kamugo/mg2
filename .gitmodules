@@ -1,0 +1,8 @@
+[submodule "kod/vendor/corefud-scorer"]
+	path = kod/vendor/corefud-scorer
+	url = https://github.com/ufal/corefud-scorer.git
+	ignore = untracked
+[submodule "kod/vendor/corpipe26"]
+	path = kod/vendor/corpipe26
+	url = https://github.com/ufal/crac2026-corpipe.git
+	ignore = untracked

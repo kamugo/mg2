@@ -1,0 +1,16 @@
+{
+  "files": [
+    "data\\processed\\sample.jsonl"
+  ],
+  "documents": 1,
+  "tokens": 9,
+  "mentions": 3,
+  "clusters": 2,
+  "zero_mentions": 1,
+  "mean_tokens_per_document": 9.0,
+  "median_tokens_per_document": 9,
+  "mean_mentions_per_document": 3.0,
+  "documents_by_source": {
+    "synthetic-smoke": 1
+  }
+}

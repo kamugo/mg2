@@ -1,0 +1,182 @@
+\chapter{Autokodery --- podstawy i zastosowania}
+\label{chap:autokodery}
+
+Autokoder jest siecią uczoną do odtworzenia wejścia po przejściu przez reprezentację pośrednią. Pozornie trywialny cel staje się użyteczny, gdy architektura, zakłócenie lub regularyzacja uniemożliwiają proste kopiowanie. Model musi wtedy zachować regularności danych, które mogą zostać przeniesione do zadania nadzorowanego. W rozdziale opisano klasyczny autokoder, warianty odszumiające, wariacyjne, rzadkie i kontraktywne, architekturę U-Net oraz modele klastrowe i grafowe. Następnie wskazano, które analogie można bezpiecznie sprawdzić w koreferencji, a które pozostają wyłącznie inspiracją.
+
+\section{Podstawowy model}
+\label{sec:ae-podstawy}
+
+\subsection{Koder, przestrzeń latentna i dekoder}
+
+Niech $x\in\mathbb{R}^{d}$ oznacza wektor wejściowy. Koder $f_\theta$ przekształca go w kod
+\[
+z=f_\theta(x), \qquad z\in\mathbb{R}^{k},
+\]
+a dekoder $g_\phi$ tworzy rekonstrukcję
+\[
+\hat{x}=g_\phi(z).
+\]
+Parametry $\theta$ i $\phi$ dobiera się przez minimalizację oczekiwanej straty $\mathcal{L}_{rec}(x,\hat{x})$. Dla cech ciągłych można użyć błędu średniokwadratowego, normy $L_1$ lub podobieństwa cosinusowego; wybór powinien odpowiadać znaczeniu skali wejścia \cite{goodfellow_2016_deep}.
+
+Gdy $k<d$, wąskie gardło wymusza kompresję. Nie gwarantuje jednak, że zachowane zostaną cechy istotne dla późniejszego zadania. Model optymalizuje rekonstrukcję, a nie tożsamość referentów. Jeśli duża część wariancji embeddingu opisuje styl albo pozycję, autokoder może poświęcić pojemność właśnie tym właściwościom. Dlatego kod powinien zostać oceniony przez zadanie docelowe, a nie tylko przez niski błąd rekonstrukcji.
+
+Autokoder nadkompletny, dla którego $k\geq d$, może nauczyć się funkcji bliskiej identyczności. Nawet wąski model o dużej pojemności może zapamiętać próbę. Ograniczenia architektury uzupełnia się regularyzacją, szumem, współdzieleniem wag albo sparsity. Osobny split walidacyjny jest konieczny także w uczeniu bez etykiet: wybór modelu na podstawie dokumentów testowych prowadziłby do przecieku domenowego.
+
+\subsection{Uczenie reprezentacji do transferu}
+
+Pretraining autokodera może wykorzystywać nieetykietowane dokumenty. Enkoder zadania głównego tworzy reprezentacje wzmianek, a autokoder uczy się ich rozkładu w domenie prawnej. Następnie kod $z$ zasila klasyfikator par. Taki układ rozdziela koszt uzyskania etykiet od kosztu zebrania tekstu, co odpowiada sytuacji, w której dokumentów prawnych jest wiele, lecz złota koreferencja jest droga.
+
+Transfer można przeprowadzić na trzy sposoby. Koder może pozostać zamrożony, co chroni nabytą reprezentację i ogranicza liczbę trenowanych parametrów. Może być dostrajany małym współczynnikiem uczenia, co zwiększa dopasowanie do koreferencji, ale grozi zapomnieniem celu domenowego. Trzeci wariant zachowuje stratę rekonstrukcji podczas uczenia nadzorowanego. Porównanie tych strategii wymaga tej samej głowicy i enkodera tekstowego, ponieważ inaczej nie da się przypisać różnicy autokoderowi.
+
+\subsection{Wybór jednostki rekonstrukcji}
+
+Najprostszym wejściem jest embedding jednej wzmianki. Liczba przykładów rośnie liniowo, a każdy wektor można prekomputować. Model nie widzi jednak jawnie relacji z innymi wzmiankami. Dwie reprezentacje są porównywane dopiero w głowicy par. Taki podział jest użyteczny metodologicznie: można sprawdzić, czy sam kod domenowy wnosi informację ponad wspólny scorer.
+
+Drugą jednostką jest wektor pary, złożony z obu embeddingów, iloczynu Hadamarda, różnicy i cech relacyjnych. Autokoder uczy się wtedy bezpośrednio rozkładu kandydackich połączeń. Liczba przykładów rośnie kwadratowo, a przewaga par negatywnych może zdominować rekonstrukcję. Ponadto model może łatwo odtwarzać odległość lub zgodność rodzaju, nie ucząc semantyki referencji.
+
+Trzecią jednostką jest wiersz albo cała macierz relacji. Rekonstrukcja wiersza umożliwia spojrzenie na wszystkich kandydatów jednej wzmianki. Pełna macierz zachowuje układ klastrów i nadaje się do splotów, lecz kosztuje $O(M^2)$ pamięci. W obu przypadkach porządek indeksów staje się częścią wejścia. Padding i pola przyszłych kandydatów muszą mieć osobną maskę, aby zero techniczne nie zostało pomylone z prawdziwą relacją negatywną.
+
+Czwartą możliwością jest graf. Krawędzie można ograniczyć do kandydatów przechodzących tani pruning, dzięki czemu pamięć zależy od ich liczby, a nie od pełnego kwadratu. Rekonstrukcja grafu wymaga jednak ustalenia, czy odtwarzane są same krawędzie, cechy węzłów, czy oba rodzaje informacji. Dla pierwszej implementacji wybrano wektor wzmianki i gęstą macierz jako dwa komplementarne, łatwiejsze do kontroli warianty.
+
+\subsection{Funkcja rekonstrukcji i skala cech}
+
+Nie wszystkie składowe wejścia mają wspólną skalę. Embedding kontekstowy jest ciągły, cechy rodzaju i liczby mogą być binarne, a odległość powinna zostać znormalizowana lub zbucketowana. Jedna średnia strata kwadratowa pozwoliłaby wymiarom o dużej wariancji zdominować uczenie. Rozwiązaniem jest standaryzacja, osobne głowy dekodera albo ważona suma strat właściwych typom cech.
+
+Podobieństwo cosinusowe zachowuje kierunek embeddingu niezależnie od jego normy, natomiast $L_1$ ogranicza bezwzględny błąd wymiarów i jest mniej wrażliwe na pojedyncze duże odchylenie niż MSE. Połączenie obu nie jest uniwersalnie optymalne; jego wagi wybiera się na dev. Jeżeli niższy błąd rekonstrukcji nie koreluje z jakością zadania, nie wolno dobierać checkpointu DAE wyłącznie według tego błędu.
+
+\section{Regularyzowane rodziny autokoderów}
+\label{sec:rodziny-ae}
+
+\subsection{Autokoder odszumiający}
+
+Autokoder odszumiający (ang.\ \emph{denoising autoencoder}, DAE) otrzymuje zaburzoną próbkę $\tilde{x}$, lecz rekonstruuje czyste $x$ \cite{vincent_2008_dae}. Cel ma postać
+\[
+\mathcal{L}_{DAE}=
+\mathbb{E}_{x\sim p_{data},\,\tilde{x}\sim q(\tilde{x}\mid x)}
+\left[\mathcal{L}_{rec}\left(x,g_\phi(f_\theta(\tilde{x}))\right)\right].
+\]
+Rozkład zakłóceń $q$ definiuje niezmienniczości, których ma nauczyć się koder. Maskowanie wymiarów uczy odporności na brak cechy, szum Gaussa wygładza lokalną reprezentację, a częściowe usuwanie informacji morfosyntaktycznej ogranicza zależność od pojedynczego sygnału.
+
+Dla koreferencji DAE ma dwie zalety. Po pierwsze, jego koszt dla każdego wektora wzmianki jest liniowy względem liczby wzmianek i nie wymaga materializacji pełnej macierzy par. Po drugie, może być uczony na nieanotowanych embeddingach z domeny. Zakłócenie musi jednak odpowiadać realnym błędom. Losowe zerowanie całego embeddingu tworzyłoby próbki odległe od rozkładu modelu językowego, a zbyt mały szum pozwoliłby kopiować wejście.
+
+Wariant główny łączy normę $L_1$ i stratę cosinusową. Pierwsza zachowuje wartości poszczególnych wymiarów, druga kierunek reprezentacji. Kod latentny trafia do scorera par, a podczas fine-tuningu niewielka waga rekonstrukcji ma przeciwdziałać całkowitemu porzuceniu wiedzy domenowej. Wartość tej strategii rozstrzyga porównanie z identyczną głowicą bez DAE oraz z losowo zainicjalizowanym koderem tej samej wielkości.
+
+\subsection{Autokoder wariacyjny}
+
+Autokoder wariacyjny (ang.\ \emph{variational autoencoder}, VAE) koduje wejście jako parametry rozkładu przybliżonego $q_\theta(z\mid x)$ \cite{kingma_2013_vae}. Próbkę uzyskuje się przez reparametryzację, a cel łączy rekonstrukcję z dywergencją Kullbacka--Leiblera do prioru:
+\[
+\mathcal{L}_{VAE}=
+-\mathbb{E}_{q_\theta(z\mid x)}[\log p_\phi(x\mid z)]
++D_{KL}(q_\theta(z\mid x)\Vert p(z)).
+\]
+Gładka przestrzeń wspiera interpolację i generowanie, lecz koreferencja wymaga stabilnej decyzji dla konkretnej wzmianki. Losowanie wprowadza dodatkową wariancję, a silny dekoder może prowadzić do zapadania posterioru.
+
+VAE nie został wybrany jako model główny. Może służyć jako ablacja pokazująca, czy regularizacja rozkładu poprawia odporność na zmianę domeny. Porównanie powinno kontrolować wymiar kodu i liczbę parametrów. Wyniku generatywnego na MNIST lub Frey Face nie można traktować jako oczekiwanej jakości klasteryzacji wzmianek.
+
+\subsection{Rzadkość i kontraktywność}
+
+Sparse autoencoder dodaje karę za aktywność kodu, na przykład normę $L_1$ albo dywergencję od małej zadanej częstości aktywacji \cite{goodfellow_2016_deep}. Kod może być szerszy od wejścia, jeśli dla jednej próbki działa niewiele jednostek. W koreferencji potencjalnie rozdziela to czynniki rodzaju, liczby, roli i semantyki. Interpretacja nie jest jednak gwarantowana, a zbyt silna kara tworzy martwe jednostki.
+
+Contractive autoencoder karze normę Frobeniusa jakobianu kodera względem wejścia \cite{rifai_2011_contractive}. Małe perturbacje $x$ powodują wtedy małe zmiany $z$ w kierunkach nieistotnych dla rekonstrukcji. W polszczyźnie mogłoby to chronić przed niewielką zmianą formy lub redakcji, o ile różnica jest właściwie reprezentowana w przestrzeni ciągłej. Jawne obliczanie jakobianu zwiększa koszt pamięci i czasu. Oba warianty pozostają kontrolami regularyzacji, ponieważ brak bezpośredniego dowodu dla polskiej koreferencji prawniczej.
+
+Tabela~\ref{tab:rodziny-ae} porównuje mechanizmy, a nie wyniki obcych benchmarków.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Rodziny autokoderów i ich znaczenie dla projektu}
+  \label{tab:rodziny-ae}
+  \begin{tabular}{p{0.17\textwidth}p{0.30\textwidth}p{0.22\textwidth}p{0.22\textwidth}}
+    \toprule
+    Wariant & Ograniczenie & Potencjalna korzyść & Główne ryzyko \\
+    \midrule
+    AE & wąskie gardło & kompresja reprezentacji & kopiowanie lub utrata cech \\
+    DAE & rekonstrukcja po szumie & stabilność i pretraining domenowy & nierealistyczne zakłócenia \\
+    VAE & prior i dywergencja KL & gładka przestrzeń latentna & losowość, zapadanie posterioru \\
+    sparse AE & kara aktywności & rozdzielenie czynników & martwe jednostki \\
+    contractive AE & kara jakobianu & lokalna odporność & wysoki koszt obliczeń \\
+    U-Net & kompresja i skip-connections & segmentacja relacji & koszt $O(n^2)$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{U-Net i segmentacja relacji}
+\label{sec:unet-relacje}
+
+\subsection{Architektura kodująco-dekodująca}
+
+U-Net składa się ze ścieżki zmniejszającej rozdzielczość i ścieżki ją odtwarzającej \cite{ronneberger_2015_unet}. Na każdym poziomie połączenie skrótowe przekazuje mapę cech o wysokiej rozdzielczości bezpośrednio do odpowiedniego bloku dekodera. Oryginalnym wyjściem jest maska segmentacji obrazu o rozmiarze wejścia. Wąskie gardło przechwytuje szerszy kontekst, a skip-connections zachowują lokalizację granic.
+
+Macierz kandydackich relacji można potraktować jako wielokanałowy obraz. Pozycja $(i,j)$ odpowiada parze wzmianek, a kanały przechowują podobieństwo embeddingów, odległość, zgodność morfosyntaktyczną i oceny pojedynczych wzmianek. Maska wyjściowa wskazuje prawdopodobieństwo wspólnej encji. Bloki skupień powinny pojawiać się w macierzy, jeśli wzmianki należące do klastra są uporządkowane tekstowo.
+
+Analogia ma granice. W obrazie sąsiedztwo pikseli wynika z geometrii, natomiast kolejność wzmianek jest w znacznej mierze arbitralna. Permutacja indeksów nie zmienia partycji, ale zmienia wzorce dostępne splotom. Relacja koreferencji jest symetryczna i przechodnia, podczas gdy zwykła maska segmentacji nie ma tych własności. Wyjście trzeba symetryzować, a klastry utworzyć kontrolowanym dekoderem. Padding nie może być traktowany jako prawdziwe pole negatywne.
+
+Koszt pamięci macierzy jest $O(M^2C)$ dla $M$ wzmianek i $C$ kanałów. Pełny dokument prawniczy może przekroczyć dostępny budżet. Stosuje się więc limit kandydatów, okna, kafle albo rzadki graf. Ograniczenie do macierzy wzmianek jest tańsze niż macierz tokenów, ale uzależnia wynik od wcześniejszej detekcji.
+
+\subsection{Transfer z segmentacji szeregów}
+
+Wen i Keyes przenieśli U-Net do jednowymiarowej segmentacji szeregów czasowych oraz zastosowali pretraining na syntetycznych krzywych \cite{wen_2019_time}. Raportują IoU 50,96\% przy uczeniu od zera i 71,95\% po transferze. Wyniki dotyczą innego zadania i nie są wartością oczekiwaną dla koreferencji. Uzasadniają jedynie hipotezę, że cechy segmentacyjne można przenieść przy małej liczbie etykiet.
+
+Dla koreferencji odpowiednikiem szeregu może być wektor ocen kolejnych poprzedników jednej anafory, a odpowiednikiem obrazu --- macierz wszystkich relacji. Transfer nie powinien polegać na wykorzystaniu wag wyuczonych na obrazie, ponieważ kanały nie mają wspólnej semantyki. Sprawdzane jest przeniesienie zasady architektonicznej: kompresji kontekstu, rekonstrukcji rozdzielczości i połączeń skrótowych. Ablacja bez skip-connections pozwala ocenić, czy są one faktycznie użyteczne.
+
+\section{Klastrowanie w przestrzeni latentnej}
+\label{sec:klastrowanie-latentne}
+
+Deep Embedded Clustering (DEC) najpierw uczy autokoder, a następnie dostraja reprezentację oraz miękkie przypisania do centroidów \cite{xie_2016_dec}. Rozkład docelowy wzmacnia pewne przypisania przez dywergencję KL. Wynikiem jest etykieta klastra dla każdej próbki, co pozornie pasuje do partycjonowania wzmianek.
+
+Podstawowe założenie DEC jest jednak niezgodne z dokumentową koreferencją. Liczba encji zmienia się między dokumentami, a centroid ,,powód'' nie powinien łączyć powodów z różnych spraw. Ustalenie liczby klastrów na podstawie złota byłoby przeciekiem. Samowzmacniający cel może ponadto zniekształcić lokalną strukturę, jeśli wstępne klastry są błędne.
+
+Improved DEC (IDEC) zachowuje równoległą stratę rekonstrukcji \cite{guo_2017_idec}. Chroni ona część geometrii wejścia podczas dostrajania klastrowego. Do projektu przeniesiono tę zasadę, lecz nie globalne centroidy: rekonstrukcja jest łączona z nadzorowaną stratą poprzedników, a końcową partycję tworzy się osobno w granicach dokumentu. Samodzielny DEC pozostaje odrzuconym wariantem, ponieważ nie ma naturalnego mechanizmu zmiennej liczby encji.
+
+\section{Autokodery grafowe}
+\label{sec:grafowe-ae}
+
+Grafowa reprezentacja jest naturalna: wzmianki są węzłami, a relacje kandydackie krawędziami. Variational Graph Autoencoder (VGAE) koduje węzły splotem grafowym, a dekoder iloczynu skalarnego rekonstruuje macierz przyległości \cite{kipf_2016_vgae}. Wspólna przestrzeń pozwala agregować sąsiedztwo, lecz niezależna rekonstrukcja krawędzi nie gwarantuje przechodniości klastrów. Gęsty dekoder ponownie ma koszt kwadratowy.
+
+Structural Deep Network Embedding (SDNE) zachowuje bliskość pierwszego i drugiego rzędu oraz mocniej waży niezerowe elementy rzadkiej macierzy \cite{wang_2016_sdne}. W koreferencji dodatnie pary są znacznie rzadsze od ujemnych, więc ważenie jest potrzebne. Metoda była badana na sieciach, nie na referencji tekstowej; stanowi inspirację dla funkcji celu, a nie gotowy baseline.
+
+Grafowy autokoder słów kluczowych pokazuje, że można łączyć strukturę wewnątrz- i międzyzdaniową tekstu przed klastrowaniem dokumentów \cite{chiu_2020_keyword}. Jednostka wyniku jest tam inna. Adaptacja wymagałaby węzłów-wzmianek, dokumentowych granic grafu, cech morfosyntaktycznych i nadzorowanej oceny krawędzi. Wariant ma sens, gdy kandydaci są przechowywani rzadko; dla małej gęstej macierzy U-Net jest prostszym testem hipotezy.
+
+\section{Transfer autokodera do koreferencji}
+\label{sec:transfer-ae}
+
+Na podstawie przeglądu wybrano dwa główne sposoby użycia. Pierwszy to DAE reprezentacji wzmianek. Wektor kontekstowy jest maskowany i zakłócany, koder tworzy krótszy kod, a dekoder odtwarza wejście. Scorer porównuje dwie reprezentacje latentne oraz jawne cechy pary. Pretraining może korzystać z nieetykietowanego tekstu prawnego, a kontrola bez DAE zachowuje ten sam enkoder i głowicę.
+
+Drugi sposób to segmentacja macierzy wzmianek przez U-Net. Kanały wejściowe opisują pary, a wyjście jest symetryczną mapą relacji. Ważona entropia binarna przeciwdziała przewadze zer, Dice podkreśla rzadkie dodatnie pola, a kara przechodniości ogranicza niespójne trójki. Finalny union-find zapewnia partycję, lecz jego działanie nie powinno maskować liczby naruszeń w surowych ocenach.
+
+Trzeci rozważany kierunek --- samodzielne klastrowanie latentne --- odrzucono jako wariant główny. Geometryczne podobieństwo ról nie jest tożsamością, a liczba encji nie jest stała. Grafowy AE pozostaje rezerwą dla rzadkiej reprezentacji. VAE, sparse AE i contractive AE są sensownymi ablacjami dopiero po ustaleniu, że podstawowy DAE działa.
+
+Tabela~\ref{tab:transfer-ae-coref} wiąże hipotezę mechanizmu z testem, który może ją obalić.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Mechanizmy transferu autokodera do koreferencji}
+  \label{tab:transfer-ae-coref}
+  \begin{tabular}{p{0.24\textwidth}p{0.30\textwidth}p{0.36\textwidth}}
+    \toprule
+    Wariant & Oczekiwany mechanizm & Kontrola falsyfikująca \\
+    \midrule
+    DAE wzmianek & odporność i adaptacja do domeny bez etykiet & ta sama głowica bez DAE oraz DAE bez pretrainingu \\
+    U-Net macierzy & wykorzystanie blokowej struktury relacji & model bez skip-connections i scorer niezależnych par \\
+    cel rekonstrukcyjny & zachowanie geometrii przy fine-tuningu & zerowa waga rekonstrukcji po pretrainingu \\
+    wymiar latentny & kompresja usuwa szum & wymiary 64, 128, 256 przy tym samym budżecie \\
+    grafowy AE & agregacja rzadkiego sąsiedztwa & gęsta macierz i identyczny zestaw kandydatów \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Ryzyka metodologiczne}
+\label{sec:ryzyka-ae}
+
+Najważniejsze ryzyko stanowi przypisanie autokoderowi korzyści pochodzącej z innej zmiany. Wariant z DAE i bez DAE musi korzystać z tego samego enkodera, danych, liczby kroków głowicy, progu i scorera. Dodatkowy pretraining ma własny koszt, który należy raportować. Porównanie wyłącznie liczby parametrów trenowanych nie wystarcza, jeżeli przygotowanie embeddingów wymaga kosztownego przejścia przez duży model.
+
+Drugim ryzykiem jest optymalizacja łatwej rekonstrukcji. Spadek $\mathcal{L}_{rec}$ nie oznacza wzrostu CoNLL F1. Potrzebna jest analiza, czy kod zachowuje informacje o zgodności i odległości, a usuwa artefakty domeny. Wizualizacja przestrzeni latentnej może ujawnić strukturę, lecz nie jest testem jakości: atrakcyjny wykres dwuwymiarowy zależy od redukcji i może ukrywać nakładanie klas.
+
+Trzecie ryzyko dotyczy analogii z obrazami. Lokalny filtr splotowy zakłada sens sąsiedztwa, który w macierzy zależy od porządku wzmianek. Jeżeli permutacja radykalnie zmienia wynik, model uczy się układu zamiast relacji. Należy więc zachować kolejność tekstową, maskować niedozwolone pola i sprawdzić odporność na kontrolowaną permutację w obrębie dokumentu.
+
+Czwarte ryzyko stanowi pozornie korzystna kompresja. Mniejszy kod redukuje liczbę parametrów głowicy, ale cały system nadal ponosi koszt enkodera tekstowego. Gdy embeddingi są prekomputowane, czas eksperymentu nie obejmuje inferencji end-to-end. Obie wartości powinny zostać podane osobno. Analogicznie trening na nieetykietowanym korpusie jest tańszy anotacyjnie, lecz nie jest bezkosztowy obliczeniowo.
+
+Wynik negatywny może mieć kilka znaczeń. Brak przewagi DAE może wskazywać, że enkoder bazowy już reprezentuje potrzebną domenę, że zakłócenie jest źle dobrane, że zbiór pretrainingu jest za mały albo że kompresja usuwa sygnał. Ablacje bez pretrainingu, bez straty rekonstrukcji i z różnymi wymiarami pozwalają te przyczyny częściowo rozdzielić. Nie należy jednak wybierać wyjaśnienia po fakcie bez odpowiadającego mu testu.
+
+\section{Podsumowanie}
+
+Opisano autokoder jako połączenie kodera, przestrzeni latentnej i dekodera oraz wskazano, dlaczego sama rekonstrukcja nie gwarantuje użyteczności. DAE wybrano jako najprostszy mechanizm pretrainingu domenowego, a U-Net jako test analogii z segmentacją macierzy. VAE, regularyzacja rzadka i kontraktywna, DEC/IDEC oraz modele grafowe wyznaczają ablacje lub warianty rezerwowe. Każdy transfer sformułowano jako hipotezę z architektonicznie porównywalną kontrolą, ponieważ literatura nie dostarcza bezpośredniego wyniku dla autokodera w polskiej koreferencji prawniczej.

@@ -1,0 +1,74 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda": "12.4",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "seeds": [
+      20260903,
+      20260917,
+      20261001,
+      20261015,
+      20261029
+    ],
+    "train_data_seed": 700001,
+    "test_data_seed": 700002,
+    "train_documents": 24,
+    "test_documents": 12,
+    "synthetic_data": true,
+    "cublas_workspace_config": ":4096:8",
+    "corefud_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590"
+  },
+  "aggregate": {
+    "experiment": "E1",
+    "completed_runs": 1,
+    "conll_f1_mean": 0.9708,
+    "conll_f1_std": 0.0,
+    "lea_f1_mean": 0.9682999999999999,
+    "lea_f1_std": 0.0
+  },
+  "runs": [
+    {
+      "experiment": "E1",
+      "seed": 20260903,
+      "training_and_inference_seconds": 0.0005267001688480377,
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 1.0,
+          "recall": 0.9556,
+          "f1": 0.9773000000000001
+        },
+        "b_cubed": {
+          "precision": 1.0,
+          "recall": 0.9436,
+          "f1": 0.971
+        },
+        "ceafe": {
+          "precision": 0.9895,
+          "recall": 0.94,
+          "f1": 0.9641
+        },
+        "lea": {
+          "precision": 1.0,
+          "recall": 0.9384999999999999,
+          "f1": 0.9682999999999999
+        },
+        "blanc": {
+          "precision": 1.0,
+          "recall": 0.925,
+          "f1": 0.9606
+        },
+        "conll_f1": 0.9708,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 95.56  Precision: 100.00  F1: 97.73\nbcub\nRecall: 94.36  Precision: 100.00  F1: 97.10\nceafe\nRecall: 94.00  Precision: 98.95  F1: 96.41\nlea\nRecall: 93.85  Precision: 100.00  F1: 96.83\nblanc\nRecall: 92.50  Precision: 100.00  F1: 96.06\nCoNLL score: 97.08\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    }
+  ]
+}

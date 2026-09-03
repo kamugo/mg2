@@ -1,0 +1,46 @@
+{
+  "authoritative": "official-corefud-scorer",
+  "scores": {
+    "muc": {
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
+    },
+    "b_cubed": {
+      "precision": 0.6667000000000001,
+      "recall": 0.75,
+      "f1": 0.7059000000000001
+    },
+    "ceafe": {
+      "precision": 0.7333,
+      "recall": 0.7333,
+      "f1": 0.7333
+    },
+    "lea": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333
+    },
+    "blanc": {
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.4857
+    },
+    "conll_f1": 0.6464,
+    "mention_detection": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "raw_output": "The scorer is evaluating coreferential mentions, singletons, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 50.00  Precision: 50.00  F1: 50.00\nbcub\nRecall: 75.00  Precision: 66.67  F1: 70.59\nceafe\nRecall: 73.33  Precision: 73.33  F1: 73.33\nlea\nRecall: 50.00  Precision: 25.00  F1: 33.33\nblanc\nRecall: 50.00  Precision: 50.00  F1: 48.57\nCoNLL score: 64.64\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n",
+  "config": {
+    "mode": "official",
+    "key": "tests/fixtures/s06-gold.conllu",
+    "system": "tests/fixtures/s06-system.conllu",
+    "scorer_dir": "vendor/corefud-scorer",
+    "match": "head",
+    "keep_singletons": true,
+    "output": "../wyniki/s06-official-smoke.json"
+  }
+}

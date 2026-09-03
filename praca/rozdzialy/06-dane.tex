@@ -1,0 +1,184 @@
+\chapter{Dane i ich przygotowanie}
+\label{chap:dane}
+
+Eksperyment wymaga dwóch różnych rodzajów danych. Złoty korpus koreferencji służy do uczenia i oceny relacji, natomiast nieetykietowany tekst prawniczy umożliwia domenowy pretraining autokodera. Publiczna dostępność pliku nie jest wystarczającą podstawą użycia: dla konkretnego wydania trzeba zachować licencję, pochodzenie i hash. W rozdziale przedstawiono wybór zasobów, wspólny format, tokenizację, podział dokumentów, procedurę anotacji oraz ochronę przed przeciekiem i ujawnieniem danych osobowych.
+
+\section{Role i wybór zbiorów}
+\label{sec:role-zbiorow}
+
+\subsection{Złota koreferencja}
+
+Podstawowym źródłem etykiet jest Polish-PCC z zamrożonego wydania CorefUD 1.4. Publiczne archiwum tego wydania zawiera dla Polish-PCC splity train i dev; nie zawiera testu ze złotymi etykietami. W pilocie część train podzielono dokumentowo na uczenie i kalibrację, a dev zachowano do jednorazowej oceny. Nie miesza się plików oryginalnego PCC 1.5 z harmonizacją, ponieważ wydania mogą różnić się formatem, licencją, granicami i ustawieniem scorera. Manifest zawiera URL, wersję, datę pobrania, SHA-256 oraz lokalny plik licencji CC BY 3.0.
+
+Żaden z przeanalizowanych benchmarków prawniczych nie zastępuje polskiego złota koreferencji. LexGLUE składa się z siedmiu zadań klasyfikacyjnych i rozumienia, a splity treningowe zależnie od komponentu liczą od 5532 do 60\,000 przykładów \cite{chalkidis_2022_lexglue}. LegalBench obejmuje 162 zadania w sześciu typach rozumowania \cite{guha_2023_legalbench}. Nie zawierają dokumentowej anotacji łańcuchów potrzebnej do obliczenia CoNLL F1.
+
+\subsection{Nieetykietowany tekst domenowy}
+
+ELI, JuDDGES-pl i wybrane zasoby europejskie służą jako kandydaci do pretrainingu. Oficjalne API Sejmu udostępnia tekst oraz strukturę polskich aktów \cite{sejm_2026_eli}. Dokumenty urzędowe są wyłączone z ochrony prawnoautorskiej na podstawie art.~4 ustawy \cite{sejm_1994_prawo_autorskie}, lecz fakt ten nie znosi wymagań ochrony danych osobowych.
+
+JuDDGES-pl deklaruje 266\,370 rekordów, 43,1 GB oraz licencję CC BY 4.0 \cite{juddges_2026_pl}. Jest najczytelniejszym kandydatem dla polskich orzeczeń, ale karta zachowuje dane funkcjonariuszy publicznych i nie gwarantuje braku PII. Zasób jest świeży i srebrnie wzbogacony, dlatego wymaga kontroli jakości. Pobranie pełnych 43,1 GB nie następuje automatycznie podczas testu potoku.
+
+EUR-Lex/CELLAR dopuszcza ponowne użycie większości dokumentów prawnych, udostępnia treści redakcyjne na CC BY 4.0 i metadane na CC0, z wyjątkami dla praw osób trzecich \cite{eu_2026_eurlex_reuse}. Materiał jest wielojęzyczny i może wspierać analizę transferu, ale nie zastępuje polskiego testu. MultiLegalPile obejmuje 689 GB, 24 języki i 17 jurysdykcji, a licencja zbiorcza CC BY-NC-SA 4.0 nie zwalnia z audytu poszczególnych składników \cite{niklaus_2023_multilegalpile}. Z tego powodu nie pobiera się całego zasobu.
+
+CUAD zawiera 510 umów, ponad 13 tysięcy etykiet i 41 typów klauzul, lecz brak jednoznacznej licencji dokumentów bazowych wyklucza go z treningu \cite{hendrycks_2021_cuad}. SAOS oferuje publiczne orzeczenia przez API, ale w sprawdzonej dokumentacji nie znaleziono licencji zbioru. Oba źródła pozostają wyłączone do czasu udokumentowania podstawy.
+
+Tabela~\ref{tab:decyzje-dane} podsumowuje role, nie rozmiary finalnej migawki.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Decyzje dotyczące zasobów danych}
+  \label{tab:decyzje-dane}
+  \begin{tabular}{p{0.23\textwidth}p{0.24\textwidth}p{0.19\textwidth}p{0.24\textwidth}}
+    \toprule
+    Zasób & Rola & Status & Warunek \\
+    \midrule
+    CorefUD Polish-PCC & złote train/dev & użyto & CorefUD 1.4, CC BY 3.0 \\
+    ELI & domenowy pretraining & dopuścić & manifest i skan PII \\
+    JuDDGES-pl & pretraining i próbka anotacji & warunkowo dopuścić & CC BY 4.0, audyt PII i jakości \\
+    EUR-Lex & opcjonalny pretraining & warunkowo dopuścić & filtr polski i prawa osób trzecich \\
+    MultiLegalPile & opcjonalne badanie & ograniczyć & audyt konkretnych składników \\
+    CUAD, SAOS & brak & odrzucić na tym etapie & wymagana jawna podstawa \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Pobieranie i pochodzenie}
+\label{sec:pobieranie-danych}
+
+Skrypt \texttt{pobierz\_dane.py} ma trzy tryby. Tryb CorefUD przyjmuje jawny URL wydania, opcjonalny oczekiwany SHA-256 i tworzy manifest. Brak URL kończy się kodem 2 zamiast pobrania niesprecyzowanej najnowszej wersji. Tryb ELI pobiera ograniczoną próbkę aktów dla wskazanego roku i zapisuje metadane oraz hashe. Tryb JuDDGES nie rozpoczyna automatycznie transferu dużej migawki, lecz podaje polecenie zamrożenia rewizji i również kończy się kodem 2.
+
+Surowe treści znajdują się w \texttt{kod/data/raw} poza artefaktami publicznymi. Repozytorium przechowuje kod, manifesty, statystyki agregowane oraz małe przykłady syntetyczne. Każdy rekord zachowuje identyfikator źródła, aby dokument można było odnaleźć, zaktualizować albo wycofać po zmianie statusu prawnego.
+
+\subsection{Zawartość manifestu}
+
+Manifest jest częścią danych, nie notatką administracyjną. Dla każdego pliku zapisuje adres, deklarowaną wersję, czas pobrania w UTC, hash SHA-256, liczbę bajtów, identyfikator źródłowy i ścieżkę kopii licencji. Dla API zachowuje także parametry zapytania oraz kod odpowiedzi. Pozwala to odróżnić zmianę modelu od zmiany danych.
+
+Dynamiczne źródło może zwracać inną treść pod tym samym endpointem. Sam URL nie wystarcza do reprodukcji, dlatego hash jest obowiązkowy. Jeśli ponowne pobranie daje inny hash, nie nadpisuje się migawki. Tworzy się nowy manifest i ocenia, czy dokument powinien zostać ponownie przetworzony.
+
+Identyfikator pochodzenia przechodzi przez konwersję do JSONL, budowę okien i tensorów. Umożliwia usunięcie wszystkich pochodnych jednego dokumentu bez ręcznego przeszukiwania zbioru. Jest to potrzebne zarówno przy wykrytym PII, jak i po zmianie licencji albo korekcie źródła.
+
+\section{Konwersja do wspólnego formatu}
+\label{sec:konwersja-danych}
+
+Konwerter czyta CoNLL-U/CorefUD i zapisuje jeden obiekt JSON na dokument. Wiersz wejściowy musi mieć dziesięć kolumn. Tokeny wielowyrazowe są pomijane jako wiersze techniczne, zwykłe tokeny i puste węzły zostają zachowane, a wartość \texttt{Entity} jest przekształcana w listę wzmianek. Span ma półotwarty przedział $[start,end)$.
+
+Obiekt zawiera \texttt{doc\_id}, \texttt{source}, tekst i wersję schematu. Token przechowuje identyfikator CoNLL-U, formę, lemat, UPOS, cechy, numer zdania i flagę pustego węzła. Wzmianka ma identyfikator, encję, granice, oryginalny deskryptor oraz flagę zera. Zachowanie pierwotnego deskryptora pozwala przeprowadzić audyt konwersji.
+
+Niepoprawny wiersz, zamknięcie encji bez otwarcia lub niezamknięta anotacja powodują błąd. Konwerter nie naprawia danych heurystycznie, ponieważ cicha korekta mogłaby zmienić złoto. Przed pełnym użyciem należy przepuścić pliki przez oficjalny walidator i ręcznie porównać co najmniej 20 dokumentów, ze szczególnym uwzględnieniem zagnieżdżeń, nieciągłości i zer.
+
+\subsection{Kontrole integralności}
+
+Po konwersji sprawdza się unikatowość \texttt{doc\_id}, monotoniczność indeksów, przynależność każdej wzmianki do jednego klastra i obecność wszystkich tokenów granicznych. Dla zwykłej wzmianki musi zachodzić $0\leq start<end\leq L$. Zero ma osobną flagę i kotwicę; nie jest kodowane jako przypadkowy span długości jeden.
+
+Eksport powrotny do CoNLL-U powinien przejść walidację oraz zachować sekwencję form i identyfikatory zdań. Test round-trip nie musi zachować kolejności technicznych atrybutów, ale musi zachować zbiór wzmianek, ich głowy i partycję. Różnice są raportowane według dokumentu oraz typu wzmianki.
+
+Statystyki przed i po każdym etapie stanowią sumy kontrolne na poziomie semantycznym. Liczba dokumentów, tokenów, wzmianek, klastrów i zer nie powinna zmienić się w czystej konwersji. Zmiana jest dopuszczalna dopiero w jawnym filtrze, na przykład po usunięciu dokumentu z PII, i trafia do osobnego raportu.
+
+\section{Tokenizacja i długie dokumenty}
+\label{sec:okna-danych}
+
+Indeksacja słów CorefUD pozostaje warstwą nadrzędną. Tokenizer HerBERT dzieli słowo na subwordy i zwraca mapowanie przez \texttt{word\_ids}. Reprezentacja granicy używa pierwszego i ostatniego subwordu, a głowa pozostaje indeksem słowa. Brak pełnego mapowania wzmianki jest błędem, nie powodem jej cichego obcięcia.
+
+Dokument dłuższy od okna 512 subwordów dzieli się na odcinki długości 384 ze stride 256. Granicę można przesunąć do końca zdania w zakresie $\pm32$ subwordów, jeśli nie przekracza limitu. Wzmianka przecinająca granicę powinna znaleźć się w całości w co najmniej jednym oknie. Wyjątkowo długa wzmianka trafia do raportu.
+
+Okna przechowują globalne identyfikatory tokenów i wzmianek. Dla pary obecnej w kilku oknach wybiera się maksimum skalibrowanego prawdopodobieństwa, a dopiero potem próg ustalony na dev. Union-find tworzy klastry tylko w jednym dokumencie. Pary, które nie współwystąpiły w żadnym oknie, mogą zostać porównane drugim lekkim przebiegiem nad centroidami; wariant bez tego przebiegu stanowi kontrolę.
+
+\section{Splity i ochrona przed przeciekiem}
+\label{sec:splity}
+
+Oficjalny split CorefUD pozostaje nienaruszony. Dla orzeczeń jednostką grupowania jest stabilny identyfikator sprawy. Dokumenty o identycznym znormalizowanym tekście, tej samej sygnaturze albo wysokim podobieństwie MinHash trafiają do wspólnej grupy. Jednorazowe losowanie z seedem 20260903 zapisuje się w manifeście przed analizą etykiet.
+
+Planowana próbka domenowa obejmuje 24 orzeczenia i podział 14/5/5. Mała liczebność oznacza studium wykonalności oraz szerokie przedziały ufności, nie reprezentatywny benchmark całego polskiego prawa. Dokumenty testowe, ich duplikaty i powiązane sprawy są usuwane z korpusu pretrainingowego. Demonstracje LLM pochodzą wyłącznie z train.
+
+Nie można całkowicie wykluczyć, że publiczny enkoder widział dokument w swoim wcześniejszym pretrainingu. Ryzyko raportuje się jawnie. Jego wpływ na porównanie wariantów ogranicza użycie tego samego enkodera po obu stronach ablacji.
+
+\subsection{Dobór próbki domenowej}
+
+Próbka 24 orzeczeń powinna obejmować zróżnicowane długości oraz typy spraw dostępne w licencjonowanej migawce. Dobór nie może zależeć od tego, czy model bazowy radzi sobie z dokumentem. Najpierw ustala się kryteria źródłowe i przeprowadza audyt, następnie losuje dokumenty, a dopiero potem rozpoczyna anotację.
+
+Trzy dokumenty pilotażowe są dodatkowe i nie trafiają do finalnego testu. Ich funkcją jest sprawdzenie instrukcji, dlatego ponowna anotacja po dyskusji nie jest przeciekiem. Finalny test pozostaje zamrożony. Jeżeli dokument zostanie wykluczony po audycie, zastępstwo wybiera się tą samą procedurą i zapisuje przyczynę.
+
+Podział 14/5/5 nie umożliwia precyzyjnego oszacowania rzadkich klas. Z tego powodu analiza według typu ma charakter opisowy, jeśli w grupie znajduje się niewiele wzmianek. Nie łączy się tokenów z wielu dokumentów w jednostkę bootstrapu, ponieważ ukryłoby to zależność wewnątrz jednego orzeczenia.
+
+\section{Anotacja i kontrola jakości}
+\label{sec:anotacja}
+
+Każde z 24 orzeczeń anotuje niezależnie dwóch anotatorów. Najpierw czytają cały dokument, następnie wyznaczają wzmianki i głowy, nadają typy PERSON, ORG, ROLE, OBJECT, PLACE, DOCUMENT, PROVISION lub OTHER, a dopiero potem tworzą klastry. Dostępne flagi obejmują ZERO, NESTED, DISCONTINUOUS i UNCERTAIN. Konsultacja zaczyna się po zamrożeniu obu wersji.
+
+Tożsamość wymaga wskazania dokładnie tego samego obiektu. Nie łączy się elementu ze zbiorem, klasy z egzemplarzem, relacji część--całość ani dwóch osób ukrytych pod podobnym znacznikiem. Termin definiowany działa tylko w swoim zasięgu, a rolę łączy się z nazwą przy jednoznacznym przypisaniu. Koordynacja tworzy osobną wzmiankę mnogą, nie klaster identyczny z każdym członem.
+
+Pierwsze trzy dokumenty tworzą pilotaż poza finalnym testem. Po obliczeniu metryk instrukcja może zostać doprecyzowana, a pilotaż powtórzony. Finalne anotacje pozostają niezależne do pomiaru zgodności. Adjudykator zachowuje obie wersje, uzasadnienia i tworzy nowy artefakt złoty zamiast nadpisywać pracę anotatorów.
+
+Zgodność detekcji mierzy się exact-match i head-match. Dla dopasowanych wzmianek tworzy się decyzje parowe 0/1 i oblicza nominalny współczynnik Krippendorffa
+\[
+\alpha=1-\frac{D_o}{D_e}.
+\]
+Raport obejmuje liczbę jednostek, braki, rozkład klas, dodatnie pairwise F1, LEA i bootstrap dokumentowy. Próg roboczy wynosi $\alpha\geq0{,}80$. Zakres 0,67--0,80 wymaga poprawy instrukcji i ponownego pilotażu, a wynik poniżej 0,67 wstrzymuje tworzenie złota.
+
+\subsection{Przypadki szczególne anotacji}
+
+W konstrukcji definicyjnej anotuje się pełną nazwę, wystąpienie aliasu i późniejsze użycia. Zasięg kończy się zgodnie z dokumentem. Jeżeli alias wskazuje grupę, nie łączy się go z każdym członkiem. Role procesowe są łączone z nazwą tylko wtedy, gdy dokument przypisuje je jednoznacznie.
+
+Znaczniki anonimizacyjne otrzymują flagę UNCERTAIN, gdy kontekst nie rozstrzyga tożsamości. Identyczny napis nie wymusza jednego klastra. Adjudykacja może wybrać jedną interpretację albo wyłączyć przypadek z głównego testu; decyzja jest wersjonowana i nie usuwa surowych anotacji.
+
+W cytacie referencję interpretuje się z perspektywy mówiącego. Dwa ,,ja'' w wypowiedziach różnych osób nie są koreferencyjne. Wzmianka zagnieżdżona jest zachowywana, jeśli sama uczestniczy w łańcuchu. Koordynacja tworzy wzmiankę mnogą odrębną od członów, a relacja grupowa trafia do uwagi.
+
+Singletony anotuje się dla detekcji, nawet gdy główne metryki klastrowe je usuwają. Wzmianka nieciągła zachowuje listę segmentów i jedną głowę. Uproszczony eksport może zawierać minimalny span pokrywający, ale nie może nadpisać oryginalnej reprezentacji.
+
+\subsection{Wersjonowanie decyzji}
+
+Każdy plik anotacji przechowuje hash tekstu, identyfikator anotatora, wersję instrukcji i czas. Złoto po adjudykacji jest nowym plikiem. Dzięki temu można ponownie policzyć zgodność pierwotną i ustalić, które reguły instrukcji uległy zmianie.
+
+Walidator sprawdza granice, unikatowe identyfikatory, jedną przynależność klastrową i brak relacji między dokumentami. Nie rozstrzyga semantycznej poprawności. Kontrola człowieka pozostaje potrzebna dla aliasów, perspektywy cytatu i niejednoznacznej anonimizacji.
+
+\section{Licencje, prywatność i publikacja}
+\label{sec:bezpieczenstwo-danych}
+
+Licencję sprawdza się oddzielnie dla danych, wag i kodu. Licencja modelu nie nadaje praw do odtworzenia jego korpusu, a status dokumentu urzędowego nie usuwa obowiązków ochrony danych. Migawka zachowuje kopię warunków, datę i hash.
+
+Przed anotacją skaner wykrywa typowe wzorce PII, a człowiek przegląda próbkę. Surowe dane pozostają lokalnie z ograniczonym dostępem. Publiczny pakiet zawiera identyfikatory do ponownego pobrania, kod oraz agregaty; tekst jest publikowany tylko przy zgodnej licencji i pozytywnym audycie. Dokument z nieusuniętym PII nie trafia do zewnętrznego LLM.
+
+\section{Stan przygotowania}
+\label{sec:stan-danych}
+
+Na syntetycznym pliku testowym konwerter i statystyki zostały uruchomione. Kod wygenerował 1 dokument, 9 tokenów, 3 wzmianki, 2 klastry i 1 wzmiankę zerową. Są to wyłącznie liczby testu technicznego. Następnie pobrano pełne archiwum CorefUD 1.4 o rozmiarze 123 369 695 bajtów i zapisano jego sumę SHA-256 w manifeście. Zachowano plik licencji CC BY 3.0. Walidacja pełnych danych ujawniła i pozwoliła poprawić obsługę sąsiadujących zamknięć encji oraz identyfikatorów części wzmianek nieciągłych.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Statystyki zamrożonego Polish-PCC w CorefUD 1.4 po konwersji}
+  \label{tab:statystyki-pcc-real}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    Split & Dokumenty & Tokeny & Wzmianki & Encje & Wzmianki zerowe \\
+    \midrule
+    train & 1463 & 446,420 & 154,166 & 102,508 & 14,612 \\
+    dev & 183 & 55,820 & 19,300 & 12,478 & 1,856 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Tabela~\ref{tab:statystyki-pcc-real} podaje wartości wygenerowane przez kod projektu. Fragmenty jednej wzmianki nieciągłej zachowano jako osobne spany wejściowe ze wspólnym identyfikatorem encji; ograniczenie to uwzględniono przy interpretacji projekcji mention-level. Do budowy tensorów train wydzielono 1244 dokumenty uczące i 219 kalibracyjnych. Po pominięciu końcowych okien jednoelementowych otrzymano odpowiednio 3339, 559 i 500 okien dla uczenia, kalibracji i dev.
+
+% LUKA: statystyki korpusu prawniczego i zgodność anotatorów wymagają ukończenia podwójnej anotacji 24 dokumentów.
+
+Nie podano liczebności ani wyniku zgodności dla planowanego korpusu prawniczego, ponieważ nie ukończono jego podwójnej anotacji. Brak pozostaje jawny; pojedynczy akt ELI służy wyłącznie jakościowej kontroli transferu i nie zastępuje złotego testu.
+
+\subsection{Karta reprodukcji danych}
+
+Po ukończeniu pobierania karta reprodukcji powinna wskazywać dokładne manifesty train, dev i test, wersję konwertera, polecenia statystyk oraz listę wykluczonych dokumentów z kodami przyczyn. Nie publikuje się surowej treści, jeśli warunki pozwalają tylko na ponowne pobranie ze źródła.
+
+Karta rozdziela liczby wygenerowane na danych badawczych od smoke testów. Obecne 1/9/3/2/1 opisuje wyłącznie syntetyczny plik kontrolny i nie może zostać przepisane do tabeli korpusu. Analogicznie pobranie jednego aktu ELI potwierdza API, lecz nie określa rozmiaru planowanego korpusu.
+
+Kompletność danych ogólnych potwierdzono przez manifest, hashe, statystyki i testy konwertera. Kompletność części prawnej zostanie potwierdzona dopiero po zapisaniu audytu PII, zgodności anotatorów oraz niezmiennych splitów. Do tego czasu pełne wyniki domenowe pozostają oznaczone jako brakujące.
+
+\subsection{Plan statystyk opisowych}
+
+Dla każdego splitu zostaną policzone dokumenty, zdania, tokeny, wzmianki, klastry, singletony i zera. Rozkład długości dokumentów oraz liczby wzmianek otrzyma medianę i percentyle, ponieważ sama średnia nie ujawnia długiego ogona. Osobno zestawia się typy PERSON, ORG, ROLE, OBJECT, PLACE, DOCUMENT, PROVISION i OTHER.
+
+Statystyki relacji obejmą wielkość klastra, dystans tokenowy i zdaniowy do najbliższego poprawnego poprzednika, udział wzmianek zagnieżdżonych oraz nieciągłych. Pozwala to sprawdzić, czy limit okna i 128 kandydatów usuwa systematycznie określone przypadki. Każde odcięcie będzie raportowane jako liczba i udział, nie ukrywane w preprocessing.
+
+Porównanie PCC i próbki prawnej obejmie te same definicje. Różnica rozkładów opisuje zakres transferu, ale przy 24 dokumentach nie uzasadnia uogólnienia na całą domenę. Statystyki nie są uzupełniane z opisów publikacji, ponieważ finalna migawka i filtry mogą dać inne wartości.
+
+\section{Podsumowanie}
+
+Rozdzielono złoty Polish-PCC/CorefUD od nieetykietowanego tekstu prawnego i prawniczego. Uzasadniono dopuszczenie ELI i warunkowe użycie JuDDGES-pl, a wyłączono źródła bez jednoznacznej podstawy. Opisano manifesty, konwersję, mapowanie subwordów, okna, deduplikację, splity i dwuosobową anotację. Stan repozytorium potwierdza działanie potoku na próbce, lecz pełne statystyki i korpus prawny pozostają do uzupełnienia bez wstawiania niewygenerowanych wartości.

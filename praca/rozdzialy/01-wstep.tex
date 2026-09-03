@@ -1,0 +1,51 @@
+\chapter{Wstęp}
+\label{chap:wstep}
+
+Rozstrzyganie koreferencji służy ustaleniu, które wyrażenia w dokumencie odnoszą się do tego samego obiektu. Zadanie to stanowi warstwę pośrednią między analizą językową a systemami, które mają odpowiadać na pytania, wyszukiwać fakty, streszczać dokumenty albo budować reprezentację występujących w nich osób, instytucji i przedmiotów. W tekstach prawniczych poprawne odtworzenie łańcuchów referencyjnych jest szczególnie ważne: pomylenie stron postępowania, adresata obowiązku lub obiektu rozporządzenia może zmienić sens wydobytej informacji. W rozdziale przedstawiono motywację, zakres, cel i tezę pracy, a następnie pytania badawcze, planowany wkład oraz układ dalszych rozdziałów.
+
+\section{Motywacja i zakres}
+\label{sec:motywacja-zakres}
+
+Dokument prawny nie jest zbiorem niezależnych zdań. Informacja o jednej osobie lub rzeczy bywa rozłożona na wiele akapitów, a późniejsze wzmianki przyjmują inną postać niż pierwsze wskazanie obiektu. Nazwa spółki może zostać zastąpiona terminem zdefiniowanym, takim jak ,,Wykonawca'', osoba może wystąpić jako ,,powód'', ,,skarżący'' albo zaimek, natomiast postanowienie umowy może być przywołane przez wyrażenie ,,powyższy zapis''. W polszczyźnie dodatkową trudność powoduje podmiot zerowy: wykonawca czynności może nie zostać wyrażony osobnym słowem, ponieważ informację o osobie i liczbie niesie forma czasownika. Opis zadania wymaga więc ujęcia szerszego niż identyczność napisów.
+
+Wykrycie takich zależności wspiera analizę całego dokumentu. Połączenie w jeden łańcuch nazwy strony, jej roli procesowej i późniejszych zaimków pozwala agregować przypisane jej czynności. Rozróżnienie dwóch osób ukrytych pod podobnym znacznikiem anonimizacyjnym chroni z kolei przed utworzeniem fałszywej biografii. Potencjalnymi odbiorcami systemu są moduły wyszukiwania semantycznego, ekstrakcji relacji, streszczania, anonimizacji i kontroli spójności. Nie zakłada się jednak, że sam komponent koreferencyjny rozstrzyga wykładnię prawa. Jego wyjściem jest struktura pomocnicza, której błędy muszą pozostać widoczne dla dalszego systemu.
+
+W literaturze zadanie przechodziło od klasyfikacji par wzmianek, przez modele rankingu poprzedników i globalne modele encji, do architektur neuronowych działających na spanach, słowach lub reprezentacji generatywnej \cite{soon_2001_machine,wiseman_2016_global,lee_2017_e2e,dobrovolskii_2021_word,zhang_2023_seq2seq}. Rozwiązania te pokazują, że wynik zależy zarówno od jakości reprezentacji kontekstu, jak i od sposobu narzucenia spójnej struktury klastrów. Rozbudowany model językowy może dostarczyć silną reprezentację, lecz dostosowanie go do nowej domeny wymaga danych, pamięci i czasu. Model dostępny wyłącznie przez usługę zewnętrzną wprowadza ponadto koszt tokenów, zmienność wersji i ograniczenia dotyczące przekazywania dokumentów.
+
+W pracy zbadano inną drogę adaptacji: wykorzystanie autokodera jako niewielkiego modułu uczącego się własności domeny na nieetykietowanym tekście. Rozważono odszumianie reprezentacji wzmianek oraz segmentację macierzy relacji, inspirowaną zastosowaniem architektur kodująco-dekodujących poza koreferencją. Nie założono z góry, że kompresja przyniesie poprawę. Autokoder może odtworzyć cechy łatwe, lecz nieprzydatne dla tożsamości referencji, albo utracić informację podczas przejścia przez wąską warstwę latentną. Z tego powodu jego użyteczność potraktowano jako hipotezę wymagającą porównania z architektonicznie zgodną kontrolą.
+
+Zakres językowy ograniczono do polszczyzny, a zakres domenowy do tekstów prawniczych, przede wszystkim aktów prawnych i orzeczeń. Podstawą nadzorowanego uczenia jest polska część zasobów koreferencyjnych, w szczególności Polish Coreference Corpus i jego harmonizacja w CorefUD \cite{ogrodniczuk_2014_pcc,nedoluzhko_2022_corefud}. Rozróżniono przy tym tekst prawny, ustanawiający normy, od tekstu prawniczego, tworzonego w praktyce stosowania i opisu prawa. Różnica ta ma znaczenie dla słownictwa, długości dokumentów oraz typów referencji, lecz oba rodzaje materiału łączy potrzeba kontroli licencji i danych osobowych.
+
+Przedmiotem oceny jest koreferencja tożsamościowa encji. Nie próbuje się utożsamiać każdego semantycznie związanego wyrażenia. Relacja część--całość, odwołanie do zbioru bez identyczności oraz luźne powiązanie tematyczne pozostają poza głównym zadaniem. Nie rozstrzyga się także samodzielnie sensu normy ani prawdziwości zdań. System ma wykrywać wzmianki i dzielić je na rozłączne klastry w granicach jednego dokumentu. Zakazano tworzenia klastrów między dokumentami, nawet gdy powtarzają się role takie jak ,,sąd'' lub ,,powód''.
+
+\section{Cel, teza i pytania badawcze}
+\label{sec:cel-teza}
+
+Celem pracy jest analiza możliwości zastosowania autokodera do wykrywania zależności koreferencyjnych w polskich tekstach prawniczych oraz określenie, czy taki moduł daje mierzalną korzyść wobec prostszych i droższych alternatyw. Cel obejmuje przegląd metod, przygotowanie danych, projekt systemu, jego implementację i porównawcze eksperymenty. Istotne jest nie tylko osiągnięcie wyniku jakościowego, ale również ustalenie kosztu, warunków powodzenia i klas przypadków, w których proponowane podejście zawodzi.
+
+Przyjęto następującą tezę: włączenie autokodera uczonego na danych domenowych do systemu rozstrzygania koreferencji w polskich tekstach prawniczych pozwala uzyskać statystycznie istotną poprawę jakości mierzonej CoNLL F1 względem architektonicznie porównywalnego wariantu bez autokodera, przy niższym koszcie adaptacji niż w rozwiązaniu opartym wyłącznie na dużym modelu językowym (ang.\ \emph{large language model}, LLM).
+
+Teza nie jest traktowana jako założony wynik. Została rozbita na trzy falsyfikowalne pytania badawcze:
+
+\begin{enumerate}
+  \item \textbf{PB1:} czy dodanie autokodera uczonego na danych domenowych zwiększa CoNLL F1 i LEA na polskich tekstach prawniczych względem tego samego enkodera i procedury klastrowania bez autokodera, przy identycznym podziale danych i budżecie strojenia?
+  \item \textbf{PB2:} który sposób użycia autokodera --- segmentacja macierzy relacji, kompresja reprezentacji wzmianek czy odszumiające uczenie wstępne --- daje najlepszy kompromis jakości, liczby trenowanych parametrów, czasu uczenia i pamięci GPU?
+  \item \textbf{PB3:} czy hybryda autokodera i LLM ogranicza liczbę tokenów wysyłanych do LLM oraz koszt i czas inferencji bez istotnej utraty CoNLL F1 względem wariantu LLM-only, a zarazem przewyższa wariant bez LLM?
+\end{enumerate}
+
+Odpowiedź na PB1 jest negatywna, jeżeli poprawa CoNLL F1 nie okaże się istotna w sparowanym bootstrapie przy poziomie istotności 0,05 albo zostanie okupiona pogorszeniem LEA. W PB2 brak wariantu dominującego pod względem jakości i kosztu jest pełnoprawnym wynikiem, a nie powodem wyboru najlepszego pojedynczego seedu. W PB3 oszczędność tokenów nie wystarcza, jeżeli jakość hybrydy istotnie ustępuje LLM-only; analogicznie sama jakość nie wystarcza bez redukcji kosztu.
+
+Tak sformułowane pytania ograniczają ryzyko pozornego potwierdzenia tezy. Wszystkie porównania wymagają tego samego zbioru testowego, sposobu dopasowania wzmianek i wersji scorera. Wyniki należy podawać dla wielu seedów oraz uzupełnić przedziałami ufności. Poza średnią CoNLL raportuje się LEA, BLANC i jakość wykrywania wzmianek, ponieważ poszczególne miary inaczej reagują na rozdzielanie i nadmierne łączenie klastrów.
+
+\section{Wkład własny i układ pracy}
+\label{sec:wklad-uklad}
+
+Planowany wkład obejmuje cztery elementy. Po pierwsze, ujednolicono reprezentację polskich danych koreferencyjnych i danych domenowych, uwzględniając wzmianki zerowe, długie dokumenty i granice licencyjne. Po drugie, zaprojektowano porównywalne warianty systemu: lekką głowicę par jako kontrolę, odszumiający autokoder reprezentacji wzmianek, sieć typu U-Net nad macierzą relacji oraz selektywną hybrydę kierującą tylko niepewne przypadki do LLM. Po trzecie, przygotowano wspólny potok ewaluacji z oficjalnym scorerem CorefUD, bootstrapem dokumentowym i pomiarem kosztu. Po czwarte, przyjęto jawne kryteria negatywnego rozstrzygnięcia pytań, aby brak przewagi autokodera również stanowił informacyjny rezultat.
+
+Rozdział~\ref{chap:koreferencja} porządkuje terminologię zadania i opisuje własności polszczyzny. W rozdziale trzecim zostaną zestawione metody regułowe, statystyczne, neuronowe i oparte na LLM, natomiast rozdział czwarty przedstawi rodziny autokoderów i uzasadnienie ich transferu. Specyfika domeny i formalizacja problemu zostaną omówione w rozdziale piątym. Dane, licencje, konwersję i anotację opisze rozdział szósty.
+
+Projekt oraz implementacja znajdą się w rozdziale siódmym, a zamrożony protokół badań w rozdziale ósmym. Rozdziały dziewiąty i dziesiąty oddzielą surowe wyniki od ich interpretacji i porównania z alternatywami. Odpowiedzi na PB1--PB3, ograniczenia oraz możliwe dalsze prace zostaną zebrane w rozdziale jedenastym.
+
+\section{Podsumowanie}
+
+Uzasadniono potrzebę modelowania referencji na poziomie całego polskiego dokumentu prawniczego oraz zawężono zadanie do tożsamości encji wewnątrz dokumentu. Sformułowano falsyfikowalną tezę i trzy pytania obejmujące jakość, sposób użycia autokodera oraz kompromis z LLM. Wskazano także, że wartość rozwiązania będzie oceniana łącznie przez jakość, stabilność i koszt, a nie przez pojedynczy wynik. Terminologia niezbędna do precyzyjnego opisu wejścia i wyjścia systemu została przedstawiona w kolejnym rozdziale.

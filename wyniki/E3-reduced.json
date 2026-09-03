@@ -1,0 +1,294 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda": "12.4",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "seeds": [
+      20260903,
+      20260917,
+      20261001,
+      20261015,
+      20261029
+    ],
+    "train_data_seed": 700001,
+    "test_data_seed": 700002,
+    "train_documents": 24,
+    "test_documents": 12,
+    "synthetic_data": true,
+    "cublas_workspace_config": ":4096:8",
+    "corefud_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590"
+  },
+  "aggregate": {
+    "experiment": "E3",
+    "completed_runs": 5,
+    "conll_f1_mean": 0.94632,
+    "conll_f1_std": 0.032647542020801494,
+    "lea_f1_mean": 0.94034,
+    "lea_f1_std": 0.036380324352594764
+  },
+  "runs": [
+    {
+      "experiment": "E3",
+      "seed": 20260903,
+      "training_seconds": 1.9495407994836569,
+      "inference_seconds": 0.00689690001308918,
+      "training": {
+        "variant": "baseline",
+        "seed": 20260903,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 2289,
+        "final_loss": 0.8059866428375244,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68368384,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "b_cubed": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "ceafe": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "lea": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "blanc": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "conll_f1": 1.0,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 100.00  F1: 100.00\nbcub\nRecall: 100.00  Precision: 100.00  F1: 100.00\nceafe\nRecall: 100.00  Precision: 100.00  F1: 100.00\nlea\nRecall: 100.00  Precision: 100.00  F1: 100.00\nblanc\nRecall: 100.00  Precision: 100.00  F1: 100.00\nCoNLL score: 100.00\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    },
+    {
+      "experiment": "E3",
+      "seed": 20260917,
+      "training_seconds": 0.11012409999966621,
+      "inference_seconds": 0.004470000043511391,
+      "training": {
+        "variant": "baseline",
+        "seed": 20260917,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 2289,
+        "final_loss": 0.7725469470024109,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68368384,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.9184,
+          "recall": 1.0,
+          "f1": 0.9573999999999999
+        },
+        "b_cubed": {
+          "precision": 0.8636,
+          "recall": 1.0,
+          "f1": 0.9268000000000001
+        },
+        "ceafe": {
+          "precision": 0.9493,
+          "recall": 0.8069,
+          "f1": 0.8724
+        },
+        "lea": {
+          "precision": 0.8332999999999999,
+          "recall": 1.0,
+          "f1": 0.9091
+        },
+        "blanc": {
+          "precision": 0.9,
+          "recall": 0.8695999999999999,
+          "f1": 0.8694
+        },
+        "conll_f1": 0.9189,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 91.84  F1: 95.74\nbcub\nRecall: 100.00  Precision: 86.36  F1: 92.68\nceafe\nRecall: 80.69  Precision: 94.93  F1: 87.24\nlea\nRecall: 100.00  Precision: 83.33  F1: 90.91\nblanc\nRecall: 86.96  Precision: 90.00  F1: 86.94\nCoNLL score: 91.89\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    },
+    {
+      "experiment": "E3",
+      "seed": 20261001,
+      "training_seconds": 0.12663150019943714,
+      "inference_seconds": 0.004177600145339966,
+      "training": {
+        "variant": "baseline",
+        "seed": 20261001,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 2289,
+        "final_loss": 0.6677297949790955,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68380672,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.9375,
+          "recall": 1.0,
+          "f1": 0.9677
+        },
+        "b_cubed": {
+          "precision": 0.8759,
+          "recall": 1.0,
+          "f1": 0.9338
+        },
+        "ceafe": {
+          "precision": 0.9651000000000001,
+          "recall": 0.8204,
+          "f1": 0.8869
+        },
+        "lea": {
+          "precision": 0.8519,
+          "recall": 1.0,
+          "f1": 0.92
+        },
+        "blanc": {
+          "precision": 0.8859999999999999,
+          "recall": 0.8116,
+          "f1": 0.8195999999999999
+        },
+        "conll_f1": 0.9295,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 93.75  F1: 96.77\nbcub\nRecall: 100.00  Precision: 87.59  F1: 93.38\nceafe\nRecall: 82.04  Precision: 96.51  F1: 88.69\nlea\nRecall: 100.00  Precision: 85.19  F1: 92.00\nblanc\nRecall: 81.16  Precision: 88.60  F1: 81.96\nCoNLL score: 92.95\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    },
+    {
+      "experiment": "E3",
+      "seed": 20261015,
+      "training_seconds": 0.14231550134718418,
+      "inference_seconds": 0.005033601075410843,
+      "training": {
+        "variant": "baseline",
+        "seed": 20261015,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 2289,
+        "final_loss": 0.8100591897964478,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68392960,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.9573999999999999,
+          "recall": 1.0,
+          "f1": 0.9783
+        },
+        "b_cubed": {
+          "precision": 0.9190999999999999,
+          "recall": 1.0,
+          "f1": 0.9579000000000001
+        },
+        "ceafe": {
+          "precision": 0.9769,
+          "recall": 0.8792,
+          "f1": 0.9254000000000001
+        },
+        "lea": {
+          "precision": 0.9026000000000001,
+          "recall": 1.0,
+          "f1": 0.9488
+        },
+        "blanc": {
+          "precision": 0.9231,
+          "recall": 0.8841,
+          "f1": 0.8928
+        },
+        "conll_f1": 0.9539,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 95.74  F1: 97.83\nbcub\nRecall: 100.00  Precision: 91.91  F1: 95.79\nceafe\nRecall: 87.92  Precision: 97.69  F1: 92.54\nlea\nRecall: 100.00  Precision: 90.26  F1: 94.88\nblanc\nRecall: 88.41  Precision: 92.31  F1: 89.28\nCoNLL score: 95.39\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    },
+    {
+      "experiment": "E3",
+      "seed": 20261029,
+      "training_seconds": 0.18924850039184093,
+      "inference_seconds": 0.004230000078678131,
+      "training": {
+        "variant": "baseline",
+        "seed": 20261029,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 2289,
+        "final_loss": 0.7820935249328613,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68368384,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.9375,
+          "recall": 1.0,
+          "f1": 0.9677
+        },
+        "b_cubed": {
+          "precision": 0.8851,
+          "recall": 1.0,
+          "f1": 0.9390999999999999
+        },
+        "ceafe": {
+          "precision": 0.9588,
+          "recall": 0.815,
+          "f1": 0.8811
+        },
+        "lea": {
+          "precision": 0.8584999999999999,
+          "recall": 1.0,
+          "f1": 0.9238
+        },
+        "blanc": {
+          "precision": 0.9074,
+          "recall": 0.8551000000000001,
+          "f1": 0.8642
+        },
+        "conll_f1": 0.9293,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 93.75  F1: 96.77\nbcub\nRecall: 100.00  Precision: 88.51  F1: 93.91\nceafe\nRecall: 81.50  Precision: 95.88  F1: 88.11\nlea\nRecall: 100.00  Precision: 85.85  F1: 92.38\nblanc\nRecall: 85.51  Precision: 90.74  F1: 86.42\nCoNLL score: 92.93\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    }
+  ]
+}

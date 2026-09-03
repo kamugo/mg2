@@ -1,0 +1,52 @@
+{
+  "authoritative": "internal-consistency-check-only",
+  "synthetic_data": true,
+  "documents": 3,
+  "scores": {
+    "muc": {
+      "precision": 0.8,
+      "recall": 0.5714285714285714,
+      "f1": 0.6666666666666666
+    },
+    "b_cubed": {
+      "precision": 0.8974358974358974,
+      "recall": 0.7435897435897437,
+      "f1": 0.8133012820512823
+    },
+    "ceafe": {
+      "precision": 0.6166666666666667,
+      "recall": 0.8222222222222223,
+      "f1": 0.7047619047619047
+    },
+    "lea": {
+      "precision": 0.5384615384615384,
+      "recall": 0.5384615384615384,
+      "f1": 0.5384615384615384
+    },
+    "blanc": {
+      "precision": 0.8055555555555556,
+      "recall": 0.7357142857142858,
+      "f1": 0.7645875251509056
+    },
+    "mention_detection": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "conll_f1": 0.7282432844932846
+  },
+  "bootstrap_conll_f1": {
+    "estimate": 0.7282432844932846,
+    "ci_low": 0.64640522875817,
+    "ci_high": 0.7887179487179488,
+    "confidence": 0.95,
+    "samples": 500,
+    "seed": 20260903
+  },
+  "config": {
+    "mode": "synthetic",
+    "seed": 20260903,
+    "bootstrap_samples": 500,
+    "output": "../wyniki/s06-internal-smoke.json"
+  }
+}

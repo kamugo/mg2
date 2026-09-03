@@ -1,0 +1,122 @@
+\chapter{Plan i przebieg eksperymentów}
+\label{chap:eksperymenty}
+
+Protokół zamrożono przed uruchomieniem eksperymentów badawczych. Jego celem jest ochrona przed doborem testu, metryki lub progu po obejrzeniu wyniku. Wszystkie warianty korzystają z tych samych splitów, identycznej tokenizacji i przypiętego oficjalnego scorera. W rozdziale przedstawiono metryki, baseline’y, eksperymenty główne, ablacje, testy istotności oraz pomiar kosztu. Na końcu rozdzielono uruchomienia zredukowane od brakujących badań na pełnych danych.
+
+\section{Zasady wspólne}
+\label{sec:zasady-eksperymentow}
+
+Jednostką podziału jest dokument. Oficjalny split CorefUD Polish-PCC pozostaje bez zmian, a domenowe orzeczenia są grupowane po sprawie. Dokumenty train, dev i test nie mogą pojawić się w nieetykietowanym pretrainingu w formie identycznej ani zduplikowanej.
+
+Hiperparametry, w tym próg krawędzi, wymiar latentny i długość okna, dobiera się tylko na dev. Checkpoint wybiera najwyższy CoNLL F1; przy remisie rozstrzyga LEA, a następnie niższy koszt inferencji. Wczesne zatrzymanie następuje po pięciu ewaluacjach bez poprawy.
+
+Eksperyment główny wykorzystuje seedy 20260903, 20260917, 20261001, 20261015 i 20261029. Raport obejmuje każdy przebieg, średnią i odchylenie standardowe. Nie wybiera się seedu dającego najlepszy test. Enkoder domyślny to HerBERT base, a maksymalna liczba kandydatów w oknie wynosi 128.
+
+\section{Metryki}
+\label{sec:metryki}
+
+\subsection{MUC, B³ i \texorpdfstring{CEAF$_e$}{CEAF-e}}
+
+MUC ocenia, ile połączeń potrzeba do uzyskania złotych klastrów oraz ile połączeń systemowych jest uzasadnionych. Koncentruje się na spójności łańcucha, ale słabo uwzględnia singletony i może łagodnie traktować niektóre nadmierne scalenia.
+
+B³ przypisuje precision i recall każdej wzmiance na podstawie przecięcia jej złotego i przewidzianego klastra, a następnie agreguje wynik. Jest wrażliwe na czystość klastrów z perspektywy elementów. Zachowanie przy brakujących wzmiankach zależy od implementacji dopasowania.
+
+CEAF$_e$ wyszukuje optymalne jedno-do-jednego dopasowanie encji złotych i systemowych. Zapobiega wielokrotnemu przypisaniu kilku systemowych klastrów do jednej encji, lecz globalne dopasowanie może reagować inaczej niż miary linkowe.
+
+CoNLL F1 jest średnią wartości F1 MUC, B³ i CEAF$_e$. Nie wystarcza jako jedyna miara, ponieważ średnia ukrywa sprzeczne zmiany składowych. Dwa modele o podobnym CoNLL mogą różnić się skłonnością do dzielenia i scalania.
+
+\subsection{LEA, BLANC i detekcja}
+
+LEA waży encje ich znaczeniem i mierzy poprawność linków. Jest użyteczna przy dużych klastrach, dla których pojedyncze fałszywe scalenie ma praktyczny skutek. W protokole spadek LEA może unieważnić pozorną korzyść CoNLL.
+
+BLANC traktuje osobno decyzje koreferencyjne i niekoreferencyjne. Pokazuje, czy model uzyskuje wynik przez nadmierne przewidywanie dominującej klasy. Ze względu na rzadkość dodatnich par uzupełnia miary klastrowe.
+
+Detekcja wzmianek otrzymuje osobne precision, recall i F1. Główne dopasowanie używa głowy, a analiza dodatkowa identycznych granic. Raportuje się zera, nazwy, role, deskrypcje i zaimki. Dzięki temu błąd braku wzmianki nie jest mylony z błędem klastra.
+
+\subsection{Oficjalny scorer}
+
+Autorytatywnym narzędziem jest niezmodyfikowany CorefUD scorer przypięty pełnym hashem commitu. Główne ustawienie to head-match, zależnościowe dopasowanie zer i pominięcie singletonów w metrykach klastrowych. Detekcja uwzględnia singletony. Exact-match oraz wynik z singletonami są analizami dodatkowymi, nie podstawą wyboru modelu.
+
+Własna implementacja metryk służy jedynie testom spójności i bootstrapowi na prostych partycjach. Nie zastępuje oficjalnego wyniku. Adapter zachowuje surowe stdout scorera obok sparsowanego JSON, co umożliwia kontrolę parsera.
+
+\section{Rozwiązania bazowe}
+\label{sec:baseline-eksperymentalne}
+
+Pierwszy baseline łączy wzmianki o identycznym znormalizowanym lemacie lub głowie. Jest deterministyczny i nie wymaga uczenia. Stanowi dolną granicę opartą na sygnale leksykalnym, lecz nie radzi sobie ze zmianą roli i może nadmiernie scalać częste rzeczowniki.
+
+Drugi baseline to regresja logistyczna mention-pair z wagami klas. Cechy obejmują zgodność lematu i głowy, rodzaju, liczby oraz odległość tokenową i zdaniową. Dla anafory wybiera się najlepszą wcześniejszą parę ponad progiem, po czym union-find tworzy klastry.
+
+Trzeci baseline jest adapterem do modelu Stanza dla polskiego. Import i pobranie wag są opcjonalne, aby główny potok nie wykonywał ukrytego transferu. Wynik musi zostać przekształcony do identyfikatorów zgodnych z CorefUD.
+
+Czwarty baseline wywołuje LLM w trybie zero-shot lub few-shot przez API zgodne z interfejsem chat. Klucz pochodzi ze zmiennej środowiskowej, temperatura wynosi zero, a odpowiedź ma JSON. Wersja modelu, prompt, tokeny, błędy schematu i koszt są zapisywane.
+
+\section{Eksperymenty główne}
+\label{sec:eksperymenty-glowne}
+
+Tabela~\ref{tab:eksperymenty-glowne} wiąże osiem eksperymentów z decyzją, którą mają umożliwić. Kryteria ustalono przed wynikami.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Eksperymenty główne i kryteria rozstrzygnięcia}
+  \label{tab:eksperymenty-glowne}
+  \begin{tabular}{p{0.10\textwidth}p{0.38\textwidth}p{0.42\textwidth}}
+    \toprule
+    ID & Porównanie & Kryterium \\
+    \midrule
+    E1 & head/lemma-match & odtwarzalny punkt dolny \\
+    E2 & regresja par kontra E1 & dodatnia dolna granica 95\% CI CoNLL \\
+    E3 & głowica neuronowa kontra E2 & dodatni sparowany CI CoNLL \\
+    E4 & domenowy DAE kontra E3 & co najmniej 0,01 CoNLL bez spadku LEA ponad 0,005 \\
+    E5 & U-Net kontra E3 & dodatni CI różnicy LEA \\
+    E6 & DAE + selektywny LLM kontra E4 & brak straty CoNLL i co najmniej 80\% mniej zapytań \\
+    E7 & zero-shot i 3-shot LLM & 99\% poprawnych JSON po jednej repetycji \\
+    E8 & E3/E4/E5 na prawie i PCC & dodatnia interakcja korzyści E4 w domenie \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+E1 nie ma progu jakościowego; jego funkcją jest ujawnienie siły prostych cech. E2 sprawdza korzyść uczenia klasycznego. E3 jest kontrolą neuronową bez rekonstrukcji. Te trzy poziomy zapobiegają przypisaniu autokoderowi przewagi, która wynikałaby z samego użycia sieci.
+
+E4 bezpośrednio odpowiada PB1. DAE jest pretrenowany na dopuszczonym tekście domenowym, a następnie porównywany z E3 na tych samych danych i seedach. E5 bada odrębną hipotezę segmentacji macierzy. Rozstrzygającą metryką jest LEA, ponieważ model ma wykorzystywać strukturę całych klastrów.
+
+E6 i E7 tworzą porównanie kosztowe dla PB3. Ten sam dostawca i wersja LLM muszą być użyte w hybrydzie i LLM-only. E8 mierzy transfer; wymaga ukończonego testu prawnego. Jeśli test ma mniej niż 20 dokumentów, wynik jest eksploracyjny.
+
+\section{Ablacje}
+\label{sec:ablacje}
+
+A1 usuwa skip-connections z U-Net przy tym samym budżecie kroków. A2 zachowuje architekturę DAE, ale pomija pretraining domenowy. A3 porównuje kody 64, 128 i 256; wybiera najmniejszy mieszczący się 0,005 CoNLL od najlepszego na dev.
+
+A4 porównuje HerBERT base, HerBERT large i wielojęzyczny enkoder zgodny z CorefUD. A5 bada okna 256, 512 i 1024 tokenów, przy czym ostatnie wymaga zgodnego enkodera. Kryterium obejmuje recall dalekich zależności oraz pamięć.
+
+A6 zeruje wagę rekonstrukcji podczas fine-tuningu po wspólnym pretrainingu. Rozdziela korzyść inicjalizacji od regularizacji ciągłym celem. A7 usuwa karę przechodniości i raportuje liczbę naruszeń przed union-find oraz LEA po dekodowaniu.
+
+Każda ablacja zmienia jeden czynnik. Jeżeli ograniczenia sprzętu wymagają zmniejszenia batcha, zmiana dotyczy obu stron porównania, a liczba kroków efektywnego batcha pozostaje wspólna.
+
+\section{Istotność statystyczna}
+\label{sec:istotnosc}
+
+Przedział ufności systemu powstaje przez 10\,000 losowań dokumentów z powtórzeniami. W każdej replice liczba dokumentów równa się rozmiarowi testu. Percentyle 2,5 i 97,5 tworzą 95-procentowy przedział.
+
+Porównanie jest sparowane: system A i B otrzymują w replice identyczny multizbiór identyfikatorów. Oblicza się rozkład różnicy metryki, jego przedział i dwustronną wartość $p$. Losowanie wzmianek lub par zignorowałoby zależności klastrowe i sztucznie zawęziło przedział.
+
+Poziom $\alpha=0{,}05$ podlega korekcie Holma osobno w rodzinach modeli głównych, ablacji i porównań domen. Rozrzut pięciu seedów jest raportowany niezależnie od bootstrapu dokumentów: oba źródła niepewności odpowiadają innym procesom.
+
+\section{Pomiar kosztu}
+\label{sec:koszt}
+
+Trening zapisuje całkowity czas i czas epoki, liczbę parametrów wszystkich i trenowanych oraz szczyt pamięci GPU. Pomiar CUDA jest poprzedzony synchronizacją i resetem licznika. Na CPU potrzebny jest maksymalny RSS.
+
+Inferencja otrzymuje pięć rozgrzewek, a raport obejmuje średnią, medianę i p95 czasu dokumentu w tej samej kolejności danych. Prekomputację embeddingów mierzy się oddzielnie. W przeciwnym razie mała głowica wyglądałaby na tani system, mimo że koszt enkodera został ukryty.
+
+Dla LLM zapisuje się tokeny wejścia i wyjścia, wywołania, niepoprawne odpowiedzi, medianę i p95 opóźnienia oraz koszt z datą cennika. Koszt zerowy nie może zostać wpisany, jeśli eksperymentu nie uruchomiono. Wersje GPU, sterownika, CUDA, PyTorch, danych i scorera są częścią wyniku.
+
+\section{Status odtwarzalności i przebieg}
+\label{sec:status-eksperymentow}
+
+Istnieją konfiguracje YAML, deterministyczne seedy, testy, checkpointy i oficjalny scorer. Zredukowany potok E1--E5 został wykonany na wspólnych danych syntetycznych; E3--E5 przeszły pięć seedów. Uruchomienia weryfikują integrację, ale nie rozstrzygają PB1--PB3, ponieważ nie zawierają pełnego Polish-PCC, embeddingów HerBERT ani domenowego pretrainingu.
+
+E6 i E7 nie zostały wykonane bez klucza API, zamrożonego modelu i audytu PII. E8 oczekuje podwójnej anotacji 24 dokumentów. Brakujące wyniki zachowują polecenia reprodukcyjne zamiast zastępczych wartości. Pełne eksperymenty pozostają wymaganiem przed merytorycznym przyjęciem lub odrzuceniem tezy.
+
+\section{Podsumowanie}
+
+Zamrożono dane, seedy, zasady wyboru checkpointu, oficjalny scorer i osiem eksperymentów. CoNLL F1 uzupełniono przez LEA, BLANC i detekcję, a różnice będą oceniane dokumentowym bootstrapem oraz rozrzutem seedów. Koszt obejmuje cały potok, nie tylko lekką głowicę. Zredukowane przebiegi potwierdzają działanie implementacji, lecz zostały wyraźnie oddzielone od brakujących eksperymentów badawczych.

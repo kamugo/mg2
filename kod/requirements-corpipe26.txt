@@ -1,0 +1,6 @@
+# Optional comparison environment for the vendored CorPipe 26 runner.
+# CorPipe's own exact dependency ranges are in vendor/corpipe26/requirements.txt.
+minnt~=1.1
+sentencepiece>=0.2
+udapi~=0.5.1
+

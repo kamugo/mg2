@@ -1,0 +1,11 @@
+{
+  "variant": "dae",
+  "seed": 20260903,
+  "examples": 24,
+  "epochs": 3,
+  "trainable_parameters": 4257,
+  "final_loss": 0.9009674787521362,
+  "device": "cuda",
+  "peak_gpu_memory_bytes": 68441088,
+  "synthetic_data": true
+}

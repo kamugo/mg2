@@ -1,0 +1,294 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda": "12.4",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "seeds": [
+      20260903,
+      20260917,
+      20261001,
+      20261015,
+      20261029
+    ],
+    "train_data_seed": 700001,
+    "test_data_seed": 700002,
+    "train_documents": 24,
+    "test_documents": 12,
+    "synthetic_data": true,
+    "cublas_workspace_config": ":4096:8",
+    "corefud_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590"
+  },
+  "aggregate": {
+    "experiment": "E4",
+    "completed_runs": 5,
+    "conll_f1_mean": 0.85544,
+    "conll_f1_std": 0.0284179168835437,
+    "lea_f1_mean": 0.8239599999999999,
+    "lea_f1_std": 0.03219608671873022
+  },
+  "runs": [
+    {
+      "experiment": "E4",
+      "seed": 20260903,
+      "training_seconds": 0.29956499859690666,
+      "inference_seconds": 0.005995800718665123,
+      "training": {
+        "variant": "dae",
+        "seed": 20260903,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 4257,
+        "final_loss": 0.9009674787521362,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68441088,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.8654000000000001,
+          "recall": 1.0,
+          "f1": 0.9278
+        },
+        "b_cubed": {
+          "precision": 0.737,
+          "recall": 1.0,
+          "f1": 0.8486
+        },
+        "ceafe": {
+          "precision": 0.9098999999999999,
+          "recall": 0.6823999999999999,
+          "f1": 0.7798999999999999
+        },
+        "lea": {
+          "precision": 0.6893,
+          "recall": 1.0,
+          "f1": 0.8161
+        },
+        "blanc": {
+          "precision": 0.8143,
+          "recall": 0.6739,
+          "f1": 0.644
+        },
+        "conll_f1": 0.8521,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 86.54  F1: 92.78\nbcub\nRecall: 100.00  Precision: 73.70  F1: 84.86\nceafe\nRecall: 68.24  Precision: 90.99  F1: 77.99\nlea\nRecall: 100.00  Precision: 68.93  F1: 81.61\nblanc\nRecall: 67.39  Precision: 81.43  F1: 64.40\nCoNLL score: 85.21\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    },
+    {
+      "experiment": "E4",
+      "seed": 20260917,
+      "training_seconds": 0.2532560005784035,
+      "inference_seconds": 0.006327299401164055,
+      "training": {
+        "variant": "dae",
+        "seed": 20260917,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 4257,
+        "final_loss": 0.8228979706764221,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68451840,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9473999999999999
+        },
+        "b_cubed": {
+          "precision": 0.8189,
+          "recall": 1.0,
+          "f1": 0.9004000000000001
+        },
+        "ceafe": {
+          "precision": 0.9433,
+          "recall": 0.8018000000000001,
+          "f1": 0.8668
+        },
+        "lea": {
+          "precision": 0.7868,
+          "recall": 1.0,
+          "f1": 0.8806999999999999
+        },
+        "blanc": {
+          "precision": 0.8576999999999999,
+          "recall": 0.8043,
+          "f1": 0.7954000000000001
+        },
+        "conll_f1": 0.9048999999999999,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 90.00  F1: 94.74\nbcub\nRecall: 100.00  Precision: 81.89  F1: 90.04\nceafe\nRecall: 80.18  Precision: 94.33  F1: 86.68\nlea\nRecall: 100.00  Precision: 78.68  F1: 88.07\nblanc\nRecall: 80.43  Precision: 85.77  F1: 79.54\nCoNLL score: 90.49\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    },
+    {
+      "experiment": "E4",
+      "seed": 20261001,
+      "training_seconds": 0.2824704013764858,
+      "inference_seconds": 0.00772939994931221,
+      "training": {
+        "variant": "dae",
+        "seed": 20261001,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 4257,
+        "final_loss": 0.912355899810791,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68474880,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.8654000000000001,
+          "recall": 1.0,
+          "f1": 0.9278
+        },
+        "b_cubed": {
+          "precision": 0.721,
+          "recall": 1.0,
+          "f1": 0.8379000000000001
+        },
+        "ceafe": {
+          "precision": 0.8975,
+          "recall": 0.6283,
+          "f1": 0.7391
+        },
+        "lea": {
+          "precision": 0.6679999999999999,
+          "recall": 1.0,
+          "f1": 0.8009000000000001
+        },
+        "blanc": {
+          "precision": 0.8034,
+          "recall": 0.6159,
+          "f1": 0.5659000000000001
+        },
+        "conll_f1": 0.8349,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 86.54  F1: 92.78\nbcub\nRecall: 100.00  Precision: 72.10  F1: 83.79\nceafe\nRecall: 62.83  Precision: 89.75  F1: 73.91\nlea\nRecall: 100.00  Precision: 66.80  F1: 80.09\nblanc\nRecall: 61.59  Precision: 80.34  F1: 56.59\nCoNLL score: 83.49\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    },
+    {
+      "experiment": "E4",
+      "seed": 20261015,
+      "training_seconds": 0.25111999921500683,
+      "inference_seconds": 0.006241898983716965,
+      "training": {
+        "variant": "dae",
+        "seed": 20261015,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 4257,
+        "final_loss": 0.8932285308837891,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68474880,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.8654000000000001,
+          "recall": 1.0,
+          "f1": 0.9278
+        },
+        "b_cubed": {
+          "precision": 0.7345,
+          "recall": 1.0,
+          "f1": 0.8469
+        },
+        "ceafe": {
+          "precision": 0.9020999999999999,
+          "recall": 0.6315,
+          "f1": 0.7429000000000001
+        },
+        "lea": {
+          "precision": 0.6823999999999999,
+          "recall": 1.0,
+          "f1": 0.8112
+        },
+        "blanc": {
+          "precision": 0.8143,
+          "recall": 0.6522,
+          "f1": 0.6193
+        },
+        "conll_f1": 0.8392000000000001,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 86.54  F1: 92.78\nbcub\nRecall: 100.00  Precision: 73.45  F1: 84.69\nceafe\nRecall: 63.15  Precision: 90.21  F1: 74.29\nlea\nRecall: 100.00  Precision: 68.24  F1: 81.12\nblanc\nRecall: 65.22  Precision: 81.43  F1: 61.93\nCoNLL score: 83.92\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    },
+    {
+      "experiment": "E4",
+      "seed": 20261029,
+      "training_seconds": 0.30177559889853,
+      "inference_seconds": 0.0061808992177248,
+      "training": {
+        "variant": "dae",
+        "seed": 20261029,
+        "examples": 24,
+        "epochs": 3,
+        "trainable_parameters": 4257,
+        "final_loss": 0.8680727481842041,
+        "device": "cuda",
+        "peak_gpu_memory_bytes": 68497920,
+        "synthetic_data": true
+      },
+      "synthetic_data": true,
+      "scores": {
+        "muc": {
+          "precision": 0.8491,
+          "recall": 1.0,
+          "f1": 0.9184
+        },
+        "b_cubed": {
+          "precision": 0.7315999999999999,
+          "recall": 1.0,
+          "f1": 0.845
+        },
+        "ceafe": {
+          "precision": 0.9042,
+          "recall": 0.6781,
+          "f1": 0.775
+        },
+        "lea": {
+          "precision": 0.6819,
+          "recall": 1.0,
+          "f1": 0.8109000000000001
+        },
+        "blanc": {
+          "precision": 0.8188,
+          "recall": 0.7245999999999999,
+          "f1": 0.6994
+        },
+        "conll_f1": 0.8461,
+        "mention_detection": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "scorer_output": "The scorer is evaluating coreferential mentions, zeros (using dependent match method) using head match evaluation setting.\nThe following metrics will be evaluated: muc, bcub, ceafe, lea, blanc\n\nmuc\nRecall: 100.00  Precision: 84.91  F1: 91.84\nbcub\nRecall: 100.00  Precision: 73.16  F1: 84.50\nceafe\nRecall: 67.81  Precision: 90.42  F1: 77.50\nlea\nRecall: 100.00  Precision: 68.19  F1: 81.09\nblanc\nRecall: 72.46  Precision: 81.88  F1: 69.94\nCoNLL score: 84.61\n\n--- mention detection ---\nmention\nRecall: 100.00  Precision: 100.00  F1: 100.00\n"
+    }
+  ]
+}

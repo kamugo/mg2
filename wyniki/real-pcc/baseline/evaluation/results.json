@@ -1,0 +1,226 @@
+{
+  "checkpoint": "C:\\Users\\Kamil\\mg2\\wyniki\\real-pcc\\baseline\\model.pt",
+  "variant": "baseline",
+  "threshold_selected_on_calibration": 0.94,
+  "calibration_pairwise_curve": [
+    {
+      "threshold": 0.2,
+      "precision": 0.07672135778347967,
+      "recall": 0.9513690232938292,
+      "f1": 0.141992036038234,
+      "true_positive": 16296,
+      "false_positive": 196109,
+      "false_negative": 833
+    },
+    {
+      "threshold": 0.25,
+      "precision": 0.08645792103039185,
+      "recall": 0.9436627940918909,
+      "f1": 0.15840303400020578,
+      "true_positive": 16164,
+      "false_positive": 170794,
+      "false_negative": 965
+    },
+    {
+      "threshold": 0.3,
+      "precision": 0.09748114676518181,
+      "recall": 0.9319866892404693,
+      "f1": 0.17650115537275973,
+      "true_positive": 15964,
+      "false_positive": 147801,
+      "false_negative": 1165
+    },
+    {
+      "threshold": 0.35,
+      "precision": 0.10880398671096346,
+      "recall": 0.9253896899994162,
+      "f1": 0.19471418130001905,
+      "true_positive": 15851,
+      "false_positive": 129833,
+      "false_negative": 1278
+    },
+    {
+      "threshold": 0.4,
+      "precision": 0.12132111734603301,
+      "recall": 0.9176250802732209,
+      "f1": 0.21430811393043642,
+      "true_positive": 15718,
+      "false_positive": 113839,
+      "false_negative": 1411
+    },
+    {
+      "threshold": 0.45,
+      "precision": 0.13383212934296526,
+      "recall": 0.908517718489112,
+      "f1": 0.23329760360995136,
+      "true_positive": 15562,
+      "false_positive": 100718,
+      "false_negative": 1567
+    },
+    {
+      "threshold": 0.5,
+      "precision": 0.14606062894031485,
+      "recall": 0.9034969934030007,
+      "f1": 0.25146849737985943,
+      "true_positive": 15476,
+      "false_positive": 90480,
+      "false_negative": 1653
+    },
+    {
+      "threshold": 0.55,
+      "precision": 0.1610933931184018,
+      "recall": 0.8935139237550354,
+      "f1": 0.27297210530070626,
+      "true_positive": 15305,
+      "false_positive": 79702,
+      "false_negative": 1824
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.1780053845253424,
+      "recall": 0.8877926323778388,
+      "f1": 0.29655125342485794,
+      "true_positive": 15207,
+      "false_positive": 70223,
+      "false_negative": 1922
+    },
+    {
+      "threshold": 0.65,
+      "precision": 0.19881513148346067,
+      "recall": 0.8796777395061007,
+      "f1": 0.3243289782388773,
+      "true_positive": 15068,
+      "false_positive": 60721,
+      "false_negative": 2061
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.2188692027864917,
+      "recall": 0.8675929709848794,
+      "f1": 0.3495554405607565,
+      "true_positive": 14861,
+      "false_positive": 53038,
+      "false_negative": 2268
+    },
+    {
+      "threshold": 0.75,
+      "precision": 0.24396376594398375,
+      "recall": 0.8553330608908868,
+      "f1": 0.3796431856756021,
+      "true_positive": 14651,
+      "false_positive": 45403,
+      "false_negative": 2478
+    },
+    {
+      "threshold": 0.8,
+      "precision": 0.2768716992854924,
+      "recall": 0.8325062759063576,
+      "f1": 0.4155435431935075,
+      "true_positive": 14260,
+      "false_positive": 37244,
+      "false_negative": 2869
+    },
+    {
+      "threshold": 0.85,
+      "precision": 0.3192755558679506,
+      "recall": 0.7955514040516084,
+      "f1": 0.4556763083096471,
+      "true_positive": 13627,
+      "false_positive": 29054,
+      "false_negative": 3502
+    },
+    {
+      "threshold": 0.9,
+      "precision": 0.3771557981534173,
+      "recall": 0.7583630100998306,
+      "f1": 0.5037714994861453,
+      "true_positive": 12990,
+      "false_positive": 21452,
+      "false_negative": 4139
+    },
+    {
+      "threshold": 0.92,
+      "precision": 0.4113237586652957,
+      "recall": 0.7239768813123942,
+      "f1": 0.5245991793223064,
+      "true_positive": 12401,
+      "false_positive": 17748,
+      "false_negative": 4728
+    },
+    {
+      "threshold": 0.94,
+      "precision": 0.4569187449718423,
+      "recall": 0.6631443750364878,
+      "f1": 0.5410464645502393,
+      "true_positive": 11359,
+      "false_positive": 13501,
+      "false_negative": 5770
+    },
+    {
+      "threshold": 0.96,
+      "precision": 0.5199798522498321,
+      "recall": 0.5424134508727888,
+      "f1": 0.5309597965539903,
+      "true_positive": 9291,
+      "false_positive": 8577,
+      "false_negative": 7838
+    },
+    {
+      "threshold": 0.98,
+      "precision": 0.6751911049339819,
+      "recall": 0.28361258684102986,
+      "f1": 0.3994408814339747,
+      "true_positive": 4858,
+      "false_positive": 2337,
+      "false_negative": 12271
+    }
+  ],
+  "dev_pairwise": {
+    "precision": 0.4869299081832322,
+    "recall": 0.6547699365807583,
+    "f1": 0.5585129341351825,
+    "true_positive": 9705,
+    "false_positive": 10226,
+    "false_negative": 5117
+  },
+  "dev_official": {
+    "muc": {
+      "precision": 0.7298,
+      "recall": 0.5872999999999999,
+      "f1": 0.6507999999999999
+    },
+    "b_cubed": {
+      "precision": 0.606,
+      "recall": 0.5133,
+      "f1": 0.5558
+    },
+    "ceafe": {
+      "precision": 0.691,
+      "recall": 0.36200000000000004,
+      "f1": 0.47509999999999997
+    },
+    "lea": {
+      "precision": 0.5518,
+      "recall": 0.4702,
+      "f1": 0.5078
+    },
+    "blanc": {
+      "precision": 0.5999,
+      "recall": 0.4793,
+      "f1": 0.49229999999999996
+    },
+    "conll_f1": 0.5606,
+    "mention_detection": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "dev_windows": 500,
+  "evaluation_scope": {
+    "mention_boundaries": "gold",
+    "documents": "non-overlapping windows of at most 48 mentions",
+    "official_scorer": "CorefUD scorer on a mention-level projection",
+    "domain": "general Polish-PCC, not legal gold"
+  }
+}

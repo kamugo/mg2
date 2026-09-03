@@ -1,0 +1,29 @@
+seed: 20260903
+deterministic: true
+output_dir: ../wyniki/s05-smoke
+data:
+  synthetic: true
+  examples: 20
+  max_mentions: 8
+model:
+  variant: dae
+  input_dim: 32
+  hidden_dim: 16
+  latent_dim: 8
+  pair_feature_dim: 3
+  matrix_channels: 3
+  unet_base_channels: 8
+training:
+  device: cpu
+  epochs: 1
+  batch_size: 4
+  gradient_accumulation: 1
+  learning_rate: 0.001
+  weight_decay: 0.0
+  max_grad_norm: 1.0
+  mixed_precision: false
+loss:
+  positive_weight: 2.0
+  reconstruction_weight: 0.1
+  mask_probability: 0.15
+  noise_std: 0.01

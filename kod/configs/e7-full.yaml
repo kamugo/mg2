@@ -1,0 +1,7 @@
+mode: official
+key: data/processed/polish-pcc-test.gold.conllu
+system: predictions/e7-llm-few-shot.system.conllu
+scorer_dir: vendor/corefud-scorer
+match: head
+keep_singletons: false
+output: ../wyniki/E7-full.json

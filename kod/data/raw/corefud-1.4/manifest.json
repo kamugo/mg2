@@ -1,0 +1,13 @@
+{
+  "created_at": "2026-09-03T01:59:29.155729+00:00",
+  "records": [
+    {
+      "source": "corefud",
+      "url": "https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/handle/11234/1-6108/CorefUD-1.4-public.zip?sequence=3&isAllowed=y",
+      "file": "CorefUD-1.4-public.zip",
+      "bytes": 123369695,
+      "sha256": "51814a8e2996f459cf3f4fa491c161b4fd59991d3390b4484dac901600cd9173",
+      "license_check": "required before conversion"
+    }
+  ]
+}

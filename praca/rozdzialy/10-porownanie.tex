@@ -1,0 +1,113 @@
+\chapter{Porównanie z rozwiązaniami alternatywnymi}
+\label{chap:porownanie}
+
+Porównanie zaproponowanego systemu z literaturą wymaga rozdzielenia jakości, kosztu i dostępności danych. Wyniki z OntoNotes, CorefUD, KPWr, koreferencji zdarzeń i syntetycznej próby własnej nie są wymienne. Różnią się definicją wzmianki, językiem, zakresem singletonów, sposobem dopasowania oraz scorerem. Z tego powodu nie utworzono jednego rankingu liczbowego. Omówiono natomiast, jakiej decyzji dostarcza każda rodzina metod i w jakich warunkach autokoder lub hybryda mogą być uzasadnione.
+
+\section{Granice porównywalności}
+
+Rozwój angielskich systemów na OntoNotes prowadził od modeli parowych i rankingowych do modeli end-to-end, SpanBERT, systemów słowowych oraz generatywnych \cite{soon_2001_machine,lee_2017_e2e,joshi_2020_spanbert,dobrovolskii_2021_word,zhang_2023_seq2seq}. Wartości raportowane na tym benchmarku nie określają jednak oczekiwanego wyniku dla Polish-PCC. Angielski zbiór, zasady anotacji i detekcja wzmianek są inne.
+
+Podobnie wynik IKAR dla KPWr dotyczy węższej definicji anafory i innego protokołu \cite{broda_2012_ikar}. Prace CorefUD standaryzują format i ewaluację wielojęzyczną, lecz konkretne treebanki pozostają zróżnicowane \cite{nedoluzhko_2022_corefud}. Użycie oficjalnego scorera poprawia odtwarzalność wewnątrz projektu, ale samo nie czyni wyników różnych korpusów równoważnymi.
+
+Rezultaty DAE, U-Net, DEC i grafowych autokoderów pochodzą pierwotnie z klasyfikacji, obrazów lub klastrowania \cite{vincent_2008_dae,ronneberger_2015_unet,xie_2016_dec,kipf_2016_vgae}. Uzasadniają mechanizm odszumiania, skip-connections albo rekonstrukcji grafu. Nie są dowodem, że mechanizm poprawi koreferencję. Własny eksperyment powinien tę hipotezę przetestować, a nie odziedziczyć wniosek z odległego zadania.
+
+\section{Porównanie jakościowe rodzin systemów}
+
+Tabela~\ref{tab:porownanie-rodzin} porównuje własności operacyjne. Wiersz autokoderów opisuje projekt, nie potwierdzoną przewagę. Wiersz LLM rozdziela szeroką wiedzę modelu od kosztu i kontroli danych.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Jakościowe porównanie rodzin rozwiązań}
+  \label{tab:porownanie-rodzin}
+  \begin{tabular}{p{0.20\textwidth}p{0.24\textwidth}p{0.24\textwidth}p{0.22\textwidth}}
+    \toprule
+    Rodzina & Mocna strona & Główne ryzyko & Zastosowanie w projekcie \\
+    \midrule
+    reguły leksykalne & szybkość i interpretowalność & homonimia, role i parafrazy & punkt dolny E1 \\
+    mention-pair & mały koszt i jawne cechy & lokalność decyzji & E2 \\
+    model neuronowy & kontekstowe reprezentacje & koszt enkodera i dane & kontrola E3 \\
+    DAE & dane nieetykietowane, odszumianie & utrata sygnału relacyjnego & E4 \\
+    U-Net & wzorce całej macierzy & koszt $M^2$ i mało przykładów & E5 \\
+    LLM-only & wiedza i elastyczny prompt & koszt, zmienność, prywatność & E7 \\
+    hybryda & selektywne użycie LLM & błędna kalibracja selektora & E6 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Proste reguły są właściwe tam, gdzie nazwy własne i terminy definiowane powtarzają się dosłownie. Nie rozwiązują zaimków, elipsy ani przejścia od nazwy strony do roli procesowej. Regresja par potrafi ważyć kilka sygnałów i pozostaje łatwa do audytu. Nadal ocenia relacje lokalnie, więc domknięcie błędnej krawędzi może scalić dwie encje.
+
+Modele end-to-end uczą detekcję i klastrowanie wspólnie. Osiągnięcia SpanBERT i późniejszych systemów pokazują siłę wyspecjalizowanego pretrainingu i globalnego kontekstu \cite{joshi_2020_spanbert,otmazgin_2023_lingmess}. Maverick demonstruje, że projekt architektury może radykalnie zmniejszyć koszt bez rezygnacji z jakości na badanym benchmarku \cite{martinelli_2024_maverick}. Jest to ważna alternatywa dla dodawania autokodera: poprawy efektywności można szukać bez osobnego celu rekonstrukcyjnego.
+
+Generowanie sekwencji usuwa ręczny dekoder klastrów, ale wymaga długiego wyjścia i odpornego odwzorowania nazw na wzmianki. Modele ASP i Link-Append pokazują możliwości tej rodziny na OntoNotes \cite{liu_2022_asp,bohnet_2023_linkappend}. W dokumencie prawnym dodatkowym ryzykiem jest pominięcie identyfikatora lub wygenerowanie tekstu niezgodnego ze schematem. Adapter projektu odrzuca takie odpowiedzi, co zwiększa bezpieczeństwo kosztem recall.
+
+\section{Kiedy autokoder może wygrywać}
+
+DAE ma największe uzasadnienie wtedy, gdy dostępny jest duży, legalnie używalny zbiór nieetykietowanych tekstów domenowych, a złotych klastrów jest mało. Rekonstrukcja zaburzonego embeddingu może nauczyć stabilności wobec wariantów fleksyjnych, szumu OCR i lokalnych różnic stylu. Warunkiem jest jednak to, by reprezentacja wejściowa zawierała sygnał potrzebny do koreferencji, a wąskie gardło go nie usuwało.
+
+Drugim przypadkiem jest przesunięcie domenowe. Jeżeli ten sam enkoder daje mniej stabilne embeddingi dla ról procesowych, cytatów i długich definicji niż dla tekstu ogólnego, pretraining DAE może dostosować geometrię bez ręcznej anotacji klastrów. Korzyść należy mierzyć interakcją w E8: poprawa E4 względem E3 powinna być większa na prawie niż na PCC. Sama poprawa rekonstrukcji nie wystarcza.
+
+Macierzowy U-Net może wygrywać, gdy lokalne bloki macierzy relacji mają powtarzalną strukturę: długa seria wzmianek tej samej strony, dwa równoległe łańcuchy ról albo skupienie cytatu. Skip-connections zachowują szczegóły par, a most agreguje szerszy kontekst. Potencjalna przewaga jest najbardziej związana z LEA, ponieważ błędy dużych encji mają większą wagę.
+
+Żaden z tych warunków nie został potwierdzony w próbie zredukowanej. E4 i E5 przegrały z E3, a generator nie reprezentował języka ani przesunięcia domenowego. Można więc mówić o warunkowej racji projektowej, nie o empirycznej przewadze autokodera.
+
+\section{Kiedy autokoder przegrywa}
+
+Autokoder przegrywa, gdy cel rekonstrukcji konkuruje z celem relacyjnym. Wierne odtworzenie embeddingu może zachowywać temat, styl i cechy powierzchniowe, które nie rozstrzygają tożsamości encji. Przy zbyt dużej wadze $\lambda_{rec}$ gradient klasyfikacji par ma mniejszy wpływ. Przy zbyt małej wadze dodatkowy dekoder zwiększa koszt bez efektu regularizacyjnego. Ablacja A6 rozdziela te scenariusze.
+
+Wąskie gardło może również usunąć rzadki, lecz decydujący sygnał, na przykład negację roli, zmianę mówcy albo wskaźnik cytatu. DAE optymalizuje średni błąd wszystkich wymiarów, a nie koszt konkretnego nadmiernego scalenia. W systemie prawnym taki pojedynczy błąd może zmienić interpretację podmiotu obowiązku.
+
+U-Net przegrywa przy małej liczbie dokumentów, niestabilnym porządku wzmianek i dominacji paddingu. Translacyjna regularność obrazu nie musi odpowiadać macierzy, której osie są uporządkowane tekstowo. Przesunięcie wzmianki zmienia cały wiersz i kolumnę. Koszt pamięci rośnie kwadratowo z $M$, a kara przechodniości może rosnąć sześciennie. Zredukowany E5, mający największy rozrzut seedów, jest zgodny z tym ryzykiem, lecz go nie dowodzi.
+
+Autokoder jest też nieuzasadniony, gdy reguły domenowe lub lekka głowica osiągają wymagany poziom jakości. Wtedy dodatkowy pretraining, checkpoint i diagnostyka powiększają powierzchnię awarii. Idealny E2 w generatorze jest skrajną ilustracją: dodanie głębokiego modelu do danych z bezpośrednią cechą klastra nie daje wartości.
+
+\section{Autokoder a LLM}
+
+LLM może rozstrzygać przypadki wymagające wiedzy świata, interpretacji roli i integracji odległych fragmentów. Badania zero-shot i few-shot wskazują jednak zależność od promptu, modelu i demonstracji \cite{gan_2024_llm_coref,sajid_2025_fewshot}. Wyniku mini-testu lub koreferencji zdarzeń nie można przenieść na pełny polski test encji. Ponadto zewnętrzne API wprowadza opóźnienie, koszt i ryzyko ujawnienia treści.
+
+DAE ma stały koszt po treningu, działa lokalnie i może być uruchomiony bez wysyłania dokumentu. Nie ma jednak szerokiej wiedzy LLM. Własne wyniki nie pozwalają odpowiedzieć, która metoda wygrywa jakościowo: E4 używał danych syntetycznych, a E7 nie został wykonany. Każde bezpośrednie stwierdzenie przewagi byłoby niepoparte wspólnym testem.
+
+W literaturze system GLaRef pokazał, że wariant parowy może osiągnąć zbliżoną jakość przy mniej niż 10\% kosztu wariantu generatywnego w konkretnym ustawieniu CRAC 2025 \cite{seminck_2025_glaref}. Jest to argument za selektywnością, nie liczba oczekiwana dla projektu. Koszt zależy od modelu, cennika, długości promptu i liczby ponowień.
+
+\section{Czy hybryda ma sens}
+
+Hybryda ma sens, jeśli spełnione są jednocześnie trzy warunki. Po pierwsze, lokalny model musi mieć dobrze skalibrowany sygnał niepewności lub anomalii. Po drugie, LLM musi poprawiać właśnie wybrane przypadki częściej, niż psuje poprawne decyzje. Po trzecie, redukcja liczby zapytań musi rekompensować koszt selektora i opóźnienie.
+
+Margines dwóch najlepszych poprzedników wykrywa konkurencyjne decyzje, a błąd rekonstrukcji sygnalizuje wzmiankę odległą od rozkładu DAE. Sygnały są komplementarne, ale mogą być źle skalibrowane. Wysoki błąd rekonstrukcji może wynikać z rzadkiej formy, która jest łatwa koreferencyjnie; mały margines może dotyczyć dwóch błędnych kandydatów. Progi należy dobrać na dev, a wykres coverage--quality pokazać dla pełnego zakresu budżetu.
+
+E6 wymaga co najmniej 80\% mniej zapytań niż LLM-only bez straty CoNLL. Kryterium zapobiega uznaniu hybrydy za sukces tylko dlatego, że naśladuje kosztowny wariant. Potrzebna jest też analiza bezpieczeństwa: tekst z PII nie może opuścić środowiska, a awaria schematu musi pozostawić lokalną predykcję. Bez E6 i E7 sens hybrydy pozostaje hipotezą implementowalną, lecz niezweryfikowaną.
+
+\section{Scenariusze decyzji projektowej}
+
+W scenariuszu pierwszym priorytetem jest pełna lokalność i niski koszt, a dostępne są tylko nieliczne adnotacje. Należy wtedy rozpocząć od E1 i E2, następnie ocenić E3 z zamrożonym enkoderem. DAE warto dodać dopiero po potwierdzeniu, że istnieje legalny korpus domenowy i że rekonstrukcja na dev koreluje z poprawą relacji. LLM zostaje wyłączony ze względu na prywatność.
+
+W scenariuszu drugim kluczowy jest recall encji w długich dokumentach. Można dopuścić U-Net, jeżeli analiza macierzy pokazuje powtarzalne bloki, a limit $M$ nie usuwa ważnych wzmianek. Wynik należy kontrolować LEA i liczbą nadmiernych scaleń, nie samym CoNLL. Jeśli koszt macierzy przekracza budżet, bardziej naturalną alternatywą jest rzadkie generowanie kandydatów i lekka głowica globalna.
+
+W scenariuszu trzecim dopuszczalne jest zewnętrzne API, ale liczba zapytań jest ograniczona. Najpierw trzeba wyznaczyć krzywą jakości LLM-only na zaudytowanym podzbiorze. Następnie selektor hybrydowy powinien być oceniony dla kilku budżetów, w tym zera i pełnego pokrycia. Sens ma punkt Pareto: żadna inna konfiguracja nie daje wyższego CoNLL przy mniejszej liczbie tokenów. Sam wynik jednego budżetu 16 nie wystarcza.
+
+W scenariuszu czwartym wymagane są powtarzalność i możliwość audytu przez człowieka. Preferowane są jawne cechy, lokalny checkpoint i zapis każdej krawędzi prowadzącej do scalenia. Odpowiedź LLM może być sugestią dla anotatora, ale nie jedynym śladem decyzji. Błąd rekonstrukcji może służyć kolejce przypadków do ręcznej kontroli, nawet jeżeli nie poprawia automatycznego CoNLL.
+
+Te scenariusze pokazują, że pytanie o najlepszy model nie ma jednej odpowiedzi niezależnej od ograniczeń. Architektura powinna być wybierana po zdefiniowaniu kosztu błędu, polityki danych i budżetu obliczeń. Protokół E1--E8 umożliwia taki wybór, ponieważ rozdziela sygnał jakości, transfer domenowy i koszt zewnętrznej usługi.
+
+\section{Zagrożenia dla trafności}
+
+\subsection{Trafność wewnętrzna}
+
+Modele różnią się liczbą parametrów i czasem optymalizacji. Wspólny enkoder, split i scorer ograniczają to zagrożenie, ale DAE ma dodatkowy dekoder, a U-Net inną indukcyjną strukturę. Dobór progu i checkpointu po teście zawyżyłby wynik; dlatego wszystkie decyzje muszą pochodzić z dev. Pięć seedów ogranicza wpływ inicjalizacji, lecz nie zastępuje kontroli hiperparametrów.
+
+\subsection{Trafność konstruktu}
+
+CoNLL F1 jest średnią trzech miar i może ukrywać nadmierne scalanie. LEA, BLANC, detekcja wzmianek i analiza typów uzupełniają obraz. Nadal nie mierzą skutku prawnego błędu ani poprawności wyjaśnienia LLM. Błąd rekonstrukcji nie jest automatycznie niepewnością koreferencyjną; jego użycie w selektorze wymaga kalibracji.
+
+\subsection{Trafność zewnętrzna}
+
+Próba syntetyczna nie reprezentuje polskiej fleksji, zer, cytatów ani długości dokumentów. Polish-PCC nie reprezentuje całej praktyki prawnej, a planowane 24 orzeczenia nie obejmą wszystkich sądów i rodzajów spraw. Wynik zamkniętego LLM może zmienić się po aktualizacji bez zmiany nazwy marketingowej. Wnioski należy ograniczyć do zamrożonych danych i wersji.
+
+\subsection{Trafność statystyczna i reprodukcyjna}
+
+Mały test daje szerokie przedziały i niestabilny bootstrap. Wielokrotne porównania zwiększają ryzyko fałszywej dodatniości, stąd korekta Holma. Zapis seedów, wersji, surowego stdout scorera i checkpointów umożliwia odtworzenie wykonanych prób. Pełna reprodukcja LLM zależy jednak od dostawcy, a reprodukcja danych prawnych od zachowania manifestu licencji i procedury anonimizacji.
+
+\section{Wniosek porównawczy}
+
+Na obecnym etapie autokodery nie wykazały przewagi nad lekką kontrolą; w próbie syntetycznej uzyskały niższe wyniki. Nie wykonano wspólnego porównania z LLM, dlatego nie ustalono zwycięzcy jakościowego ani kosztowego. DAE pozostaje uzasadnione jako test hipotezy o wykorzystaniu nieetykietowanego tekstu i przesunięciu domenowym. U-Net pozostaje testem hipotezy o strukturze macierzy relacji. Hybryda ma sens tylko pod warunkami mierzalnej poprawy wybranych przypadków, redukcji co najmniej 80\% zapytań i zachowania prywatności.
+
+Najsilniejszym wynikiem pracy na tym etapie nie jest ranking modeli, lecz jawna granica wiedzy. Pokazano działający, porównywalny potok i negatywną kontrolę syntetyczną. Nie zastąpiono brakujących danych prawnych i wywołań LLM liczbami pozornymi. Ostateczne przyjęcie lub odrzucenie tezy wymaga wykonania E4--E8 na zamrożonych danych naturalnych zgodnie z protokołem.

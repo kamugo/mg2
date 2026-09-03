@@ -1,0 +1,18 @@
+The scorer is evaluating coreferential mentions, singletons, zeros (using dependent match method) using exact match evaluation setting.
+The following metrics will be evaluated: muc, bcub, ceafe, lea, blanc
+
+muc
+Recall: 60.53  Precision: 51.09  F1: 55.41
+bcub
+Recall: 63.98  Precision: 58.07  F1: 60.88
+ceafe
+Recall: 59.16  Precision: 58.68  F1: 58.92
+lea
+Recall: 52.73  Precision: 50.01  F1: 51.33
+blanc
+Recall: 51.59  Precision: 43.11  F1: 46.91
+CoNLL score: 58.40
+
+--- mention detection ---
+mention
+Recall: 71.78  Precision: 67.63  F1: 69.65

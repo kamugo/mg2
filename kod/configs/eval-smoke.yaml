@@ -1,0 +1,4 @@
+mode: synthetic
+seed: 20260903
+bootstrap_samples: 500
+output: ../wyniki/s06-internal-smoke.json

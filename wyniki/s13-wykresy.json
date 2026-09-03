@@ -1,0 +1,21 @@
+{
+  "quality": {
+    "thesis": "Na wspólnym teście syntetycznym warianty E4 i E5 nie przewyższają E3.",
+    "synthetic_data": true,
+    "files": [
+      "C:\\Users\\Kamil\\mg2\\praca\\rysunki\\s13-jakosc-syntetyczna.pdf",
+      "C:\\Users\\Kamil\\mg2\\praca\\rysunki\\s13-jakosc-syntetyczna.png"
+    ]
+  },
+  "latent": {
+    "thesis": "W wybranym dokumencie syntetycznym kody DAE zachowują rozróżnienie złotych encji.",
+    "synthetic_data": true,
+    "mentions": 8,
+    "entities": 2,
+    "perplexity": 3.5,
+    "files": [
+      "C:\\Users\\Kamil\\mg2\\praca\\rysunki\\s13-tsne-latent-syntetyczny.pdf",
+      "C:\\Users\\Kamil\\mg2\\praca\\rysunki\\s13-tsne-latent-syntetyczny.png"
+    ]
+  }
+}

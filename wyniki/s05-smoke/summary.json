@@ -1,0 +1,11 @@
+{
+  "variant": "dae",
+  "seed": 20260903,
+  "examples": 20,
+  "epochs": 1,
+  "trainable_parameters": 2025,
+  "final_loss": 1.195380687713623,
+  "device": "cpu",
+  "peak_gpu_memory_bytes": null,
+  "synthetic_data": true
+}

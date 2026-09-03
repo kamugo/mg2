@@ -1,0 +1,66 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda": "12.4",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "seeds": [
+      20260903,
+      20260917,
+      20261001,
+      20261015,
+      20261029
+    ],
+    "train_data_seed": 700001,
+    "test_data_seed": 700002,
+    "train_documents": 24,
+    "test_documents": 12,
+    "synthetic_data": true,
+    "cublas_workspace_config": ":4096:8",
+    "corefud_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590"
+  },
+  "aggregates": [
+    {
+      "experiment": "E1",
+      "completed_runs": 1,
+      "conll_f1_mean": 0.9708,
+      "conll_f1_std": 0.0,
+      "lea_f1_mean": 0.9682999999999999,
+      "lea_f1_std": 0.0
+    },
+    {
+      "experiment": "E2",
+      "completed_runs": 1,
+      "conll_f1_mean": 1.0,
+      "conll_f1_std": 0.0,
+      "lea_f1_mean": 1.0,
+      "lea_f1_std": 0.0
+    },
+    {
+      "experiment": "E3",
+      "completed_runs": 5,
+      "conll_f1_mean": 0.94632,
+      "conll_f1_std": 0.032647542020801494,
+      "lea_f1_mean": 0.94034,
+      "lea_f1_std": 0.036380324352594764
+    },
+    {
+      "experiment": "E4",
+      "completed_runs": 5,
+      "conll_f1_mean": 0.85544,
+      "conll_f1_std": 0.0284179168835437,
+      "lea_f1_mean": 0.8239599999999999,
+      "lea_f1_std": 0.03219608671873022
+    },
+    {
+      "experiment": "E5",
+      "completed_runs": 5,
+      "conll_f1_mean": 0.8926999999999999,
+      "conll_f1_std": 0.05866310595254909,
+      "lea_f1_mean": 0.87164,
+      "lea_f1_std": 0.0706556650241154
+    }
+  ]
+}

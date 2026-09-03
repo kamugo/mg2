@@ -1,0 +1,12 @@
+torch>=2.2
+transformers>=4.40
+datasets>=2.19
+numpy>=1.26
+scikit-learn>=1.4
+PyYAML>=6.0
+scipy>=1.11
+matplotlib>=3.8
+stanza>=1.10
+peft>=0.17
+pypdf>=5.0
+udapi>=0.4

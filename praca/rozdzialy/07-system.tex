@@ -1,0 +1,151 @@
+\chapter{Projekt i implementacja systemu}
+\label{chap:system}
+
+System zaprojektowano jako zestaw wymiennych modułów korzystających ze wspólnej reprezentacji danych i wspólnego dekodera klastrów. Dzięki temu wariant bez autokodera, DAE oraz U-Net mogą zostać porównane bez zmiany splitu, scorera i procedury treningowej. Implementację wykonano w Pythonie 3.11 i PyTorch, a parametry eksperymentów przeniesiono do plików YAML. W rozdziale opisano przepływ danych, architektury, funkcje strat, uczenie oraz mechanizmy odtwarzalności.
+
+\section{Architektura potoku}
+\label{sec:architektura-potoku}
+
+Wejściem jest dokument po konwersji z CorefUD. Warstwa danych zachowuje słowa, subwordy, globalne identyfikatory wzmianek i maski okien. Enkoder językowy tworzy dla każdej kandydackiej wzmianki wektor $h_i\in\mathbb{R}^{768}$. Reprezentacja łączy stany granic oraz agregację wnętrza, a głowa pozostaje powiązana z indeksem słowa.
+
+Na następnym etapie wykonywany jest jeden z trzech wariantów. Baseline rzutuje $h_i$ bez rekonstrukcji i ocenia pary. DAE koduje oraz rekonstruuje $h_i$, po czym scorer pracuje na kodzie. U-Net nie korzysta bezpośrednio ze scorera wektorowego, lecz segmentuje wielokanałową macierz par. Wszystkie warianty zwracają logity relacji o kształcie $B\times M\times M$.
+
+Maska wskazuje prawdziwe wzmianki, padding i dopuszczalny kierunek pary. Podczas uczenia strata jest liczona na dolnym trójkącie bez diagonali, aby ta sama symetryczna relacja nie występowała dwukrotnie. Podczas dekodowania prawdopodobieństwa są progowane, a union-find tworzy składowe spójne. Próg dobiera się tylko na dev.
+
+Dokument dłuższy od wejścia enkodera jest reprezentowany przez nachodzące okna. Ta sama wzmianka zachowuje globalny identyfikator. Dla pary ocenionej w kilku oknach wybiera się maksimum skalibrowanego prawdopodobieństwa. Dekoder uruchamia się osobno dla każdego dokumentu, co technicznie uniemożliwia utworzenie encji między dokumentami.
+
+Tabela~\ref{tab:tensory-systemu} przedstawia główne tensory. $B$ oznacza batch, $M$ limit wzmianek, $D$ wymiar embeddingu, $F$ liczbę cech par, a $C$ kanały macierzy.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Główne tensory interfejsu modelu}
+  \label{tab:tensory-systemu}
+  \begin{tabular}{p{0.30\textwidth}p{0.21\textwidth}p{0.39\textwidth}}
+    \toprule
+    Tensor & Kształt & Znaczenie \\
+    \midrule
+    \texttt{mention\_embeddings} & $B\times M\times D$ & kontekstowe reprezentacje wzmianek \\
+    \texttt{pair\_features} & $B\times F\times M\times M$ & odległość i zgodność par \\
+    \texttt{matrix\_features} & $B\times C\times M\times M$ & wejście segmentacyjne U-Net \\
+    \texttt{valid\_mentions} & $B\times M$ & maska prawdziwych pozycji \\
+    \texttt{target} & $B\times M\times M$ & złota macierz tożsamości \\
+    \texttt{logits} & $B\times M\times M$ & symetryczne oceny modelu \\
+    \texttt{latent} & $B\times M\times K$ & opcjonalny kod wzmianki \\
+    \texttt{reconstruction} & $B\times M\times D$ & opcjonalna rekonstrukcja DAE \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Wariant kontrolny bez autokodera}
+\label{sec:system-baseline}
+
+Kontrola neuronowa rzutuje embedding $D$-wymiarowy do przestrzeni $K$ przez warstwę liniową, normalizację warstwową i GELU. Nie rekonstruuje wejścia. Dla pary $(i,j)$ budowany jest wektor
+\[
+q_{ij}=[z_i;z_j;z_i\odot z_j;|z_i-z_j|;f_{ij}],
+\]
+gdzie $f_{ij}$ zawiera jawne cechy relacyjne. Dwuwarstwowa sieć kończy się jednym logitem. Macierz jest symetryzowana przez średnią logitu i jego transpozycji.
+
+Wariant ma taki sam wymiar latentny i taką samą głowicę jak DAE. Różni się wyłącznie brakiem dekodera, szumu i celu rekonstrukcyjnego. Jest zatem właściwą kontrolą PB1, w odróżnieniu od porównania z większym modelem o innym enkoderze.
+
+Symetryzacja jest wykonywana przed stratą. Nie narzuca przechodniości; ta powstaje dopiero w dekoderze. Rozdzielenie pozwala policzyć naruszenia w surowej macierzy oraz ocenić, czy kara globalna wnosi korzyść.
+
+\section{Odszumiający autokoder wzmianek}
+\label{sec:system-dae}
+
+DAE ma układ 768--384--128--384--768. Koder zawiera warstwę liniową, LayerNorm, GELU, dropout, drugą projekcję i normalizację kodu. Dekoder odtwarza wymiar wejścia przez analogiczną ścieżkę. W czasie ewaluacji zakłócenie jest wyłączone.
+
+Podczas treningu niezależnie maskuje się 15\% wymiarów oraz dodaje szum Gaussa o odchyleniu 0,01. Ustawienia są parametrami YAML, a nie stałymi ukrytymi w pętli. Plan domenowy przewiduje również maskowanie części cech morfosyntaktycznych, gdy staną się osobnym segmentem wejścia.
+
+Rekonstrukcja łączy błąd $L_1$ i stratę cosinusową na prawdziwych wzmiankach:
+\[
+\mathcal{L}_{rec}
+=
+\lVert h-\hat h\rVert_1
++1-\cos(h,\hat h).
+\]
+Wspólny cel ma postać
+\[
+\mathcal{L}_{C}
+=\mathcal{L}_{edge}
++\lambda_{rec}\mathcal{L}_{rec}.
+\]
+W implementacji komponent cosinusowy jest częścią funkcji rekonstrukcji, a waga z YAML steruje całością. Padding nie uczestniczy w obliczeniu.
+
+Scorer otrzymuje kod $z$ o wymiarze 128 oraz identyczne cechy par co kontrola. Pretraining i fine-tuning mogą być rozdzielone checkpointem. W obecnym potoku syntetycznym wykonywany jest wspólny trening techniczny; nie zastępuje on planowanego domenowego pretrainingu na prawdziwych embeddingach.
+
+\section{Segmentacja macierzy przez U-Net}
+\label{sec:system-unet}
+
+Macierz wejściowa ma domyślnie osiem kanałów. Obejmuje podobieństwo embeddingów, zgodność rodzaju, liczby i osoby, odległość tokenową i zdaniową, zgodność głowy lub lematu oraz oceny pojedynczych wzmianek. W implementacji syntetycznej liczba kanałów jest konfigurowalna, dzięki czemu test nie wymaga prawdziwego taggera.
+
+Kompaktowy U-Net zawiera dwa poziomy zmniejszania rozdzielczości i most. Blok składa się z dwóch splotów $3\times3$, GroupNorm i GELU. Max-pooling zmniejsza rozdzielczość, a splot transponowany ją odtwarza. Mapy z enkodera są konkatenowane z odpowiadającymi poziomami dekodera. Ostatni splot $1\times1$ zwraca jeden kanał.
+
+Jeżeli $M$ nie jest podzielne przez cztery, wejście jest tymczasowo dopełniane. Wynik zostaje przycięty do pierwotnego rozmiaru i symetryzowany:
+\[
+Z\leftarrow\frac{Z+Z^\top}{2}.
+\]
+Dopełnienie jest wyłączone z maski straty.
+
+Funkcja celu ma trzy składniki:
+\[
+\mathcal{L}_{A}
+=
+\mathcal{L}^{w}_{BCE}
++\lambda_{dice}\mathcal{L}_{Dice}
++\lambda_{tri}\mathcal{L}_{trans}.
+\]
+Ważona BCE zwiększa koszt błędu dodatnich, rzadkich krawędzi. Dice mierzy miękkie pokrycie dodatniej maski. Kara przechodniości wykorzystuje prawdopodobieństwa trójek i penalizuje dwie silne krawędzie bez trzeciej. Obliczenie jest sześcienne względem $M$, dlatego limit kandydatów i ablacja $\lambda_{tri}=0$ są ważne dla profilowania.
+
+Projektowy U-Net ma kanały 32--64--128 i mniej niż milion parametrów samego modułu. Szacunki 6--10 GB dla zamrożonego enkodera oraz 14--20 GB przy wspólnym strojeniu nie są pomiarami. Kod zapisuje rzeczywistą wartość \texttt{torch.cuda.max\_memory\_allocated}; dopiero ona może trafić do wyników.
+
+\section{Selektywna hybryda}
+\label{sec:system-hybryda}
+
+Hybryda działa nad logitami DAE. Dla anafory sortuje wcześniejszych kandydatów i liczy margines dwóch najlepszych ocen. Mały margines oznacza niepewność decyzji. Drugim sygnałem jest błąd rekonstrukcji wzmianki, interpretowany jako odległość od rozkładu poznanego przez DAE.
+
+Klasa \texttt{HybridSelector} wybiera przypadki poniżej progu marginesu lub powyżej opcjonalnego progu błędu rekonstrukcji, porządkuje je rosnąco według marginesu i malejąco według błędu, a następnie ogranicza listę do maksymalnej liczby kandydatów. Domyślny budżet projektu wynosi 16 na dokument. Sam selektor nie wykonuje wywołania sieciowego, co oddziela politykę wyboru od dostawcy LLM.
+
+Adapter API wysyła instrukcję, tekst po audycie oraz listę identyfikatorów wzmianek. W zero-shot lista demonstracji jest pusta, a w few-shot zawiera przykłady wyłącznie z train. Odpowiedź ma format JSON z identyfikatorem anafory oraz poprzednika albo \texttt{null}. Brak klucza środowiskowego, niepoprawny schemat lub obcy identyfikator przerywa decyzję zewnętrzną.
+
+Warstwa LLM nie ma trenowanych parametrów w lokalnym modelu. Koszt mierzy się wywołaniami, tokenami i opóźnieniem. Tekst z potencjalnym PII nie jest wysyłany. Jeśli kontrola nie przejdzie, zachowuje się predykcję lokalną.
+
+\section{Uczenie}
+\label{sec:uczenie-systemu}
+
+Pętla treningowa tworzy dataset z pliku tensorowego albo generatora syntetycznego. DataLoader używa osobnego generatora z seedem. AdamW otrzymuje learning rate i weight decay z YAML. Obsługiwane są akumulacja gradientu, clipping normy, mixed precision i automatyczny wybór CPU/CUDA.
+
+Seedy są ustawiane dla Pythona, NumPy i PyTorch. Deterministyczny tryb wyłącza benchmark cuDNN oraz ustawia przestrzeń roboczą CuBLAS. Każdy krok zapisuje epokę, numer i stratę do JSONL. Po treningu powstaje checkpoint ze stanem modelu, konfiguracją i seedem oraz podsumowanie z liczbą parametrów, końcową stratą, urządzeniem i szczytem pamięci.
+
+Generator syntetyczny tworzy prototypy klastrów, embeddingi z szumem i złotą macierz. Służy tylko do testów kształtu i przepływu gradientu. Flaga \texttt{synthetic\_data} trafia do raportu, aby techniczna liczba nie została pomylona z wynikiem badawczym.
+
+\section{Konfiguracja, testy i odtwarzalność}
+\label{sec:odtwarzalnosc-systemu}
+
+Pliki \texttt{baseline.yaml}, \texttt{dae.yaml} i \texttt{matrix\_unet.yaml} zawierają wymiary, dane, parametry treningu i wagi strat. \texttt{smoke.yaml} zmniejsza wymiar do 32 i uruchamia 20 przykładów na CPU. Konfiguracje pełne wskazują plik tensorów zamiast cichego tworzenia danych.
+
+Testy sprawdzają kształty wszystkich wariantów, symetrię wyjścia, limit selektora i rzeczywisty krok treningu. Osobny zestaw kontroluje metryki, bootstrap, parser oficjalnego scorera i baseline’y. Pinned scorer jest pobierany przez skrypt i weryfikowany pełnym hashem commitu.
+
+Tabela~\ref{tab:artefakty-systemu} wskazuje główne artefakty reprodukcji.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Artefakty implementacji i ich funkcje}
+  \label{tab:artefakty-systemu}
+  \begin{tabular}{p{0.39\textwidth}p{0.51\textwidth}}
+    \toprule
+    Artefakt & Funkcja \\
+    \midrule
+    \path{src/models/coreference.py} & DAE, scorer par, U-Net i selektor \\
+    \texttt{train.py} & trening, straty, seedy, logi i checkpoint \\
+    \texttt{eval.py} & ewaluacja sterowana YAML \\
+    \path{src/eval/official.py} & izolowane wywołanie CorefUD scorer \\
+    \path{src/eval/istotnosc.py} & bootstrap dokumentowy i porównanie sparowane \\
+    \path{src/baselines} & reguła, regresja, Stanza i LLM \\
+    \path{scripts/run_reduced_experiments.py} & zredukowane E1--E5 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Podsumowanie}
+
+Zaimplementowano wspólny interfejs dla kontroli, DAE i U-Net, symetryczne logity oraz dokumentowy dekoder klastrów. DAE uczy rekonstrukcji zaburzonych embeddingów, U-Net segmentuje macierz relacji, a selektor ogranicza użycie LLM. Konfiguracje, seedy, logi, checkpointy i przypięty scorer tworzą podstawę odtwarzalności. Następny rozdział opisuje protokół, który oddziela techniczną weryfikację od eksperymentów rozstrzygających.

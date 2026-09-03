@@ -1,0 +1,11 @@
+{
+  "variant": "matrix",
+  "seed": 20260903,
+  "examples": 24,
+  "epochs": 3,
+  "trainable_parameters": 30001,
+  "final_loss": 0.6081694960594177,
+  "device": "cuda",
+  "peak_gpu_memory_bytes": 67914240,
+  "synthetic_data": true
+}

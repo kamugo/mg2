@@ -1,0 +1,7 @@
+mode: official
+key: tests/fixtures/s06-gold.conllu
+system: tests/fixtures/s06-system.conllu
+scorer_dir: vendor/corefud-scorer
+match: head
+keep_singletons: true
+output: ../wyniki/s06-official-smoke.json

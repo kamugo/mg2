@@ -1,0 +1,142 @@
+\chapter{Przegląd istniejących rozwiązań}
+\label{chap:przeglad}
+
+Rozwiązania koreferencji różnią się jednostką decyzji, sposobem reprezentacji dokumentu oraz procedurą tworzenia klastrów. Wczesne systemy wykorzystywały ręcznie projektowane cechy i reguły, następnie wprowadzono ranking poprzedników i reprezentację encji, a modele neuronowe umożliwiły wspólne wykrywanie wzmianek i ich łączenie. Kolejny nurt przedstawia zadanie jako generowanie struktury lub tekstu. Duże modele językowe (LLM) pozwalają ponadto wykonywać koreferencję przez instrukcję, ale nie usuwają problemu spójności formatu i kosztu. W rozdziale uporządkowano te rodziny pod kątem ich przydatności dla polskiego tekstu prawniczego. Wyniki liczbowe przytoczono wyłącznie jako opis publikacji; porównywalność ograniczają różne dane, enkodery i wersje scorerów.
+
+\section{Metody regułowe i statystyczne}
+\label{sec:metody-klasyczne}
+
+\subsection{Klasyfikacja par wzmianek}
+
+W podejściu mention-pair każda para wcześniej wykrytych wzmianek staje się przykładem klasyfikacyjnym. Cechy mogą opisywać identyczność napisów i lematów, zgodność rodzaju i liczby, odległość, typy gramatyczne oraz relację składniową. Klasyfikator zwraca decyzję binarną, z której osobna heurystyka tworzy klastry. Soon i in.\ pokazali praktyczny schemat uczenia takiego modelu na danych MUC \cite{soon_2001_machine}.
+
+Zaletami są prostota, jawne cechy i możliwość użycia taniego klasyfikatora. Model nadaje się również na punkt odniesienia: wynik pokazuje, ile informacji niesie sama zgodność lokalna bez rozbudowanego enkodera. Ograniczeniem jest brak konkurencji między kandydatami. Dwie pary oceniane niezależnie mogą otrzymać wysokie prawdopodobieństwo, mimo że prowadzą do sprzecznej struktury encji. Liczba par rośnie kwadratowo z liczbą wzmianek, a błędy detektora są przekazywane bez możliwości korekty.
+
+Klastrowanie po decyzjach parowych wymaga reguły przechodniości. Najprostsze łączenie składowych spójnych powoduje, że jedna fałszywie dodatnia krawędź może scalić dwa duże klastry. Strategia najbliższego poprzednika ogranicza liczbę połączeń, ale faworyzuje krótki dystans. Dla długiego dokumentu prawniczego oba problemy są istotne: liczba kandydatów rośnie, a prawidłowe zależności mogą przekraczać wiele akapitów.
+
+\subsection{Ranking poprzedników}
+
+Mention-ranking zastępuje zbiór niezależnych pytań jednym wyborem dla anafory. Wszystkich wcześniejszych kandydatów porównuje się w tej samej przestrzeni, a wynik wskazuje najlepszego poprzednika lub decyzję o rozpoczęciu nowej encji. Denis i Baldridge zaproponowali ponadto wyspecjalizowane rankery dla zaimków, nazw i deskrypcji \cite{denis_2008_specialized}. Według publikacji ranking i specjalizacja poprawiły miary MUC, B³ i CEAF na ACE o ponad trzy punkty procentowe względem użytych modeli bazowych.
+
+Ranking lepiej odpowiada asymetrii zadania: anafora wybiera jeden punkt zaczepienia, choć w złotym klastrze może mieć kilka poprawnych wcześniejszych wzmianek. Nadal jest to jednak decyzja lokalna. Klaster powstaje dopiero po połączeniu wybranych krawędzi, a model nie ocenia bezpośrednio jakości całej partycji. Osobne modele typów mogą wykorzystywać właściwe sygnały, lecz wymagają poprawnego rozpoznania kategorii i adaptacji do polskiej anotacji.
+
+\subsection{Systemy sitowe i modele encji}
+
+System multi-pass sieve stosuje uporządkowaną listę reguł od najbardziej precyzyjnych do coraz bardziej liberalnych \cite{raghunathan_2010_sieve}. Pierwsze sita łączą na przykład identyczne nazwy, a dalsze uwzględniają zaimki lub wiedzę semantyczną. Każdy przebieg działa na klastrach utworzonych wcześniej, więc może korzystać z rosnącego kontekstu encji. Zachowanie jest interpretowalne: dla połączenia można wskazać konkretną regułę.
+
+Ta sama własność powoduje nieodwracalność błędu. Fałszywe scalenie z wczesnego sita zmienia wejście wszystkich kolejnych etapów. Reguły są ponadto związane z językiem i domeną. Polski podmiot zerowy, bogata fleksja i terminy definiowane w dokumencie wymagają innych mechanizmów niż zestaw opracowany dla angielskiego. System sitowy pozostaje wartościowym baseline'em i źródłem cech, lecz jego ręczna adaptacja jest dokładnie tym kosztem, który ma ograniczyć uczenie domenowe.
+
+Modele entity-based wprowadzają reprezentację całego tworzonego klastra. Wiseman i in.\ użyli rekurencyjnej sieci nad sekwencją wzmianek encji, a wynik klastra dołączyli do rankingu \cite{wiseman_2016_global}. Publikacja raportuje poprawę CoNLL score o 0,8 punktu wobec wcześniejszego stanu wiedzy. Model może wykryć, że kandydat jest zgodny z wieloma elementami klastra, nie tylko z ostatnią wzmianką. Sekwencyjne dekodowanie pozostawia jednak ryzyko propagacji błędów, a kolejność utworzenia encji wpływa na późniejsze decyzje.
+
+\section{Metody neuronowe}
+\label{sec:metody-neuronowe}
+
+\subsection{Modele spanowe end-to-end}
+
+Model e2e-coref Lee i in.\ usuwa obowiązek dostarczenia złotych wzmianek \cite{lee_2017_e2e}. Potencjalnym kandydatem jest każdy ciągły span do ustalonej długości. Jego reprezentacja łączy stany tokenów brzegowych, ważoną agregację wnętrza i cechy szerokości. Pierwszy scorer przycina kandydatów, a drugi ocenia możliwych poprzedników wraz z symbolem pustym. Cel marginalizuje po wszystkich poprawnych poprzednikach, dzięki czemu nie wymusza jednego arbitralnego złotego łącza.
+
+Pełna enumeracja spanów ma wysoki koszt. Liczba spanów rośnie kwadratowo z długością dokumentu, a liczba ich par jeszcze szybciej. Przycinanie jest konieczne, ale może nieodwracalnie usunąć prawidłową wzmiankę lub dalekiego poprzednika. Autorzy raportują poprawę 1,5 punktu CoNLL F1, a dla ensemble'u pięciu modeli 3,1 punktu względem wcześniejszego stanu wiedzy. Liczby dotyczą OntoNotes i nie określają oczekiwanego wyniku dla polskiego prawa.
+
+Wariant coarse-to-fine wykorzystuje tani biliniowy scorer do odrzucenia większości par przed właściwą oceną \cite{lee_2018_higher}. Rozkład poprzedników służy następnie jako uwaga aktualizująca reprezentację spanu, co przybliża wnioskowanie wyższego rzędu. Rozwiązanie zmniejsza koszt dokładnego scorera, lecz nie usuwa enumeracji spanów ani ryzyka pruning. W tabeli porównawczej systemu Maverick wariant z ELMo uzyskał 73,0 CoNLL F1 na OntoNotes; wartość ta pochodzi z wtórnego zestawienia i nie powinna być porównywana bezpośrednio z wynikami innych implementacji.
+
+SpanBERT zmienia etap pretrainingu, maskując całe spany i rekonstruując je z reprezentacji granic \cite{joshi_2020_spanbert}. Cel jest lepiej dopasowany do koreferencji niż losowe maskowanie pojedynczych tokenów. Po użyciu w c2f-coref autorzy raportują 79,6 CoNLL F1 na OntoNotes. Silniejszy enkoder poprawia reprezentację, ale nie zmienia asymptotycznego kosztu przestrzeni spanów. Nie rozwiązuje również problemu dokumentu dłuższego niż okno wejściowe.
+
+\subsection{Reprezentacje słowowe i brzegowe}
+
+Wl-coref przenosi podstawową decyzję na poziom pojedynczych słów, a granice całych wzmianek rekonstruuje później \cite{dobrovolskii_2021_word}. Liczba potencjalnych połączeń słowo--słowo ma rząd $O(n^2)$, podczas gdy jawne pary wszystkich spanów mogą prowadzić do $O(n^4)$. Oszczędność jest istotna dla długich dokumentów. Rekonstrukcja spanów stanowi jednak dodatkowe źródło błędów, zwłaszcza dla wzmianek zagnieżdżonych, nieciągłych i wielowyrazowych.
+
+S2e-coref zachowuje model end-to-end, lecz nie materializuje kosztownych reprezentacji każdego spanu i każdej pary \cite{kirstain_2021_s2e}. Scoring wykorzystuje lekkie funkcje nad tokenami początku i końca. Informacja o wnętrzu jest dostępna pośrednio przez enkoder. Podejście zmniejsza pamięć modułu koreferencji i upraszcza architekturę, ale może być słabsze dla długich wyrażeń, których główna treść nie leży na granicach.
+
+LingMess dzieli decyzje parowe na sześć kategorii językowych i stosuje wyspecjalizowane głowice obok scorera ogólnego \cite{otmazgin_2023_lingmess}. Inne cechy mogą dzięki temu dominować dla nazw, zaimków i deskrypcji. Rozdzielenie nie wymaga trenowania pełnego osobnego modelu dla każdego typu. Kosztem są dodatkowe parametry oraz reguła przypisania pary do eksperta. Dla polszczyzny zestaw kategorii powinien uwzględniać zera i lokalne role, a jego wpływ wymaga osobnej ablacji.
+
+\subsection{Efektywność jako cel architektury}
+
+Maverick rozdziela detekcję od klasyfikacji wzmianka--poprzednik i ogranicza listę kandydatów \cite{martinelli_2024_maverick}. Autorzy proponują także wariant inkrementalny. Według publikacji trening wymaga do $0{,}006\times$ pamięci wcześniejszych systemów generatywnych, a inferencja jest do $170\times$ szybsza, przy wyniku reprezentującym ówczesny stan wiedzy na CoNLL-2012. Porównanie pokazuje, że wybór reprezentacji i dekodera może mieć większy wpływ na wykonalność niż niewielka różnica średniej metryki.
+
+Tabela~\ref{tab:neuralne-coref} syntetyzuje wybrane neuronowe rozwiązania ocenione na OntoNotes. Wartości zachowano w skali punktów CoNLL F1, jednak nie tworzą one ścisłego rankingu. Różnią się rozmiarem enkodera, dodatkowymi danymi, implementacją i źródłem tabeli.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Wybrane wyniki metod neuronowych na OntoNotes według zweryfikowanych publikacji}
+  \label{tab:neuralne-coref}
+  \begin{tabular}{p{0.27\textwidth}p{0.20\textwidth}p{0.16\textwidth}p{0.27\textwidth}}
+    \toprule
+    Metoda & Reprezentacja & CoNLL F1 & Zastrzeżenie \\
+    \midrule
+    c2f-coref z ELMo & spany & 73,0 & wartość z tabeli wtórnej \\
+    SpanBERT + c2f & spany & 79,6 & kosztowny pretraining \\
+    wl-coref & słowa & 81,0 & granice rekonstruowane \\
+    s2e-coref & granice & 80,3 & wnętrze dostępne pośrednio \\
+    LingMess & pary i eksperci & 81,4 & kategorie językowe \\
+    ASP z FLAN-T5 XXL & akcje generowane & 82,5 & duży model autoregresyjny \\
+    Link-Append z mT5-XXL & akcje tekstowe & 83,3 & wynik dla języka angielskiego \\
+    seq2seq z T0-XXL & tekst znakowany & 83,2 & ryzyko zmiany tekstu \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Metody generatywne}
+\label{sec:metody-generatywne}
+
+Model generatywny odwzorowuje dokument na liniową sekwencję, z której odtwarza się wzmianki i klastry. Upraszcza interfejs uczenia, ponieważ można użyć standardowego transformera text-to-text. Trudność zostaje przesunięta do reprezentacji wyjścia. Jeden brak znacznika, powtórzony identyfikator lub zmieniony token może uniemożliwić bezstratne wyrównanie odpowiedzi z dokumentem.
+
+Autoregressive Structured Prediction (ASP) generuje jawne akcje strukturalne zamiast całego zmienionego tekstu \cite{liu_2022_asp}. Mechanizm pointer wskazuje granice wzmianki i poprzednika, a każda decyzja zależy od dokumentu oraz wcześniej utworzonej struktury. Reprezentacja zachowuje informacje potrzebne do odtworzenia klastrów, ale dekodowanie pozostaje sekwencyjne i kosztowne. Wariant FLAN-T5 XXL uzyskał według publikacji 82,5 CoNLL F1 na OntoNotes.
+
+Link-Append reprezentuje działanie trzema akcjami: wskazaniem nowej wzmianki, dołączeniem do klastra i przejściem do następnego zdania \cite{bohnet_2023_linkappend}. Stan klastrów przechodzi między zdaniami, co pomaga przy dokumentach przekraczających pojedyncze okno. Błąd wcześniejszej akcji może się jednak propagować. Autorzy podają 83,3 CoNLL F1 dla angielskiego CoNLL-2012 oraz odrębne wyniki dla arabskiego i chińskiego, co wskazuje na możliwość wielojęzycznego użycia, ale nie stanowi wyniku dla polskiego.
+
+Standardowy wariant seq2seq generuje dokument z osadzonymi znacznikami granic i identyfikatorami klastrów \cite{zhang_2023_seq2seq}. Jego zaletą jest mała liczba komponentów specyficznych dla zadania. Wadą pozostaje generowanie tokenów, które już występują w wejściu, oraz zależność kosztu od długości odpowiedzi. Raportowany wynik T0-XXL 83,2 CoNLL F1 ilustruje potencjał dużej skali, ale nie pozwala oddzielić korzyści formalizacji od korzyści rozmiaru modelu.
+
+\section{Wspólne osie porównania resolverów}
+\label{sec:osie-porownania}
+
+Opis architektury nie wystarcza do określenia kosztu. Należy rozdzielić enkoder dokumentu, wyszukiwanie kandydatów, właściwy scorer i dekoder. Dwa modele korzystające z tego samego transformera mogą różnić się o rzędy wielkości, jeśli jeden materializuje wszystkie spany i ich pary, a drugi ocenia wyłącznie słowa lub wcześniej wykryte wzmianki. Z kolei lekka głowica nie oznacza taniej inferencji, gdy dla każdego dokumentu ponownie uruchamiany jest wielki enkoder.
+
+Pierwszą osią jest miejsce detekcji. Potokowy resolver otrzymuje listę wzmianek i może zoptymalizować tylko łączenie. Model end-to-end dzieli budżet między recall kandydatów a precyzję powiązań. Porównanie tych ustawień wymaga osobnego wyniku ze złotymi wzmiankami; w przeciwnym razie nie wiadomo, czy różnica wynika ze scorera, czy z detektora. Dla podmiotów zerowych rozdzielenie jest szczególnie ważne, ponieważ sam brak węzła uniemożliwia późniejszą poprawną decyzję.
+
+Drugą osią jest kierunek i zakres decyzji. Klasyfikator par jest symetryczny na poziomie tożsamości, ale zwykle ogranicza kandydatów do wcześniejszych pozycji. Ranking jest kierunkowy i wymusza konkurencję. Model encji ocenia istniejący klaster, a segmentacja macierzy próbuje uwzględnić wiele krawędzi równocześnie. Generacja tworzy strukturę w kolejności tokenów wyjścia. Każda forma wymaga innego sposobu wymuszenia przechodniości, dlatego surowe prawdopodobieństwo par nie jest jeszcze wynikiem koreferencji.
+
+Trzecią osią jest obsługa dokumentu dłuższego niż okno. Można obcinać tekst, stosować nachodzące okna, przekazywać stan klastrów między zdaniami albo użyć enkodera długiego kontekstu. Obcięcie ma najniższy koszt, lecz systematycznie usuwa dalekie zależności. Okna powielają kodowanie wspólnych tokenów i wymagają scalania. Stan inkrementalny oszczędza pamięć, ale utrwala wcześniejsze pomyłki. Długi kontekst zmniejsza liczbę granic, lecz koszt uwagi i pamięci pozostaje wysoki.
+
+Czwartą osią jest źródło wiedzy. Cechy ręczne kodują oczekiwaną zgodność i są łatwe do audytu, reprezentacje kontekstowe przenoszą wiedzę z pretrainingu, a LLM może wykonywać wnioskowanie instrukcyjne. Korzyść większego źródła wiedzy trzeba odróżnić od korzyści samej głowicy. W eksperymencie własnym wspólny enkoder i wspólny zbiór kandydatów ograniczają to pomieszanie.
+
+Ostatnią osią jest odtwarzalność. Deterministyczna reguła może zostać uruchomiona bez zewnętrznej usługi, model neuronowy wymaga wag i wersji bibliotek, a zamknięty LLM dodatkowo zależy od identyfikatora wdrożenia, cennika i zachowania API. Z tego powodu raport metryki bez wersji artefaktów oraz kosztu nie stanowi pełnego opisu systemu.
+
+\section{LLM w koreferencji}
+\label{sec:llm-coref}
+
+\subsection{Zero-shot i few-shot}
+
+W ustawieniu zero-shot model otrzymuje definicję zadania, tekst i schemat odpowiedzi, bez przykładów uczących. Nie wymaga strojenia wag i szybko przenosi się na nową domenę, ale wynik jest wrażliwy na prompt. Gan i in.\ wskazują, że deklaratywna znajomość koreferencji nie przekłada się automatycznie na strukturę zgodną z tradycyjnym scorerem \cite{gan_2024_llm_coref}. Osobno należy zatem kontrolować poprawność formatu, granice wzmianek i decyzje referencyjne.
+
+Few-shot dodaje demonstracje wejście--odpowiedź, a chain-of-thought może dołączyć uzasadnienie. Demonstracje muszą pochodzić wyłącznie ze zbioru treningowego. Uzasadnienie ułatwia analizę, lecz zwiększa liczbę tokenów i może utrudniać parser. Dla zadania polskiego zestaw powinien pokrywać fleksję, podmiot zerowy i długą anaforę; dla prawa także terminy definiowane oraz role procesowe. Temperatura powinna wynosić zero, prompt i identyfikator modelu muszą być wersjonowane, a wynik ograniczony schematem identyfikatorów istniejących wzmianek.
+
+Eksperyment z Gemini 2.5 Pro i długim kontekstem uzyskał 61,74 CoNLL F1 na mini-teście CRAC 2025 \cite{sajid_2025_fewshot}. Jest to mini-test wielu języków, a nie pełny polski zbiór. Wartość nie może być zestawiona z tabelą OntoNotes. Pokazuje natomiast praktyczne ograniczenie: powtarzanie demonstracji i całego dokumentu w każdym wywołaniu zwiększa koszt proporcjonalnie do liczby tokenów.
+
+\subsection{Strojenie, nauczyciel i student}
+
+Pełne strojenie text-to-text pozwala nauczyć model kanonicznego formatu. Hejman i in.\ dostrajają Llama 3.1-8B, reprezentują wzmianki przez głowy i generują puste węzły \cite{hejman_2025_llama}. Model jest ekspresywny, ale osiem miliardów parametrów przekracza wygodny budżet pojedynczej karty bez kwantyzacji albo adapterów. Zbiorcze wyniki CRAC 2025 wskazują ponadto, że systemy klasyczne nadal przewyższały cztery zgłoszone systemy LLM \cite{novak_2025_crac}. Większy model nie gwarantuje poprawnej globalnej partycji.
+
+LLM może działać offline jako anotator pseudoetykiet. Badanie GPT-4 dla międzydokumentowej koreferencji zdarzeń wskazuje poziom porównywalny z przeszkolonymi anotatorami \cite{zhao_2023_gpt}. Zadanie i język są inne, dlatego nie przenosi się wartości jakości na polskie encje. Mechanizm jest jednak użyteczny: nauczyciel może oznaczać nieetykietowane dane, a mały student uczyć się na połączeniu złota i srebra. Potrzebne są progi pewności, niezależna kontrola próbki i całkowite wyłączenie testu.
+
+Racjonalizacje nauczyciela mogą stanowić dodatkowy nadzór. Nath i in.\ użyli ich w koreferencji zdarzeń \cite{nath_2024_rationale}. Uzasadnienie bywa informacyjne, ale może zawierać halucynację i nie powinno zastępować złotej etykiety. Każda pseudoetykieta musi zachować identyfikator modelu, promptu, datę i wynik walidacji. Model studenta jest oceniany wyłącznie na nietkniętym teście.
+
+F-coref pokazuje analogiczny transfer od klasycznego nauczyciela LingMess do mniejszego modelu \cite{otmazgin_2022_fcoref}. Student ma 91 mln parametrów wobec 494 mln nauczyciela, a według publikacji przetwarza 2,8 tysiąca dokumentów OntoNotes w 25 sekund na V100, podczas gdy LingMess potrzebuje 6 minut, a model AllenNLP 12 minut. Wynik wspiera ideę kosztownego uczenia offline i taniej inferencji, ale nie dowodzi, że LLM jest najlepszym nauczycielem dla polskiego prawa.
+
+\subsection{Jakość i koszt}
+
+GLaRef umożliwia względnie spójne porównanie wariantu parowego i generatywnego na teście CRAC 2025 \cite{seminck_2025_glaref}. Średnie CoNLL F1 wynosi odpowiednio 61,57 i 62,96, lecz system parowy zużywa mniej niż 10\% kosztu obliczeniowego LLM. Niewielka różnica jakości ukrywa więc ponad dziesięciokrotną różnicę kosztu. W badaniu własnym trzeba raportować tokeny wejścia i wyjścia, opóźnienie, pamięć i cenę obok metryk koreferencji.
+
+Badanie modeli instrukcyjnych na Polish Coreference Corpus jest najbliższym językowo punktem odniesienia \cite{saputa_2024_pcc_llm}. Zastosowana zgodność instrukcja--odpowiedź nie jest automatycznie równoważna CoNLL F1 innego wydania PCC. Własny baseline powinien wygenerować format możliwy do przeliczenia tym samym scorerem co modele specjalistyczne.
+
+Selektywna hybryda ogranicza wywołania LLM do przypadków niepewnych. Model lokalny wyznacza margines między najlepszymi kandydatami, a moduł rekonstrukcyjny dostarcza sygnał nietypowości. LLM otrzymuje tylko pary o małym marginesie lub wysokim błędzie rekonstrukcji. Zamknięty JSON ogranicza halucynowane identyfikatory, a klasteryzator wymusza spójność. Drugi wariant używa LLM tylko offline do pseudoetykiet, dzięki czemu inferencja nie wymaga połączenia z usługą.
+
+\section{Wnioski dla projektu}
+\label{sec:wnioski-przeglad}
+
+Przegląd ujawnia trzy podstawowe kompromisy. Modele parowe są tanie i przejrzyste, ale słabo reprezentują konkurencję oraz globalne klastry. Modele spanowe uczą pełny potok, lecz przestrzeń kandydatów jest kosztowna. Generacja upraszcza interfejs, ale wymaga dużego modelu, sekwencyjnego dekodowania i niezawodnego parsera. Żadna rodzina nie usuwa jednocześnie problemu długiego kontekstu, polskich zer i adaptacji domenowej.
+
+Dla projektu przyjęto więc wspólny enkoder oraz porównywalne lekkie głowice. Klasyfikator mention-pair i reguła head-match tworzą dolne punkty odniesienia. Model neuronowy bez autokodera jest kontrolą architektoniczną. Autokoder ma zmienić reprezentację, a nie korzystać z większego enkodera lub innego splitu. LLM-only pozostaje punktem odniesienia jakościowo-kosztowym, natomiast hybryda ma sens tylko wtedy, gdy ograniczy liczbę zapytań bez istotnej utraty jakości.
+
+\section{Podsumowanie}
+
+Przedstawiono przejście od klasyfikacji par i sit przez ranking oraz modele encji do neuronowych architektur spanowych, słowowych i generatywnych. Omówiono rolę LLM jako resolvera, nauczyciela i selektywnego eksperta. Wyniki literaturowe zachowano wraz z informacją o nieporównywalności danych i kosztu. Analiza wskazała potrzebę lekkiego, kontrolowanego modułu adaptacyjnego; podstawy autokoderów i możliwe sposoby ich przeniesienia przedstawiono w następnym rozdziale.
