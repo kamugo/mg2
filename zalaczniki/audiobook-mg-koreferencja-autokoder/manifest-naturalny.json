@@ -1,0 +1,93 @@
+{
+  "generated_at": "2026-09-03T14:41:03.560579+00:00",
+  "source": "audiobook.md",
+  "voice": "pl-PL-ZofiaNeural",
+  "rate": "-2%",
+  "pitch": "+0Hz",
+  "volume": "+0%",
+  "natural_text_processing": true,
+  "chapters": 15,
+  "word_count": 4909,
+  "files": [
+    {
+      "path": "czesci-naturalne/01-1-po-co-w-ogole-uczyc-komputer-koreferencji.mp3",
+      "bytes": 1113984,
+      "sha256": "9a27e7a87de097868b312604853fcbcf26e18c4255f8862b22c6024bda011d36"
+    },
+    {
+      "path": "czesci-naturalne/02-2-wzmianki-klastry-i-najwazniejsze-pulapki.mp3",
+      "bytes": 1283616,
+      "sha256": "fe40c16281038e5d5c4a8f8db5a6c6dd4ce348437edbe0d5445c4ab680952a93"
+    },
+    {
+      "path": "czesci-naturalne/03-3-dlaczego-jezyk-prawny-i-prawniczy-jest-wyjatkowo-trud.mp3",
+      "bytes": 1225728,
+      "sha256": "41368d6dc181cdb994450a99d2e139b98df9341e2ad97949b1303552b7476daf"
+    },
+    {
+      "path": "czesci-naturalne/04-4-jak-wczesniej-rozwiazywano-koreferencje.mp3",
+      "bytes": 1114848,
+      "sha256": "60d1c4a2667f7b7102e63bccd24d12fed116522c7bd6da41e0c33c5d060fddef"
+    },
+    {
+      "path": "czesci-naturalne/05-5-czym-jest-autokoder-i-dlaczego-u-net-pasuje-do-mapy-r.mp3",
+      "bytes": 1097424,
+      "sha256": "c671f8da7f33cafcef675e161f62a86831bdd3d9883b88a1628953094fd89d2e"
+    },
+    {
+      "path": "czesci-naturalne/06-6-jak-dokladnie-dziala-corefseg-ae.mp3",
+      "bytes": 1366416,
+      "sha256": "99b8eac89421c7acca92adad39f0ad48765785386d2e66bd4aeea430f021c465"
+    },
+    {
+      "path": "czesci-naturalne/07-7-na-czym-polega-prawny-pretrening-dae.mp3",
+      "bytes": 1161504,
+      "sha256": "da9ac35535c53957fb0a31b2700dd4b551bd0c2ebbb283530f37453dad0edea5"
+    },
+    {
+      "path": "czesci-naturalne/08-8-jakich-danych-uzyto-i-czego-w-nich-brakuje.mp3",
+      "bytes": 1192608,
+      "sha256": "60e95f9943f7a2b3675a3d349cb252af1d2e650b549c209591b786be945ea374"
+    },
+    {
+      "path": "czesci-naturalne/09-9-jak-mierzy-sie-koreferencje-i-dlaczego-jedna-liczba-n.mp3",
+      "bytes": 1127520,
+      "sha256": "12906d36689998baf565026da19b9e5c4ce3511c131231eca4aa2a3e729229ed"
+    },
+    {
+      "path": "czesci-naturalne/10-10-co-pokazaly-wykonane-eksperymenty.mp3",
+      "bytes": 1289376,
+      "sha256": "2750247610ca4b4927ae25b0e9c0f8b3a468b7c0da711af1e3fe6e71f2ad9817"
+    },
+    {
+      "path": "czesci-naturalne/11-11-co-ujawnila-proba-uzycia-oficjalnego-scorera.mp3",
+      "bytes": 1104192,
+      "sha256": "8f76385e3b5248c6e59a5b54abe378f64ad2bc63d5033eb3d5651b27130d0ef0"
+    },
+    {
+      "path": "czesci-naturalne/12-12-jak-rozumiec-zbior-srebrny-i-porownanie-z-corpipe.mp3",
+      "bytes": 1128384,
+      "sha256": "306dce1c2dab517200d57a325968347fd7d3d424c255993f78587ac1d9007618"
+    },
+    {
+      "path": "czesci-naturalne/13-13-najwazniejsze-ograniczenia-architektury-i-kodu.mp3",
+      "bytes": 1177488,
+      "sha256": "991f5f4cf7d36dee0655efa48c59c4698f71026c63bbd297fe2b4723eca19d9a"
+    },
+    {
+      "path": "czesci-naturalne/14-14-jak-doprowadzic-badanie-do-mocnego-finalu.mp3",
+      "bytes": 1190016,
+      "sha256": "a61199a8bea2d6ec4151bdb2b574e65b1c8193a63fc06b55fa0616d818e7fb6c"
+    },
+    {
+      "path": "czesci-naturalne/15-15-podsumowanie-bez-technicznego-zargonu.mp3",
+      "bytes": 827136,
+      "sha256": "b8b9cc838466137d414a6d780c3023499a196867ff030ff21e8181b0930ff0d9"
+    },
+    {
+      "path": "audiobook-pelny-naturalny.mp3",
+      "bytes": 17400240,
+      "sha256": "517999e739f59f3c129b0f5a340c9d1cb475d85c2860dbea29cf6a1ee58911f4"
+    }
+  ]
+}

@@ -12,7 +12,9 @@ przeglądu technicznego.
 
 ## Pobieranie
 
-[Pobierz pełny audiobook MP3 z GitHub Releases](https://github.com/kamugo/mg2/releases/download/audiobook-corefseg-ae-v1/audiobook-pelny.mp3).
+[Pobierz płynniejszą wersję MP3 — głos Zofia](https://github.com/kamugo/mg2/releases/download/audiobook-corefseg-ae-natural-v2/audiobook-pelny-naturalny.mp3).
+
+[Pobierz klasyczny audiobook MP3 z GitHub Releases](https://github.com/kamugo/mg2/releases/download/audiobook-corefseg-ae-v1/audiobook-pelny.mp3).
 
 Wydanie GitHub jest zalecaną drogą pobierania. Link do widoku `blob` pokazuje
 stronę HTML, natomiast powyższy adres zwraca bezpośrednio cały plik audio.
@@ -23,9 +25,12 @@ Pliki:
 - `syntezuj.py` — powtarzalny generator nagrań przez `edge-tts`;
 - `czesci/*.mp3` — osobne rozdziały;
 - `audiobook-pelny.mp3` — kompletne rozdziały połączone w ustalonej kolejności;
+- `audiobook-pelny-naturalny.mp3` — płynniejsza wersja z łagodniejszym głosem;
 - `manifest.json` — głos, tempo, rozmiary i sumy SHA-256 wygenerowanych plików.
 
-Domyślny głos to polski `pl-PL-MarekNeural`, a tempo wynosi `-5%`.
+Domyślnie generator tworzy wersję naturalną głosem `pl-PL-ZofiaNeural`, z tempem
+`-2%`, poprawioną wymową skrótów technicznych i wyraźniejszymi pauzami. Pierwsza
+wersja głosem `pl-PL-MarekNeural` pozostaje dostępna jako wydanie klasyczne.
 
 ```powershell
 python -m pip install edge-tts
@@ -35,7 +40,7 @@ python syntezuj.py
 Inny głos lub tempo:
 
 ```powershell
-python syntezuj.py --voice pl-PL-ZofiaNeural --rate=-8%
+python syntezuj.py --voice pl-PL-MarekNeural --rate=-5% --pitch=-1Hz
 ```
 
 Jeżeli rozdziały zostały już poprawnie wygenerowane, można ponownie zbudować
