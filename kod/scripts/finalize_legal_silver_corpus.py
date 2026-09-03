@@ -26,10 +26,12 @@ def sha256(path: Path) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("directory", type=Path, nargs="?", default=Path("data/processed/legal-silver-400"))
+    parser.add_argument("--corpus-name", default="legal-silver-400")
+    parser.add_argument("--expected-documents", type=int, default=400)
     args = parser.parse_args()
     root = args.directory.resolve()
-    jsonl_path = root / "legal-silver-400.jsonl"
-    conllu_path = root / "legal-silver-400.conllu"
+    jsonl_path = root / f"{args.corpus_name}.jsonl"
+    conllu_path = root / f"{args.corpus_name}.conllu"
     documents = [
         json.loads(line)
         for line in jsonl_path.read_text(encoding="utf-8").splitlines()
@@ -37,16 +39,22 @@ def main() -> int:
     ]
     blocks = document_blocks(conllu_path.read_text(encoding="utf-8"))
     doc_ids = [str(document["doc_id"]) for document in documents]
-    if len(documents) != 400 or len(set(doc_ids)) != 400 or set(doc_ids) != set(blocks):
-        raise RuntimeError("Expected the same 400 unique documents in JSONL and CoNLL-U")
+    if (
+        len(documents) != args.expected_documents
+        or len(set(doc_ids)) != args.expected_documents
+        or set(doc_ids) != set(blocks)
+    ):
+        raise RuntimeError(
+            f"Expected the same {args.expected_documents} unique documents in JSONL and CoNLL-U"
+        )
 
-    parsed = list(parse_conllu(conllu_path.open(encoding="utf-8"), "legal-silver-400"))
+    parsed = list(parse_conllu(conllu_path.open(encoding="utf-8"), args.corpus_name))
     surface_mentions = sum(
         sum(not bool(mention["is_zero"]) for mention in document["mentions"])
         for document in documents
     )
     parsed_mentions = sum(len(document["mentions"]) for document in parsed)
-    if len(parsed) != 400 or parsed_mentions != surface_mentions:
+    if len(parsed) != args.expected_documents or parsed_mentions != surface_mentions:
         raise RuntimeError(
             f"CoNLL-U round-trip mismatch: docs={len(parsed)}, mentions={parsed_mentions}/{surface_mentions}"
         )
@@ -65,7 +73,9 @@ def main() -> int:
             "".join(blocks[str(document["doc_id"])] for document in selected),
             encoding="utf-8",
         )
-    if dict(split_counts) != {"train": 320, "dev": 40, "test": 40}:
+    if sum(split_counts.values()) != args.expected_documents or not all(
+        split_counts[split] for split in ("train", "dev", "test")
+    ):
         raise RuntimeError(f"Unexpected split: {dict(split_counts)}")
 
     mention_rows: list[dict[str, object]] = []

@@ -108,8 +108,10 @@ def main() -> int:
             if line.strip()
         )
     }
-    if not (set(corpipe_docs) == set(stanza_docs) == set(rich_docs)) or len(corpipe_docs) != 400:
-        raise RuntimeError("CorPipe, Stanza and rich JSONL must contain the same 400 documents")
+    if not corpipe_docs or not (set(corpipe_docs) == set(stanza_docs) == set(rich_docs)):
+        raise RuntimeError(
+            "CorPipe, Stanza and rich JSONL must contain the same non-empty set of documents"
+        )
 
     output_docs: list[dict[str, Any]] = []
     chain_rows: list[dict[str, object]] = []
