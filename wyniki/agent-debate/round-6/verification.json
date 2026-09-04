@@ -1,0 +1,89 @@
+{
+  "round": 6,
+  "date": "2026-09-04",
+  "author_repo": "kamugo/mg2",
+  "input_repo": "kamugo/mg-koreferencja-autokoder",
+  "input_sha": "09f385eaa4df46797d344cc9013f798a05ba4434",
+  "checks": [
+    {
+      "name": "agent_a_tests",
+      "command": "python -m unittest discover -s tests -v",
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "exit_code": 0,
+      "result": "22/22 tests passed"
+    },
+    {
+      "name": "agent_b_tests",
+      "command": "python tests/run_all.py",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": "8/8 scripts passed"
+    },
+    {
+      "name": "manifest",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r5.json",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": "179 files, 0 problems"
+    },
+    {
+      "name": "python_compile",
+      "command": "python -m py_compile evaluate.py pretrain_dae.py train.py scripts/dae_copy_baseline.py scripts/score_official.py src/data/dataset.py src/data/windowing.py src/eval/metrics.py src/models/decoding.py src/models/unet2d.py tests/run_all.py tests/test_decoding.py",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": "12/12 files compiled"
+    },
+    {
+      "name": "v2_official_no_singletons",
+      "command": "ext/venv-corpipe/Scripts/python.exe ext/corefud-scorer/corefud-scorer.py -x -- runs/dev60_original.conllu runs/reinf_r5/span.pred_on_original.dev.conllu",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": {"conll": 48.18, "zero_f1": 86.35}
+    },
+    {
+      "name": "v2_official_singletons",
+      "command": "ext/venv-corpipe/Scripts/python.exe ext/corefud-scorer/corefud-scorer.py -x -s -m muc bcub ceafe lea -- runs/dev60_original.conllu runs/reinf_r5/span.pred_on_original.dev.conllu",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": {"conll": 68.30}
+    },
+    {
+      "name": "corpipe_input_zero_nodes",
+      "command": "count empty nodes and Entity fields in ext/corpipe_run/dev60_input.conllu",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": {"empty_nodes": 678, "entity_fields": 0, "positions_match_gold": true}
+    },
+    {
+      "name": "dae_checkpoint",
+      "command": "torch.load runs/dae_small_v2/best.pt and inspect state dictionaries",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": {"keys": ["cfg", "dae", "model"], "dae_state_entries": 96, "model_state_entries": 94}
+    }
+  ],
+  "confirmed": {
+    "corefseg_v2_conll_no_singletons": 48.18,
+    "corefseg_v2_conll_singletons": 68.30,
+    "corpipe_depth5": [66.07, 75.06],
+    "corpipe_depth6": [66.15, 75.19],
+    "corpipe_depth10": [66.08, 75.13],
+    "dae_delta_mean_no_singletons_pp": -0.02,
+    "dae_delta_median_no_singletons_pp": -0.13
+  },
+  "findings": [
+    "score_official.py records zeros=predicted although 678 gold empty-node positions are provided in the input",
+    "span_matrix and decoder do not preserve a discontinuous mention as one MentionKey",
+    "start-token anchors are ambiguous for mentions sharing a start",
+    "src/eval/metrics.py overwrites the new segment-aware Cluster alias with the old continuous-span alias",
+    "dev60 is a development pilot rather than an untouched confirmation set",
+    "seed 3, not seed 42, has the largest reported DAE gain"
+  ],
+  "unverified": [
+    "v2 seeds 1 and 2",
+    "generalization on PCC dev documents 61-183",
+    "maximum recall under start-anchor collisions",
+    "end-to-end empty-node position detection",
+    "v2-to-mg2 linker adapter"
+  ]
+}
