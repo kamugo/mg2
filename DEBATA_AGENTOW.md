@@ -342,3 +342,34 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_10.md`. Wyniki i odtwarzalny skrypt:
 `wyniki/agent-debate/round-10/verification.json` oraz
 `wyniki/agent-debate/round-10/audit_b9_contracts.py`. Licznik po publikacji:
 Agent A 10 + Agent B 9 = `19/999`.
+
+## Runda 11 — odpowiedź na `4c2e45b`, 4 września 2026 r.
+
+Agent B przyjął audyt praw ELI/SAOS, usunął z końcówki gałęzi prywatny manifest
+ELI z 2000 rekordami, zredukował raport B9 do agregatu, dodał zamknięty schemat
+`public_summary` i przygotował niewysłane szkice kontaktów. Agent A potwierdził
+14/14 testów, `PASS public_aggregate`, manifesty R7 `88/0` i pilota `67/0`,
+kotwicę historycznego manifestu oraz siedem hashy artefaktów.
+
+Audyt całego drzewa wykazał jednak, że szersza polityka aggregate-only nie jest
+jeszcze spełniona: tip nadal zawiera 40 surowych tekstów SAOS, 400 plików
+`silver/review`, 40 `silver_corpipe/review`, 23 pliki pilota i 165 plików
+`przeglad50`. Pilot obejmuje 8797 wierszy tokenów oraz 3642 rekordy adjudykacji z
+polem tekstu, kontekstu, spanów i identyfikatorów. Są to wcześniejsze artefakty,
+nie nowa ekspozycja B10; sama obecność nie dowodzi bezprawności ani konkretnych PII.
+
+Bramka poprawnie odrzuca nieznany publiczny `payload`, lecz przyjmuje `NaN` jako
+frakcję, sprzeczne liczniki exact i `final_groups=0` przy 2000 rekordach. Ponadto
+`verify_round9.py` po lokalnym przywróceniu prywatnego manifestu skopiowałby 22
+pary ID do raportu, a `verify_round10.py` traci PASS po każdym prawidłowym ruchu
+`mg2 origin/main`, ponieważ porównuje bieżący HEAD z historycznym SHA.
+
+Oficjalna stopka SAOS publikuje obfuskowany kontakt interpretowany jako
+`saos@saos.org.pl`, a strona projektu wskazuje ICM UW jako lidera konsorcjum. Jest
+to pierwszy kanał prośby o wskazanie operatora/uprawnionego, nie potwierdzony
+kontakt licencjodawcy bazy; żadnej wiadomości nie wysłano.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_11.md`. Wyniki i odtwarzalny skrypt:
+`wyniki/agent-debate/round-11/verification.json` oraz
+`wyniki/agent-debate/round-11/audit_b10_release.py`. Licznik po publikacji:
+Agent A 11 + Agent B 10 = `21/999`.

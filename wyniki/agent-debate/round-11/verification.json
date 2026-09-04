@@ -1,0 +1,263 @@
+{
+  "schema_version": "agent-a-round-11-verification-1.0",
+  "created_at_utc": "2026-09-04T20:30:49.0239522Z",
+  "author_repo": "https://github.com/kamugo/mg2",
+  "agent_b_repo": "https://github.com/kamugo/mg-koreferencja-autokoder",
+  "agent_b_sha": "4c2e45ba06a4ef152cddd04204896e39851d6192",
+  "previously_handled_agent_b_sha": "c58d6534cf368cafe6cf78ff0c78212177d681fa",
+  "agent_b_diff_range": "c58d6534cf368cafe6cf78ff0c78212177d681fa..4c2e45ba06a4ef152cddd04204896e39851d6192",
+  "agent_b_reply_to_sha": "34ff9b4551be5418b82b2dbdbb81cb785a746420",
+  "round": 11,
+  "counter_after_publish": {
+    "agent_a": 11,
+    "agent_b": 10,
+    "total": 21,
+    "target": 999
+  },
+  "chronology": {
+    "agent_b_round10_committed_local_time": "2026-09-04T22:13:18+02:00",
+    "agent_a_round10_sha": "2747c9789f62ef56f50a569db27f51de260e14bb",
+    "agent_a_round10_published_after_agent_b_round10": true,
+    "interpretation": "Agent B could not have answered the technical findings in A10; its 19/999 ledger was correct when B10 was published"
+  },
+  "agent_b_results_reproduced": {
+    "tests_run_all": {
+      "passed_scripts": 14,
+      "failed_scripts": 0,
+      "exit_code": 0
+    },
+    "tests_run_all_with_real_scorer": {
+      "passed_scripts": 14,
+      "failed_scripts": 0,
+      "exit_code": 0,
+      "scorer_sha256": "418dde1a0ae44538b78383bfe522d06d7db793ddb7e23d01416eae61d53b1f1c"
+    },
+    "public_summary_gate": {
+      "result": "PASS public_aggregate",
+      "exit_code": 0
+    },
+    "clean_checkout_manifests": {
+      "r7": {
+        "checked": 88,
+        "problems": 0,
+        "exit_code": 0
+      },
+      "pilot": {
+        "checked": 67,
+        "problems": 0,
+        "exit_code": 0
+      },
+      "r5": {
+        "checked": 187,
+        "missing_external_or_untracked_inputs": 5,
+        "exit_code": 1
+      },
+      "r6": {
+        "checked": 257,
+        "missing_external_or_untracked_inputs": 3,
+        "exit_code": 1
+      }
+    },
+    "verification_artifact_hashes_and_sizes": {
+      "checked": 7,
+      "mismatches": 0
+    },
+    "historical_private_manifest": {
+      "absent_from_b10_tip": true,
+      "present_in_b9_history": true,
+      "sha256": "c4fece97ccb81cf0afccf53fb080af82792d09ee6f9dad400af1caed15b73c8d",
+      "public_summary_anchor_matches": true
+    }
+  },
+  "release_gate_audit": {
+    "inputs": {
+      "release_gate_sha256": "fb27bb733652fa83f9cbbf13ab27a82b8ed243bfd36f14034833868729510d4d",
+      "public_summary_sha256": "4a4d67c58bb1c8b0c0a529d050e27bf0372dc7b60210f5be774d273a83ca712f",
+      "verify_round9_sha256": "5e90a3ea9cf74ff0c79601ae653fc677695e70203ffcd91c8e79cf487887af35"
+    },
+    "mutations": {
+      "baseline_public_summary_accepted": true,
+      "unknown_top_level_payload_accepted": false,
+      "nan_train_fraction_accepted": true,
+      "inconsistent_exact_counters_accepted": true,
+      "zero_final_groups_for_2000_records_accepted": true,
+      "controlled_manifest_unknown_full_text_key_accepted": true
+    },
+    "required_numeric_invariants": [
+      "all floating point values are finite and fractions lie in [0,1]",
+      "record_count - unique_exact_hashes = exact_duplicate_records - exact_duplicate_groups",
+      "exact_duplicate_records >= 2 * exact_duplicate_groups",
+      "nonempty population implies final_groups >= 1",
+      "unique_exact_hashes - final_groups <= accepted_near_pairs"
+    ],
+    "serialization_requirement": "json.dump(..., allow_nan=False) and parse_constant rejection",
+    "controlled_manifest_scope": "non-public structural check only; not fail-closed against unknown text fields or arbitrary PII"
+  },
+  "tracked_tip_inventory": {
+    "scope": "git tree at 4c2e45ba06a4ef152cddd04204896e39851d6192 under kod/data; counts and field names only",
+    "top_level": {
+      "agent-debate": {
+        "files": 2,
+        "bytes": 19501
+      },
+      "legal-audit": {
+        "files": 4,
+        "bytes": 14681
+      },
+      "pilot": {
+        "files": 23,
+        "bytes": 7115634
+      },
+      "przeglad50": {
+        "files": 165,
+        "bytes": 54342976
+      },
+      "saos2015": {
+        "files": 43,
+        "bytes": 750104
+      },
+      "silver": {
+        "files": 403,
+        "bytes": 40115886
+      },
+      "silver_corpipe": {
+        "files": 43,
+        "bytes": 24865057
+      }
+    },
+    "selected_artifacts": {
+      "saos2015_raw_text": {
+        "files": 40,
+        "bytes": 704974
+      },
+      "silver_review_text": {
+        "files": 400,
+        "bytes": 8493955
+      },
+      "silver_corpipe_review_text": {
+        "files": 40,
+        "bytes": 1329212
+      },
+      "pilot_all": {
+        "files": 23,
+        "bytes": 7115634
+      },
+      "przeglad50_all": {
+        "files": 165,
+        "bytes": 54342976
+      }
+    },
+    "pilot_input_token_rows": 8797,
+    "pilot_adjudication_jsonl_files": 3,
+    "pilot_adjudication_records": 3642,
+    "pilot_adjudication_sensitive_field_names": [
+      "char_segments",
+      "comment",
+      "context",
+      "doc",
+      "gold_cluster",
+      "id",
+      "surface_text"
+    ],
+    "interpretation": "the new public_summary is aggregate-only, but the repository tip does not yet satisfy the broader documented policy for tracked legal artifacts",
+    "legal_or_pii_conclusion": "none; presence of these artifacts does not by itself prove unlawful publication or specific personal data"
+  },
+  "verification_generator_limits": {
+    "verify_round9_private_branch": {
+      "method": "static branch reproduction plus inspection of the B9 historical object; the full generator was not run on a restored private manifest",
+      "private_path_preferred_when_present": true,
+      "whole_private_dedup_object_copied": true,
+      "near_pairs_with_document_ids_copied": 22,
+      "required_fix": "always project private input to the public schema before writing a public verification artifact"
+    },
+    "verify_round10": {
+      "clean_checkout_exit_code_after_agent_a_round10": 1,
+      "historical_reply_to_sha": "34ff9b4551be5418b82b2dbdbb81cb785a746420",
+      "current_agent_a_origin_main": "2747c9789f62ef56f50a569db27f51de260e14bb",
+      "moving_head_equality_condition": false,
+      "other_clean_checkout_limits": "script forces an absent local scorer path and R5/R6 retain historical external inputs",
+      "required_fix": "verify existence/identity of the historical reply commit; record the current remote only as informational provenance"
+    }
+  },
+  "saos_contact_research": {
+    "accessed": "2026-09-04",
+    "homepage": {
+      "url": "https://www.saos.org.pl/",
+      "direct_http_status": 200,
+      "published_obfuscated_contact": "saos_malpka_saos_kropka_org_kropka_pl",
+      "interpreted_email": "saos@saos.org.pl",
+      "deliverability_tested": false
+    },
+    "project_help": {
+      "url": "https://www.saos.org.pl/help/index.php",
+      "direct_http_status": 200,
+      "fact": "ICM University of Warsaw is named as consortium leader"
+    },
+    "code_repository": {
+      "url": "https://github.com/CeON/saos",
+      "revision": "b6b64ddaf3140c98ddd1b59ff8cda9b5a92c32f8",
+      "provider_field": "University of Warsaw, ICM",
+      "code_license": "GPL-3.0",
+      "data_license_inferred_from_code_license": false
+    },
+    "recommended_wording": "contact the SAOS team through the service-published address and ask them to identify the current operator, authorized data rights-holder, and applicable terms; do not label the mailbox as a confirmed data licensor"
+  },
+  "artifacts": {
+    "audit_script": {
+      "path": "wyniki/agent-debate/round-11/audit_b10_release.py",
+      "sha256": "9ef061999cd4bff4678048296716e47ac8d5e865f71765df9918e41a705c2f87"
+    },
+    "verification": "wyniki/agent-debate/round-11/verification.json",
+    "response": "ODPOWIEDZ_AGENT_A_RUNDA_11.md"
+  },
+  "commands": [
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python wyniki/agent-debate/round-11/audit_b10_release.py --agent-b-root C:/Users/Kamil/Desktop/mg --agent-a-root C:/Users/Kamil/mg2",
+      "exit_code": 0,
+      "result": "aggregate-only release gate mutations, tracked-tree inventory, B9 private-branch inspection, and moving-head condition reproduced without emitting legal text"
+    },
+    {
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b-4c2e45-8cf24bb53e3049e7a513c81aafc33aab/kod",
+      "command": "python tests/run_all.py",
+      "exit_code": 0,
+      "result": "14/14 scripts passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b-4c2e45-8cf24bb53e3049e7a513c81aafc33aab/kod",
+      "command": "python scripts/legal_release_gate.py check --input data/legal-audit/round-10/public_summary.json --mode public_aggregate",
+      "exit_code": 0,
+      "result": "PASS public_aggregate"
+    },
+    {
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b-4c2e45-8cf24bb53e3049e7a513c81aafc33aab/kod",
+      "command": "python scripts/verify_round10.py",
+      "exit_code": 1,
+      "result": "pass=false after legitimate A origin movement, plus clean-checkout external dependency limits"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "result": "51/51 tests passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python -m json.tool wyniki/agent-debate/round-11/verification.json",
+      "exit_code": 0
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "warnings_and_unverified": [
+    "No message was sent to SAOS, ELI, ICM, or any other external party.",
+    "The published SAOS mailbox was not tested for deliverability and is not confirmed as the data licensor.",
+    "No complete legal opinion or repository-wide PII review was performed.",
+    "Removing files from a Git tip would not erase already published history.",
+    "The six invalid pilot dependency trees and technical findings from Agent A round 10 remain open because B10 predates A10.",
+    "No model training, inference, scoring, or transformation of legal data was performed in this round."
+  ]
+}
