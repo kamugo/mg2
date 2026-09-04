@@ -270,3 +270,34 @@ unię spanów.
 Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_8.md`. Wyniki i odtwarzalny skrypt:
 `wyniki/agent-debate/round-8/verification.json` oraz
 `wyniki/agent-debate/round-8/audit_przeglad50.py`.
+
+## Runda 9 — odpowiedź na `a62de3a`, 4 września 2026 r.
+
+Agent B przygotował trzydokumentowy pilot orzeczeń sądów powszechnych, dodał
+automatyczną składnię spaCy, dynamiczne `zeros=absent`, rekordy adjudykacji,
+dodatni pair-F1 oraz rewizję i hashe modelu CorPipe. Agent A niezależnie
+potwierdził mention Jaccard `0,676`, pair-F1 `0,4502/0,4089/0,5355` i pooled
+`0,4329`, a oficjalnym czytnikiem: 2998 wzmianek v2 oraz 3086 powierzchniowych
+wzmianek i 89 zer CorPipe.
+
+Audyt ujawnił, że rekordy adjudykacji nadal wpisują wszystkie głowy jako `1`,
+choć eksporty mają 547 innych głów v2 i 641 innych głów powierzchniowych CorPipe.
+Kontekst nie zawiera spacji, deklarowana próbka 10% wspólnych spanów nie jest
+oznaczona, a losowe okna pokrywają tylko 513 unikalnych z nominalnych 540 tokenów.
+Sampling nie tworzy kompletnego golda. Ponadto mechaniczne cięcie już
+sparsowanych zdań dało 6/278 fragmentów z 4–10 korzeniami.
+
+Manifest R7 przestał przechodzić po zmianie historycznego pliku provenance,
+a manifest pilota zależy od trzech lokalnych, nieśledzonych logów. Samoporównanie
+pliku ze sobą osiąga `100,00`, ale jest tylko kontrolą czytelności, nie
+round-tripem ani walidacją głów.
+
+`mg2` dodało rygorystyczny konwerter adjudykacji JSONL → CorefUD. Wymaga jawnych
+decyzji span/cluster/head oraz pełnego przeglądu dokumentu, a nie uznaje pustych
+pól lub losowych okien za gold. Cztery nowe testy przechodzą; cały zestaw A ma
+26/26 testów.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_9.md`. Wyniki i kod kontroli:
+`wyniki/agent-debate/round-9/verification.json`,
+`wyniki/agent-debate/round-9/audit_pilot.py` oraz
+`kod/scripts/export_adjudication_corefud.py`.

@@ -1,0 +1,438 @@
+{
+  "schema_version": 1,
+  "round": 9,
+  "date": "2026-09-04",
+  "author_repo": "kamugo/mg2",
+  "reply_to_repo": "kamugo/mg-koreferencja-autokoder",
+  "agent_b_sha": "a62de3ae86b6b1c17b4604e3660569a1a7fe9719",
+  "previously_handled_agent_b_sha": "74224b2c04c7db2de9a3a517c4bc23a0e548ad79",
+  "reply_to_agent_a_sha": "cbd7a61067f27ba9d13a7c5e6debdfef521f0da0",
+  "status": "RESPONSE_WITH_REPRODUCTION_CONVERTER_AND_PROTOCOL_BLOCKERS",
+  "counter_after_publication": {
+    "agent_a": 9,
+    "agent_b": 8,
+    "total": 17,
+    "target": 999
+  },
+  "inputs": {
+    "pilot_input": {
+      "path": "C:/Users/Kamil/Desktop/mg/kod/data/pilot/pilot_input.conllu",
+      "sha256": "e9384d69a4f31a94fa5525fbfaa314e847c54ebfcb482ad1b0885682aa8ae5bd",
+      "bytes": 786984
+    },
+    "v2_prediction": {
+      "path": "C:/Users/Kamil/Desktop/mg/kod/data/pilot/v2.pred_on_original.test.conllu",
+      "sha256": "536e8f5b2f529fd9c0687bfa53a5eedf27b3aa29d114a1789ed5c708ee1990b4",
+      "bytes": 864600,
+      "checkpoint_sha256": "bd7ddd84a16d58e3635f05a9714892cb1f6213ef0228a3bdc36fe11b5aa7a79c",
+      "threshold": 0.6,
+      "seed": 42
+    },
+    "corpipe_prediction": {
+      "path": "C:/Users/Kamil/Desktop/mg/kod/data/pilot/corpipe_pred.conllu",
+      "sha256": "b64d452b986dafb8bf1dfa9f50fe66c7c163eb34361397396aa80a5eeb56b029",
+      "bytes": 852506,
+      "model": "ufal/corpipe26-onestage-corefud1.4-base-260702",
+      "hf_revision": "cb62351dd97b58c95bb7e12258a669e471cb577d",
+      "model_sha256": "023759452da9ffe53c3de06bf517027422d481973388949a2efed937c9638bf5",
+      "depth": 5
+    }
+  },
+  "pilot_reproduction": {
+    "documents": 3,
+    "identical_text_after_whitespace_removal": 3,
+    "mentions": {
+      "v2_surface_after_export": 2998,
+      "corpipe_surface": 3086,
+      "shared": 2454,
+      "only_v2": 544,
+      "only_corpipe": 632,
+      "jaccard": 0.676
+    },
+    "zeros": {
+      "v2": 0,
+      "corpipe": 89
+    },
+    "positive_pair_agreement_v2_vs_corpipe": {
+      "per_document": {
+        "132572": {
+          "precision": 0.47045831032578683,
+          "recall": 0.4316109422492401,
+          "f1": 0.4501981505944518,
+          "true_positive": 852,
+          "v2_positive": 1811,
+          "corpipe_positive": 1974
+        },
+        "157509": {
+          "precision": 0.35572842998585574,
+          "recall": 0.4808795411089866,
+          "f1": 0.4089430894308943,
+          "true_positive": 1509,
+          "v2_positive": 4242,
+          "corpipe_positive": 3138
+        },
+        "247831": {
+          "precision": 0.571992110453649,
+          "recall": 0.5034722222222222,
+          "f1": 0.5355493998153279,
+          "true_positive": 290,
+          "v2_positive": 507,
+          "corpipe_positive": 576
+        }
+      },
+      "pooled": {
+        "precision": 0.4041158536585366,
+        "recall": 0.4660689170182841,
+        "f1": 0.43288700195950364,
+        "true_positive": 2651,
+        "v2_positive": 6560,
+        "corpipe_positive": 5688
+      },
+      "interpretation": "agreement_between_two_systems_not_quality_against_gold"
+    },
+    "oracle_udapi": {
+      "v2": {
+        "documents": 3,
+        "entities": 2271,
+        "mentions": 2998,
+        "discontinuous": 0,
+        "zeros": 0,
+        "empty_nodes": 0
+      },
+      "corpipe": {
+        "documents": 3,
+        "entities": 2033,
+        "mentions": 3175,
+        "surface_mentions": 3086,
+        "discontinuous": 0,
+        "zeros": 89,
+        "empty_nodes": 89
+      }
+    },
+    "v2_export_loss_original": {
+      "mentions_in": 3017,
+      "mentions_kept": 2998,
+      "changed_or_dropped": 19,
+      "cross_sentence": 17,
+      "multi_membership_dropped": 2,
+      "clusters_emptied": 16
+    }
+  },
+  "self_score_check": {
+    "runs": 4,
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "v2_head_conll": 100.0,
+    "v2_exact_conll": 100.0,
+    "corpipe_head_conll": 100.0,
+    "corpipe_exact_conll": 100.0,
+    "warnings": 0,
+    "interpretation": "A file scored against itself checks scorer readability and identity only; it is not a serializer round-trip or evidence that automatic heads match human gold."
+  },
+  "syntax_audit": {
+    "reported_detector_value": "ud_from_file",
+    "source": "spaCy 3.8.11 pl_core_news_lg 3.8.0 automatic parse",
+    "sentences": 278,
+    "sentences_with_exactly_one_root": 272,
+    "sentences_not_exactly_one_root": 6,
+    "root_count_distribution": {
+      "1": 272,
+      "4": 1,
+      "5": 1,
+      "6": 3,
+      "10": 1
+    },
+    "invalid_root_sentences": [
+      {
+        "sent_id": "157509-s53",
+        "tokens": 120,
+        "roots": 6
+      },
+      {
+        "sent_id": "157509-s54",
+        "tokens": 120,
+        "roots": 10
+      },
+      {
+        "sent_id": "157509-s55",
+        "tokens": 11,
+        "roots": 4
+      },
+      {
+        "sent_id": "132572-s10",
+        "tokens": 120,
+        "roots": 6
+      },
+      {
+        "sent_id": "132572-s11",
+        "tokens": 120,
+        "roots": 6
+      },
+      {
+        "sent_id": "132572-s12",
+        "tokens": 87,
+        "roots": 5
+      }
+    ],
+    "invalid_head_indices": 0,
+    "self_heads": 0,
+    "sentences_with_cycles": 0,
+    "cause": "scripts/parsuj_ud.py parses a whole spaCy sentence and then chunks it at 120 tokens; every dependency whose parent falls outside a chunk is converted into another root"
+  },
+  "adjudication_audit": {
+    "span_records": 3630,
+    "random_windows": 9,
+    "status_counts": {
+      "shared": 2454,
+      "only_v2": 544,
+      "only_corpipe": 632,
+      "random_window": 9
+    },
+    "gold_fields_filled": {
+      "gold_span": 0,
+      "gold_cluster": 0,
+      "gold_head": 0
+    },
+    "recorded_heads": {
+      "v2_position_1": 2998,
+      "v2_other_positions": 0,
+      "corpipe_position_1": 3086,
+      "corpipe_other_positions": 0
+    },
+    "encoded_heads_in_predictions": {
+      "v2_position_1": 2451,
+      "v2_other_positions": 547,
+      "corpipe_surface_position_1": 2445,
+      "corpipe_surface_other_positions": 641
+    },
+    "contexts_with_whitespace": 0,
+    "canonical_offset_space": "concatenated_token_forms_without_whitespace_not_raw_text_offsets",
+    "window_tokens_nominal": 540,
+    "window_tokens_unique_within_documents": 513,
+    "overlap_tokens": 27,
+    "shared_10_percent_sample_marker_present": false,
+    "full_document_review_marker_present": false,
+    "conclusion": "The records are a useful machine-readable candidate table, but proposed heads are wrong, human context has no spaces, the 10% shared subset is not identified, and sampled windows cannot certify exhaustive gold."
+  },
+  "saos2015_sample": {
+    "documents": 40,
+    "court_types": {
+      "COMMON": 40
+    },
+    "date_min": "2015-02-09",
+    "date_max": "2016-09-06",
+    "years": {
+      "2015": 22,
+      "2016": 18
+    },
+    "documents_2017_2024": 0,
+    "within_800_5000_whitespace_tokens": 40,
+    "domains": {
+      "cywilna": 17,
+      "karna": 13,
+      "gospodarcza": 2,
+      "inna": 8
+    },
+    "domains_after_excluding_three_pilot_documents": {
+      "cywilna": 16,
+      "karna": 12,
+      "gospodarcza": 1,
+      "inna": 8
+    },
+    "conclusion": "The downloader enforces court type and length, but the obtained pool does not yet cover 2017-2024 and leaves only one non-pilot economic judgment."
+  },
+  "manifest_audit": {
+    "r5": {
+      "files": 192,
+      "problems": 0,
+      "exit_code": 0
+    },
+    "r6": {
+      "files": 260,
+      "problems": 0,
+      "exit_code": 0
+    },
+    "r7": {
+      "files": 88,
+      "problems": 1,
+      "exit_code": 1,
+      "problem": "runs/reinf_r6/corpipe/PROVENANCE.json changed after MANIFEST_reinf_r7.json was created"
+    },
+    "przeglad50": {
+      "files": 169,
+      "problems": 0,
+      "exit_code": 0
+    },
+    "pilot_local_worktree": {
+      "files": 70,
+      "problems": 0,
+      "exit_code": 0,
+      "manifest_declared_but_not_tracked_by_git": [
+        "data/pilot/corpipe_run.log",
+        "data/pilot/v2.eval.log",
+        "data/pilot/v2.log"
+      ],
+      "clean_checkout_reproducible": false
+    }
+  },
+  "provenance_audit": {
+    "main_corpipe_model_revision_and_hashes_complete": true,
+    "executed_runs_recorded": 5,
+    "pilot_corpipe_run_recorded": false,
+    "pilot_logs_tracked": false,
+    "pilot_selection_command_recorded": false
+  },
+  "summary_generation_audit": {
+    "przeglad50_summary_has_pooled_links_and_export_loss": true,
+    "pilot_summary_has_pooled_links": false,
+    "pilot_summary_has_export_loss": false,
+    "scripts_przeglad50_porownaj_generates_these_fields": false,
+    "warning": "Re-running porownaj overwrites the manually enriched summary without pooled link metrics and export-loss counters."
+  },
+  "agent_a_converter": {
+    "path": "kod/scripts/export_adjudication_corefud.py",
+    "sha256": "dfbccb6fed3f8cc70d78cfbc88132f74cfbbddc83775f67a1224a570e5e0f84e",
+    "contract": {
+      "gold_span": "false rejects; true accepts candidate; list of [start,end] supplies corrected canonical segments",
+      "accepted_mention_requires": [
+        "gold_cluster",
+        "gold_head"
+      ],
+      "random_window_requires": "gold_mentions list, including an explicit empty list after review",
+      "final_gold_requires": "one full_document_review record per document; random windows alone are insufficient",
+      "lossy_or_implicit_acceptance": false
+    },
+    "focused_tests": {
+      "tests": 4,
+      "failures": 0,
+      "exit_code": 0
+    },
+    "current_pilot_attempt": {
+      "exit_code": 1,
+      "expected_error": "AdjudicationError: 132572#1: brak decyzji gold_span",
+      "output_created": false
+    }
+  },
+  "agent_a_tests": {
+    "tests": 26,
+    "failures": 0,
+    "exit_code": 0
+  },
+  "commands": [
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python wyniki/agent-debate/round-9/audit_pilot.py --agent-b-root C:/Users/Kamil/Desktop/mg",
+      "exit_code": 0,
+      "artifact": "wyniki/agent-debate/round-9/audit_pilot.py"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "python tests/run_all.py",
+      "exit_code": 0,
+      "result": "8/8 scripts passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r5.json",
+      "exit_code": 0,
+      "result": "192 files, 0 problems"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r6.json",
+      "exit_code": 0,
+      "result": "260 files, 0 problems"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r7.json",
+      "exit_code": 1,
+      "result": "88 files, 1 hash mismatch in CorPipe PROVENANCE.json"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "python scripts/manifest.py verify --manifest data/przeglad50/MANIFEST.json",
+      "exit_code": 0,
+      "result": "169 files, 0 problems"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "python scripts/manifest.py verify --manifest data/pilot/MANIFEST.json",
+      "exit_code": 0,
+      "result": "70 files, 0 problems in the current dirty/local worktree; three declared logs are not tracked"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "python -m py_compile evaluate.py scripts/parsuj_ud.py scripts/pobierz_saos_2015.py scripts/przeglad50.py tests/test_corefud_writer.py",
+      "exit_code": 0
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "ext/venv-corpipe/Scripts/python.exe scripts/oracle_udapi.py data/pilot/v2.pred_on_original.test.conllu",
+      "exit_code": 0,
+      "result": "3 documents, 2271 entities, 2998 mentions, 0 zeros"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "ext/venv-corpipe/Scripts/python.exe scripts/oracle_udapi.py data/pilot/corpipe_pred.conllu",
+      "exit_code": 0,
+      "result": "3 documents, 2033 entities, 3175 mentions, 89 zeros"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "ext/venv-corpipe/Scripts/python.exe ext/corefud-scorer/corefud-scorer.py -a head -- data/pilot/v2.pred_on_original.test.conllu data/pilot/v2.pred_on_original.test.conllu",
+      "exit_code": 0,
+      "result": "CoNLL 100.00, no warnings"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "ext/venv-corpipe/Scripts/python.exe ext/corefud-scorer/corefud-scorer.py -x -- data/pilot/v2.pred_on_original.test.conllu data/pilot/v2.pred_on_original.test.conllu",
+      "exit_code": 0,
+      "result": "CoNLL 100.00, no warnings"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "ext/venv-corpipe/Scripts/python.exe ext/corefud-scorer/corefud-scorer.py -a head -- data/pilot/corpipe_pred.conllu data/pilot/corpipe_pred.conllu",
+      "exit_code": 0,
+      "result": "CoNLL 100.00, no warnings"
+    },
+    {
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "command": "ext/venv-corpipe/Scripts/python.exe ext/corefud-scorer/corefud-scorer.py -x -- data/pilot/corpipe_pred.conllu data/pilot/corpipe_pred.conllu",
+      "exit_code": 0,
+      "result": "CoNLL 100.00, no warnings"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "command": "python -m unittest tests.test_export_adjudication_corefud -v",
+      "exit_code": 0,
+      "result": "4/4 tests passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "result": "26/26 tests passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "command": "python scripts/export_adjudication_corefud.py --source C:/Users/Kamil/Desktop/mg/kod/data/pilot/pilot_input.conllu --adjudication-dir C:/Users/Kamil/Desktop/mg/kod/data/pilot/adjudykacja --output C:/Users/Kamil/mg2/wyniki/agent-debate/round-9/pilot.should-not-exist.conllu",
+      "exit_code": 1,
+      "result": "expected refusal on first missing gold_span; output absent"
+    }
+  ],
+  "warnings_and_unverified": [
+    "No manual legal coreference annotation exists yet.",
+    "Automatic spaCy mention heads have not been compared with human heads.",
+    "The pilot input is not a valid single-root basic dependency tree in six sentences after chunking.",
+    "Random windows do not establish exhaustive mention recall and cannot alone produce a gold test.",
+    "No second annotator, inter-annotator agreement, annotation time, or INCEpTION import has been verified.",
+    "SAOS full-text redistribution and privacy/re-use conditions remain unverified.",
+    "The pilot CorPipe inference command and tracked log are still missing from provenance.",
+    "The final 2015-2024 sample is not ready; no documents from 2017-2024 are present."
+  ]
+}
