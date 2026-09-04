@@ -1,0 +1,399 @@
+{
+  "schema_version": "agent-a-round-12-verification-1.0",
+  "date": "2026-09-04",
+  "status": "pass_with_documented_limitations",
+  "author_repository": "https://github.com/kamugo/mg2",
+  "input_repository": "https://github.com/kamugo/mg-koreferencja-autokoder",
+  "input_commit": {
+    "sha": "947339c413f343c1dc5df421a6a885d0487837f2",
+    "parent": "4c2e45ba06a4ef152cddd04204896e39851d6192",
+    "subject": "Recenzja C nr 01: odtworzony wynik 61-183 i skan par ELI; luki kontraktow zer/zakresu/eksportera/bramki potwierdzone; 16 rekomendacji (tekst pracy nieaktualny)",
+    "author_role_declared_in_document": "Agent C, independent reviewer",
+    "is_agent_b_response": false,
+    "is_substantive_unhandled_commit": true
+  },
+  "count": {
+    "agent_a": 12,
+    "agent_b": 10,
+    "combined": 22,
+    "target": 999,
+    "agent_c_reviews_tracked_separately": 1,
+    "interpretation": "C01 triggers one A response but is not counted as B11"
+  },
+  "chronology": {
+    "checked_git_entries": 31,
+    "mismatches": 0,
+    "tail": [
+      {
+        "role": "B10",
+        "sha": "4c2e45ba06a4ef152cddd04204896e39851d6192",
+        "time": "2026-09-04T22:13:18+02:00"
+      },
+      {
+        "role": "A10",
+        "sha": "2747c9789f62ef56f50a569db27f51de260e14bb",
+        "time": "2026-09-04T22:23:49+02:00"
+      },
+      {
+        "role": "A11",
+        "sha": "6acf66e9e35124bbdfbfd718f94ad1ac2477752d",
+        "time": "2026-09-04T22:36:38+02:00"
+      },
+      {
+        "role": "C01",
+        "sha": "947339c413f343c1dc5df421a6a885d0487837f2",
+        "time": "2026-09-04T22:53:00+02:00"
+      }
+    ],
+    "queued_next_commit": "81eeb3a4aec0908975bfc42a41161955d9bf38ba"
+  },
+  "input_artifacts": [
+    {
+      "path": "POSTEP.md",
+      "bytes": 35392,
+      "sha256": "53d5350629b8e736937391a50df7f61424c24fe772321628814b65d84977c2de"
+    },
+    {
+      "path": "recenzje/OS_CZASU.md",
+      "bytes": 6832,
+      "sha256": "5f27a35e50a85cdbbeb60f3e0230aa0b42e2c9243b3fdf83881cd5ca3e98c5c6"
+    },
+    {
+      "path": "recenzje/RECENZJA_C_01.md",
+      "bytes": 29468,
+      "sha256": "44f91177babfbf7d12066d5ca264a7b11d41ce385a538534bca64595e03d5dc9"
+    },
+    {
+      "path": "recenzje/REJESTR_REKOMENDACJI.md",
+      "bytes": 6104,
+      "sha256": "cbc030cd21afe6c88be33b2ad241f87639caa9398c5a0ad1d6fbecfe9b4438df"
+    },
+    {
+      "path": "recenzje/skrypty/audyt_c01.py",
+      "bytes": 15553,
+      "sha256": "8a8d4ec391dc1c945abf3d2eed8ee93b2cb16d85b18f58b0784b320ca76e7f45"
+    },
+    {
+      "path": "recenzje/wyniki/RECENZJA_C_01.json",
+      "bytes": 4986,
+      "sha256": "f3b55dba1c39cce861a031ab30737bc16bf35db108f6b2b85b6e243c85c481ce"
+    }
+  ],
+  "c01_reproduction": {
+    "exit_code": 0,
+    "working_copy": "isolated detached checkout at 947339c413f343c1dc5df421a6a885d0487837f2",
+    "output_path": "C:/Users/Kamil/AppData/Local/Temp/RECENZJA_C_01.reproduced.json",
+    "matches_committed_json_except_timing": true,
+    "eli_manifest_sha256": "c9248430310a4a3ba8a1c9b3bff997aba5c8baf468f238642cbbc24c18a19973",
+    "eli": {
+      "records": 2000,
+      "unique_exact_hashes": 1990,
+      "simhash_candidates": 81,
+      "near_pairs_filtered": 22,
+      "near_pairs_exhaustive": 25,
+      "missed_by_filter": 3,
+      "missed_cross_split": 1,
+      "sha256_sorted_missed_pair_ids": "ce8e4e295e59a8d1b420871d4487c94d831b16e2f8927d1179aa574282c26bc7"
+    },
+    "confirmed_counterexamples": [
+      "zero identity is not checked by B10",
+      "document identity/count contract is not checked by B10",
+      "B10 exporter accepts crossing/interleaved unrepresentable mentions",
+      "B10 public aggregate gate accepts NaN and inconsistent counters",
+      "B10 verify_round10 compares a moving A remote head to a historical SHA"
+    ],
+    "reader_behavior": {
+      "rejects_interleaved_parts": false,
+      "emits_warning": true,
+      "propagates_loss_to_json": false,
+      "wording": "not silent, but non-failing and unrecorded"
+    }
+  },
+  "c01_provenance_counterexamples": {
+    "reader_loaded_from_worktree_instead_of_sha": true,
+    "reader_substitution_changes_result_at_same_sha_b": true,
+    "sha_a_all_zeros_exit_code": 0,
+    "sha_a_is_used_to_load_a_code": false,
+    "source_text_hashes_compared_to_manifest": false,
+    "duplicate_doc_ids_checked_before_dict": false,
+    "duplicate_doc_id_fixture_input_records": 2,
+    "duplicate_doc_id_fixture_effective_records": 1,
+    "interpretation": "current C01 numbers reproduce, but the generator does not fully enforce its declared pinned snapshot"
+  },
+  "two_axis_review": {
+    "standards": {
+      "hard_documented_standard_findings": 0,
+      "findings": [
+        "corefud_reader is loaded from the checkout while other B modules are loaded from Git blobs",
+        "broad Exception handling can hide the absence of the reader check",
+        "the snapshot-loading responsibility is split across unrelated mechanisms"
+      ]
+    },
+    "spec": {
+      "findings": [
+        "C01 incorrectly states that no concrete human adjudication task/owner was specified",
+        "R5 incorrectly requires non-empty additional gold_mentions instead of proof of a complete blind review",
+        "R6 does not by itself produce an untouched holdout from previously used training data",
+        "R16 conflicts with the user-mandated 999/999 counter and stop condition",
+        "DAE and privacy conclusions need narrower wording"
+      ]
+    }
+  },
+  "head_only_reexport": {
+    "scope": "sanitization of Entity head fields; no reinference, training, threshold selection, span change or cluster change",
+    "source_b_sha": "4c2e45ba06a4ef152cddd04204896e39851d6192",
+    "gold_path": "kod/runs/dev61_183_original.conllu",
+    "gold_sha256": "2f0d62c7612b6cdcca23bc00aefe3e623963d62947f42534e88da33f423c0bba",
+    "scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590",
+    "scorer_sha256": "418dde1a0ae44538b78383bfe522d06d7db793ddb7e23d01416eae61d53b1f1c",
+    "udapi_version": "0.5.2",
+    "movehead_sha256": "0bd50896d39dcc4ef472c0414ab150cf6e587af88e0159c4b146c748409449e1",
+    "policy": {
+      "chosen_keep_head_if_possible": false,
+      "true_false_disagreements_all_four_predictions": 0,
+      "future_disagreement": "fail before scoring"
+    },
+    "gold_differential": {
+      "mentions": 11766,
+      "different_heads_b10_vs_movehead": 37,
+      "percent": 0.3145,
+      "all_differences_category": "gappy",
+      "movehead_matches_gold": 11766
+    },
+    "models": {
+      "v2_seed42": {
+        "checkpoint_sha256": "bd7ddd84a16d58e3635f05a9714892cb1f6213ef0228a3bdc36fe11b5aa7a79c",
+        "prediction_before_sha256": "6cd3916b16824bd62a4d6d3868917a81e71925b3568ee7330bc79c606ea18204",
+        "prediction_after_sha256": "569d9ae59f0f527bf1046d53e7411505b6c16ede806a893ae21d6e5947425035",
+        "mentions": 11362,
+        "changed_heads": 20,
+        "head_before": 54.79,
+        "head_after": 54.79,
+        "exact_before": 53.65,
+        "exact_after": 53.65,
+        "historical_original_export_loss": {
+          "mentions_in": 11389,
+          "mentions_kept": 11362,
+          "duplicate_span": 4,
+          "cross_sentence": 8,
+          "multi_membership_dropped": 15,
+          "clusters_emptied": 19
+        }
+      },
+      "v2_seed1": {
+        "checkpoint_sha256": "7ca12d86fb65715373ab1b209adc8340aabda1ab1436a6fa3a562a81ba24d1cb",
+        "prediction_before_sha256": "bbdcb2fcd03d3896c4b4fa7e7a11e7aa6562e119c2109067e93454196bd36131",
+        "prediction_after_sha256": "50ce7522c38947926cb00cdd6b471468bb155b2ce2c86474770f29f56ccfa4d3",
+        "mentions": 11828,
+        "changed_heads": 31,
+        "head_before": 54.88,
+        "head_after": 54.91,
+        "exact_before": 53.64,
+        "exact_after": 53.64,
+        "historical_original_export_loss": {
+          "mentions_in": 11861,
+          "mentions_kept": 11828,
+          "duplicate_span": 2,
+          "cross_sentence": 16,
+          "multi_membership_dropped": 15,
+          "clusters_emptied": 27
+        }
+      },
+      "v2_seed2": {
+        "checkpoint_sha256": "bbfff10645d699773705d22ac343764501f60688676c09f620e7fd1d66fbb018",
+        "prediction_before_sha256": "9e5a86aa7252223187806e0f28d7594b9f4bf3028a5148b4250672556056a142",
+        "prediction_after_sha256": "b1fa736d0110976f18bcba10d92b5ebd04545c2dc5995fa025a709789561ecf1",
+        "mentions": 11536,
+        "changed_heads": 19,
+        "head_before": 53.77,
+        "head_after": 53.81,
+        "exact_before": 52.73,
+        "exact_after": 52.73,
+        "historical_original_export_loss": {
+          "mentions_in": 11556,
+          "mentions_kept": 11536,
+          "duplicate_span": 1,
+          "cross_sentence": 9,
+          "multi_membership_dropped": 10,
+          "clusters_emptied": 15
+        }
+      },
+      "v1_seed42": {
+        "checkpoint_sha256": "c12a1a4700cc1270fa4a0f175762ae7b744db16e03fcce7c682cd4ad098afc46",
+        "prediction_before_sha256": "7b45683570dc2bf9461708de7b1bcc0d03a99e3bf5de1123618f87697d5d98b7",
+        "prediction_after_sha256": "be26cecaef6377054a4b421c73b5003623f1948b0e084a6837792c48387b95f5",
+        "mentions": 6878,
+        "changed_heads": 30,
+        "head_before": 33.55,
+        "head_after": 33.56,
+        "exact_before": 31.71,
+        "exact_after": 31.71,
+        "historical_original_export_loss": {
+          "mentions_in": 6969,
+          "mentions_kept": 6878,
+          "duplicate_span": 0,
+          "cross_sentence": 67,
+          "multi_membership_dropped": 24,
+          "clusters_emptied": 58
+        }
+      }
+    },
+    "aggregate": {
+      "v2_changed_heads": 70,
+      "v1_changed_heads": 30,
+      "all_changed_heads": 100,
+      "changed_categories": {
+        "gappy": 100
+      },
+      "mentions_removed": 0,
+      "clusters_removed": 0,
+      "spans_changed": 0,
+      "zero_surface_class_changes": 0,
+      "scorer_runs": 16,
+      "scorer_nonzero_exits": 0,
+      "scorer_stderr_bytes": 0,
+      "already_indexed_warnings": 0,
+      "v2_head_before_mean": 54.48,
+      "v2_head_before_population_sd": 0.50,
+      "v2_head_after_mean": 54.50,
+      "v2_head_after_population_sd": 0.49,
+      "exact_scores_invariant": true
+    }
+  },
+  "implemented_changes": {
+    "audit_script": {
+      "path": "wyniki/agent-debate/round-12/audit_movehead_reexport.py",
+      "bytes": 19270,
+      "sha256": "243f30281d9a5e230cd0f70b2cf27621bd125ddd7954336e9897835b56d7431e"
+    },
+    "audit_tests": {
+      "path": "wyniki/agent-debate/round-12/test_audit_movehead_reexport.py",
+      "bytes": 4389,
+      "sha256": "f1bfe8a99803e9033e65728bd0b4de2457492ea05bc695b4a3e1e308eb54f1bc"
+    },
+    "thesis_files": [
+      "praca/rozdzialy/08-eksperymenty.tex",
+      "praca/rozdzialy/09-wyniki.tex",
+      "praca/rozdzialy/11-podsumowanie.tex"
+    ],
+    "thesis_diff": {
+      "insertions": 83,
+      "deletions": 8,
+      "external_benchmark_separated_from_agent_a_model": true,
+      "historical_score_kept": "54.48 +/- 0.50",
+      "head_only_corrected_score_not_promoted_to_historical_table": true
+    }
+  },
+  "tests": [
+    {
+      "name": "C01 audit full reproduction",
+      "command": "python recenzje/skrypty/audyt_c01.py --repo-b . --repo-a C:/Users/Kamil/mg2 --sha-b 4c2e45ba06a4ef152cddd04204896e39851d6192 --sha-a 6acf66e9e35124bbdfbfd718f94ad1ac2477752d --eli-manifest C:/Users/Kamil/mg2/kod/data/raw/legal-silver-2000/manifest.json --out C:/Users/Kamil/AppData/Local/Temp/RECENZJA_C_01.reproduced.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-c01-937dd3fce6ff4371985a89983633a276",
+      "exit_code": 0,
+      "artifact": "C:/Users/Kamil/AppData/Local/Temp/RECENZJA_C_01.reproduced.json",
+      "result": "all deterministic JSON fields match; only two elapsed-time fields differ"
+    },
+    {
+      "name": "B/C01 tests/run_all.py",
+      "command": "python tests/run_all.py",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-c01-937dd3fce6ff4371985a89983633a276/kod",
+      "exit_code": 0,
+      "result": "14/14 scripts"
+    },
+    {
+      "name": "official scorer seed42 head",
+      "command": "C:/Users/Kamil/Desktop/mg/kod/ext/venv-corpipe/Scripts/python.exe C:/Users/Kamil/Desktop/mg/kod/ext/corefud-scorer/corefud-scorer.py -a head -- runs/dev61_183_original.conllu runs/reinf_r7/frozen61_183/span.pred_on_original.dev.conllu",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-c01-937dd3fce6ff4371985a89983633a276/kod",
+      "exit_code": 0,
+      "result": "CoNLL 54.79; no stderr"
+    },
+    {
+      "name": "official scorer seed42 exact",
+      "command": "C:/Users/Kamil/Desktop/mg/kod/ext/venv-corpipe/Scripts/python.exe C:/Users/Kamil/Desktop/mg/kod/ext/corefud-scorer/corefud-scorer.py -x -- runs/dev61_183_original.conllu runs/reinf_r7/frozen61_183/span.pred_on_original.dev.conllu",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-c01-937dd3fce6ff4371985a89983633a276/kod",
+      "exit_code": 0,
+      "result": "CoNLL 53.65; no stderr"
+    },
+    {
+      "name": "B manifest R7",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r7.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-c01-937dd3fce6ff4371985a89983633a276/kod",
+      "exit_code": 0,
+      "result": "88 files, 0 problems"
+    },
+    {
+      "name": "B pilot manifest",
+      "command": "python scripts/manifest.py verify --manifest data/pilot/MANIFEST.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-c01-937dd3fce6ff4371985a89983633a276/kod",
+      "exit_code": 0,
+      "result": "67 files, 0 problems"
+    },
+    {
+      "name": "portable MoveHead audit tests with official scorer",
+      "command": "$env:COREFUD_SCORER='C:/Users/Kamil/Desktop/mg/kod/ext/corefud-scorer/corefud-scorer.py'; $env:COREFUD_SCORER_PYTHON='C:/Users/Kamil/Desktop/mg/kod/ext/venv-corpipe/Scripts/python.exe'; & $env:COREFUD_SCORER_PYTHON wyniki/agent-debate/round-12/test_audit_movehead_reexport.py -v",
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0,
+      "result": "6/6"
+    },
+    {
+      "name": "portable MoveHead audit four predictions",
+      "command": "python wyniki/agent-debate/round-12/audit_movehead_reexport.py --repo-b C:/Users/Kamil/Desktop/mg --scorer C:/Users/Kamil/Desktop/mg/kod/ext/corefud-scorer/corefud-scorer.py --python C:/Users/Kamil/Desktop/mg/kod/ext/venv-corpipe/Scripts/python.exe --output-dir C:/Users/Kamil/AppData/Local/Temp/a12-portable-movehead-audit",
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0,
+      "artifact": "C:/Users/Kamil/AppData/Local/Temp/a12-portable-movehead-audit/verification.json",
+      "artifact_sha256": "c3c6d1efa81e8c40ff2cd54bca8c092e6c4d5935ef1efda0cc12e2ab03af7c4e",
+      "result": "16/16 scorer calls, exact invariant"
+    },
+    {
+      "name": "Agent A unittest suite",
+      "command": "python -m unittest discover -s tests -v",
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "exit_code": 0,
+      "result": "51/51"
+    },
+    {
+      "name": "LaTeX isolated build",
+      "commands": [
+        "pdflatex -interaction=nonstopmode -halt-on-error -jobname=a12-thesis -output-directory=C:/Users/Kamil/AppData/Local/Temp/mg2-a12-tex-811fc3d22f5a4f3f8cb4ba1fb0dc1d8f main.tex",
+        "biber --input-directory=C:/Users/Kamil/AppData/Local/Temp/mg2-a12-tex-811fc3d22f5a4f3f8cb4ba1fb0dc1d8f --output-directory=C:/Users/Kamil/AppData/Local/Temp/mg2-a12-tex-811fc3d22f5a4f3f8cb4ba1fb0dc1d8f a12-thesis",
+        "pdflatex -interaction=nonstopmode -halt-on-error -jobname=a12-thesis -output-directory=C:/Users/Kamil/AppData/Local/Temp/mg2-a12-tex-811fc3d22f5a4f3f8cb4ba1fb0dc1d8f main.tex",
+        "pdflatex -interaction=nonstopmode -halt-on-error -jobname=a12-thesis -output-directory=C:/Users/Kamil/AppData/Local/Temp/mg2-a12-tex-811fc3d22f5a4f3f8cb4ba1fb0dc1d8f main.tex",
+        "pdflatex -interaction=nonstopmode -halt-on-error -jobname=a12-thesis -output-directory=C:/Users/Kamil/AppData/Local/Temp/mg2-a12-tex-811fc3d22f5a4f3f8cb4ba1fb0dc1d8f main.tex",
+        "pdflatex -interaction=nonstopmode -halt-on-error -jobname=a12-thesis -output-directory=C:/Users/Kamil/AppData/Local/Temp/mg2-a12-tex-811fc3d22f5a4f3f8cb4ba1fb0dc1d8f main.tex"
+      ],
+      "cwd": "C:/Users/Kamil/mg2/praca",
+      "exit_code": 0,
+      "artifact": "C:/Users/Kamil/AppData/Local/Temp/mg2-a12-tex-811fc3d22f5a4f3f8cb4ba1fb0dc1d8f/a12-thesis.pdf",
+      "artifact_sha256": "74e55ead03c472ea9ba5bdd569199323fbb43b15c66bebde21bd56c2c67831ce",
+      "result": "final unique-job sequence 5x pdflatex + 1x biber; 104 pages; Biber 57 citekeys; 0 undefined, multiply-defined or overfull"
+    },
+    {
+      "name": "python -m json.tool round-12/verification.json",
+      "command": "python -m json.tool wyniki/agent-debate/round-12/verification.json",
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0
+    },
+    {
+      "name": "git diff --check",
+      "command": "git diff --check",
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0
+    }
+  ],
+  "warnings_and_limits": [
+    "C01 reviewed uncommitted B work; A does not independently treat those claims as facts about the input commit.",
+    "C01 reader warning was emitted but not stored in its JSON.",
+    "The head-only output files are temporary and are not promoted as new model predictions.",
+    "The thesis table intentionally retains the historical B7 score and labels the correction separately.",
+    "No CorPipe reinference, model training, legal annotation, legal opinion, PII audit or external contact was performed.",
+    "The LaTeX build retained 43 underfull-box diagnostics plus environment warnings from MiKTeX/Perl locale.",
+    "Earlier main-job LaTeX attempts (3x pdflatex, 1x biber, all exit 0) were not used because they read stale auxiliary files from the working directory; the reported PDF comes from the isolated a12-thesis job.",
+    "The existing untracked legal data and user artifacts were not staged or modified."
+  ],
+  "next_step": {
+    "commit": "81eeb3a4aec0908975bfc42a41161955d9bf38ba",
+    "action": "create exactly one separate A13 after isolated review of B11 full dedup and evaluation-contract fixes",
+    "gpu": "not required",
+    "external_contact": "not authorized"
+  }
+}

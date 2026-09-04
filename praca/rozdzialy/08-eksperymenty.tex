@@ -1,7 +1,9 @@
 \chapter{Plan i przebieg eksperymentów}
 \label{chap:eksperymenty}
 
-Protokół zamrożono przed uruchomieniem eksperymentów badawczych. Jego celem jest ochrona przed doborem testu, metryki lub progu po obejrzeniu wyniku. Wszystkie warianty korzystają z tych samych splitów, identycznej tokenizacji i przypiętego oficjalnego scorera. W rozdziale przedstawiono metryki, baseline’y, eksperymenty główne, ablacje, testy istotności oraz pomiar kosztu. Na końcu rozdzielono uruchomienia zredukowane od brakujących badań na pełnych danych.
+Protokół E1--E8 zamrożono przed uruchomieniem eksperymentów badawczych. Jego celem jest ochrona przed doborem testu, metryki lub progu po obejrzeniu wyniku. W obrębie tego protokołu warianty mają korzystać z tych samych splitów, identycznej tokenizacji i przypiętego oficjalnego scorera. W rozdziale przedstawiono metryki, baseline’y, eksperymenty główne, ablacje, testy istotności oraz pomiar kosztu. Na końcu rozdzielono uruchomienia zredukowane od brakujących badań na pełnych danych.
+
+Osobnym źródłem dowodów jest historyczny benchmark CorefSeg-AE v2 z repozytorium Agenta B, niezależnie sprawdzony przez Agenta A i opisany w sekcji~\ref{sec:benchmark-b-pcc}. Nie jest on wykonaniem E1--E8 ani wynikiem modelu \texttt{mg2}. Próg v2 wybrano na dokumentach 1--60 Polish-PCC-dev, a wynik końcowy obliczono na dokumentach 61--183; użyto trzech seedów 42, 1 i 2. Metryką główną jest head-match bez singletonów, exact-match pozostaje analizą dodatkową. Wejście zachowuje złotą składnię i pozycje węzłów pustych: zakres \path{zeros=gold_nodes_predicted_labels} nie oznacza wykrywania zer z surowego tekstu. V2 i ten benchmark pozostają zamrożone; dokumenty 61--183, których wyniki już obejrzano, nie są nietkniętym testem następnej architektury. Korekta eksportu głów lub ponowne uruchomienie scorera musi mieć osobny rekord transformacji i nie jest reinferencją.
 
 \section{Zasady wspólne}
 \label{sec:zasady-eksperymentow}

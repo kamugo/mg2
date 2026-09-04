@@ -3,6 +3,8 @@
 
 Celem pracy było zbadanie możliwości zastosowania autokodera do koreferencji w polskich tekstach prawniczych oraz porównanie tego podejścia z metodami klasycznymi, neuronowymi i dużym modelem językowym. Zbudowano podstawy teoretyczne, przeprowadzono kwerendę, zaprojektowano dane i protokół, zaimplementowano trzy warianty modelu oraz wspólną ewaluację. Wykonano również zredukowaną próbę E1--E5. Zakres wykonania pozwala ocenić wykonalność techniczną, ale nie pozwala potwierdzić głównej tezy na danych naturalnych.
 
+Późniejsza współpraca z Agentem B dostarczyła odrębnego, niezależnie sprawdzonego benchmarku na 123 dokumentach Polish-PCC-dev 61--183. Historyczny wynik head-match bez singletonów wynosi $54,48 \pm 0,50$ dla CorefSeg-AE v2 (trzy seedy), 33,55 dla v1 i 73,96 dla CorPipe 26 base; dodatkowy exact-match v2 wynosi $53,34 \pm 0,43$ w skali 0--100. Modele CorefSeg należą do repozytorium B, a nie do linkera A. Tabela~\ref{tab:benchmark-b-pcc} przypina źródła, a tabela~\ref{tab:benchmark-b-loss} opisuje straty eksportu. Wynik korzysta ze złotej składni i pozycji zer oraz nie jest porównywalny z własnym pilotem A na złotych wzmiankach w oknach. Nie stanowi dowodu jakości na tekstach prawnych ani wyniku nowej inferencji po sanityzacji głów.
+
 \section{Odpowiedzi na pytania badawcze}
 
 \subsection{PB1: wpływ domenowego autokodera odszumiającego}
@@ -11,11 +13,13 @@ PB1 pytało, czy dodanie autokodera uczonego na danych domenowych poprawia CoNLL
 
 PB1 pozostaje nierozstrzygnięte. Nie przyjęto ani nie odrzucono hipotezy o poprawie, ponieważ wynik pochodzi z jednego seedu, złotych wzmianek i ogólnej domeny. Ujemna różnica 0,0096 CoNLL F1 stanowi jednak mocniejsze ostrzeżenie niż test syntetyczny: cel rekonstrukcyjny może konkurować z celem relacyjnym i nie należy zakładać korzyści autokodera. Rozstrzygnięcie wymaga domenowej adaptacji, wielu seedów, sparowanego bootstrapu oraz uzgodnionego legal-test.
 
+Niezależnie od tego pilota, cztery seedy ablacji R5/R6 Agenta B na dev60 nie potwierdziły stabilnego zysku DAE: różnica metryki zmieniała znak. Jest to negatywny wynik wykonanych konfiguracji na PCC, nie uniwersalne obalenie autokoderów. Nie uzasadnia kolejnego długiego treningu DAE bez nowej hipotezy, kontrolowanej ablacji, baseline'u i testu wolnego od wpływu tej optymalizacji.
+
 \subsection{PB2: sposób zastosowania autokodera}
 
 PB2 dotyczyło kompromisu jakości, parametrów, czasu i pamięci między kompresją wzmianek a segmentacją macierzy. W próbie technicznej E5 uzyskał średnio 0,89270 CoNLL F1 i 0,87164 LEA, więcej niż E4, lecz mniej niż E3. U-Net miał 30\,001 trenowanych parametrów i największy rozrzut seedów, a DAE 4\,257 parametrów. Różnice czasu na bardzo małej próbie były zdominowane przez narzut wykonania i nie stanowią profilu pełnego systemu.
 
-PB2 również pozostaje nierozstrzygnięte. Na danych syntetycznych żaden autokoder nie zdominował kontroli, a segmentacja była bardziej zmienna. Nie wykonano ablacji skip-connections, wagi rekonstrukcji, wymiaru latentnego ani kary przechodniości. Do odpowiedzi potrzebne są naturalne dokumenty, wspólny enkoder i pomiar pełnego potoku, w tym ekstrakcji embeddingów.
+PB2 również pozostaje nierozstrzygnięte. Na danych syntetycznych żaden autokoder nie zdominował kontroli, a segmentacja była bardziej zmienna. Zewnętrzny benchmark B potwierdza działanie CorefSeg-AE v2 na naturalnym PCC, ale nie zastępuje wspólnego porównania z linkerem A. Nie wykonano pełnych ablacji skip-connections, wagi rekonstrukcji, wymiaru latentnego ani kary przechodniości. Do odpowiedzi potrzebne są wspólne dane, zgodny zakres detekcji wzmianek oraz pomiar pełnego potoku, w tym ekstrakcji embeddingów.
 
 \subsection{PB3: selektywna hybryda z LLM}
 
@@ -43,7 +47,7 @@ Czwartym wkładem jest jawne udokumentowanie braków. Nie nadano wynikom syntety
 
 Najważniejszym ograniczeniem jest brak ukończonego zbioru prawnego. Nie obliczono statystyk, zgodności anotatorów ani wyników E8. Pełny Polish-PCC i rzeczywisty HerBERT włączono do dodatkowego pilota, lecz ocena korzysta ze złotych granic wzmianek i niepokrywających się okien po 48 elementów. Wynik mention-level nie mierzy utraty relacji między oknami ani jakości detekcji end-to-end.
 
-Nie wykonano pretrainingu domenowego, pełnych ablacji A1--A7, pięciu seedów ani dokumentowego bootstrapu różnic na danych naturalnych. Pomiar treningu głowic nie obejmuje jednorazowego kosztu kodowania HerBERT-em. t-SNE przedstawia jeden dokument syntetyczny i nie pozwala wnioskować o globalnej geometrii przestrzeni.
+W naturalnym pilocie A nie wykonano pretrainingu domenowego, pełnych ablacji A1--A7, pięciu seedów ani dokumentowego bootstrapu różnic. Odrębne trzy seedy v2 i cztery seedy ablacji DAE w repozytorium B nie uzupełniają tych braków w protokole A. Pomiar treningu głowic nie obejmuje jednorazowego kosztu kodowania HerBERT-em. t-SNE przedstawia jeden dokument syntetyczny i nie pozwala wnioskować o globalnej geometrii przestrzeni.
 
 Porównanie z LLM jest wyłącznie projektowe. Zewnętrzne modele są wersjonowane przez dostawcę, koszt zależy od cennika, a dokumenty mogą zawierać dane osobowe. Bez audytu i świadomej decyzji nie powinny być wysyłane do API. Ograniczona liczba dokumentów prawnych po anotacji nadal zawęzi trafność zewnętrzną do wybranego rodzaju orzeczeń.
 
@@ -51,7 +55,7 @@ Porównanie z LLM jest wyłącznie projektowe. Zewnętrzne modele są wersjonowa
 
 Wydanie CorefUD 1.4, plik licencji, sumy kontrolne i tensory HerBERT zostały zamrożone w pilocie. Następnym krokiem pozostaje ukończenie podwójnej anotacji 24 dokumentów prawnych, rozstrzygnięcie sporów i obliczenie Krippendorffa $\alpha$. Dopiero po audycie jakości można utworzyć niezmienne splity domenowe.
 
-Kolejnym krokiem powinno być wykonanie E1--E5 dla pięciu seedów na wspólnych danych. Próg, checkpoint i hiperparametry należy dobrać wyłącznie na dev. Po każdym porównaniu trzeba uruchomić sparowany bootstrap dokumentowy i korektę Holma. Następnie można wykonać ablacje wagi rekonstrukcji, kodu, skip-connections i przechodniości.
+Pierwszeństwo ma ocena zamrożonych modeli na ręcznie zatwierdzonym teście prawnym; srebrne etykiety ani zgodność dwóch systemów nie są goldem. Dokumenty PCC-dev 61--183 pozostają historycznym benchmarkiem, nie testem dla nowej architektury. Dalsze wykonanie E1--E5 dla pięciu seedów na wspólnych danych wymaga uprzedniego określenia nowej hipotezy, baseline'u, kryterium sukcesu i niezależnego testu. Próg, checkpoint i hiperparametry należy dobrać wyłącznie na dev, z kontrolą identycznych i blisko zduplikowanych dokumentów między zbiorami. Po porównaniu należy osobno raportować rozrzut seedów i sparowany bootstrap dokumentowy; ablacje nie mogą korzystać z wyników testu do wyboru wariantu.
 
 E6 i E7 powinny zostać uruchomione dopiero po audycie PII, zamrożeniu promptu, identyfikatora modelu i cennika. Należy raportować zależność jakości od odsetka przypadków przekazywanych do LLM dla wielu budżetów selektora, nie tylko jeden punkt. Analiza błędów powinna obejmować role procesowe, terminy definiowane, cytaty, zera i dalekie zależności na przykładach uzgodnionych przez anotatorów.
 

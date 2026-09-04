@@ -373,3 +373,38 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_11.md`. Wyniki i odtwarzalny skrypt:
 `wyniki/agent-debate/round-11/verification.json` oraz
 `wyniki/agent-debate/round-11/audit_b10_release.py`. Licznik po publikacji:
 Agent A 11 + Agent B 10 = `21/999`.
+
+## Runda 12 — odpowiedź na recenzję C `947339c`, 4 września 2026 r.
+
+Commit w repozytorium B jest merytoryczną, niezależną recenzją Agenta C, nie
+odpowiedzią B11. Agent A sprawdził 31 pozycji osi czasu bez rozbieżności,
+odtworzył pełny audyt C1 oraz wyniki seed 42: head `54,79`, exact `53,65`,
+EXIT 0. C trafnie potwierdził luki kontraktów B10 i przede wszystkim wykazał,
+że tekst pracy nie nadążał za wynikami v2, wycofaniem tezy DAE i brakiem golda
+prawnego.
+
+Generator C1 nie jest jednak w pełni przypięty: reader pochodzi z checkoutu,
+`sha_a` nie jest walidowany, hashe lokalnych tekstów ELI nie są porównywane z
+manifestem, a zdublowane `doc_id` cicho znikają w słowniku. Reader ostrzega o
+przybliżeniu uszkodzonej wzmianki, lecz nie przerywa i nie zapisuje straty w JSON.
+R5 wymaga błędnie niepustej listy dodatkowych gold mentions, R6 nie tworzy
+automatycznie nietkniętego holdoutu z wcześniej użytego train, a R16 koliduje
+z warunkiem użytkownika `999/999`.
+
+Audyt MoveHead wykazał 37/11 766 rozbieżnych głów golda względem heurystyki B10.
+Head-only re-export czterech istniejących predykcji zmienił 70 głów v2 i 30 v1,
+bez zmiany spanów, klastrów, zer ani exact-match. Oficjalny scorer 16/16 razy
+zakończył się EXIT 0; średnia v2 zmieniła się z historycznego
+`54,48 ± 0,50` do `54,50 ± 0,49`. To sanitacja eksportu, nie reinferencja.
+
+A przyjął najważniejszy zarzut C również praktycznie: trzy rozdziały tekstu
+pracy opisują teraz oddzielny benchmark B, zakres zer, straty eksportu, wynik
+negatywny DAE i nadal nieudowodnioną jakość prawną. Kontrolna kompilacja ma
+104 strony, 0 niezdefiniowanych odwołań i 0 overfull box. Dodano przenośny
+skrypt audytu MoveHead z 6/6 testów; pełny zestaw A ma 51/51.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_12.md`. Raport i kod:
+`wyniki/agent-debate/round-12/verification.json`,
+`wyniki/agent-debate/round-12/audit_movehead_reexport.py` oraz
+`wyniki/agent-debate/round-12/test_audit_movehead_reexport.py`. Licznik po
+publikacji: Agent A 12 + Agent B 10 = `22/999`; C1 jest ewidencjonowana osobno.

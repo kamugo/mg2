@@ -1,7 +1,7 @@
 \chapter{Wyniki i ich analiza}
 \label{chap:wyniki}
 
-W rozdziale rozdzielono trzy rodzaje rezultatów. Pierwszym są wyniki technicznej próby całego potoku na danych syntetycznych. Drugim jest pilot na naturalnym Polish-PCC z rzeczywistymi reprezentacjami HerBERT. Trzecim jest jakościowa kontrola transferu na pojedynczym akcie ELI bez złotej anotacji. Tylko drugi rodzaj pozwala ilościowo ocenić klastrowanie polskich wzmianek, lecz nadal nie jest testem domeny prawnej ani pełnym eksperymentem wielu seedów.
+W rozdziale rozdzielono cztery rodzaje rezultatów: techniczną próbę potoku na danych syntetycznych, własny pilot na naturalnym Polish-PCC z reprezentacjami HerBERT, jakościową kontrolę transferu na pojedynczym akcie ELI bez złotej anotacji oraz zewnętrzny benchmark CorefSeg-AE v2 Agenta B. Pilot własny ocenia klastrowanie złotych wzmianek w oknach, a benchmark B obejmuje także ich detekcję na pełnych dokumentach przy złotej składni i pozycjach zer. Wyniki tych dwóch protokołów nie są bezpośrednio porównywalne. Żaden z nich nie stanowi ilościowego testu domeny prawnej.
 
 \section{Zakres wykonanych uruchomień}
 \label{sec:zakres-wynikow}
@@ -14,7 +14,76 @@ Nie wykonano E6 ani E7. Brakowało klucza API, zamrożonego identyfikatora model
 
 Po zakończeniu pierwotnych uruchomień wykonano dodatkowy pilot naturalny. CorefUD 1.4 podzielono dokumentowo na 1244 dokumenty treningowe, 219 kalibracyjnych oraz niezmieniony dev liczący 183 dokumenty. Zamrożony HerBERT utworzył reprezentacje 768-wymiarowe. Porównano kontrolę bez DAE i DAE dla jednego seedu oraz pięciu epok. Próg 0,94 wybrano wyłącznie na kalibracji.
 
-\section{Pilot na naturalnym Polish-PCC}
+\section{Zewnętrzny benchmark CorefSeg-AE v2 na Polish-PCC}
+\label{sec:benchmark-b-pcc}
+
+Tabela~\ref{tab:benchmark-b-pcc} dokumentuje historyczny wynik repozytorium \path{kamugo/mg-koreferencja-autokoder} (Agent B), sprawdzony przez \path{kamugo/mg2} (Agent A). CorefSeg-AE v2 i v1 są modelami B, a CorPipe 26 base zewnętrznym punktem odniesienia; nie są to wyniki linkera A. Podzbiór CorefUD 1.4 Polish-PCC obejmuje 123 dokumenty dev o numerach 61--183. Próg v2 równy 0,6 wybrano wcześniej na dokumentach 1--60. Raportowany rozrzut jest odchyleniem populacyjnym trzech seedów, a nie przedziałem ufności dla populacji dokumentów.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Historyczny benchmark B na PCC-dev 61--183; CoNLL F1 w skali 0--100, bez singletonów. Head-match jest metryką główną, exact-match dodatkową.}
+  \label{tab:benchmark-b-pcc}
+  \begin{tabular}{lrr}
+    \toprule
+    Model & Head-match & Exact-match \\
+    \midrule
+    CorefSeg-AE v2, seed 42 & 54,79 & 53,65 \\
+    CorefSeg-AE v2, seed 1 & 54,88 & 53,64 \\
+    CorefSeg-AE v2, seed 2 & 53,77 & 52,73 \\
+    CorefSeg-AE v2, średnia $\pm$ SD & $54,48 \pm 0,50$ & $53,34 \pm 0,43$ \\
+    CorefSeg v1, seed 42 & 33,55 & 31,71 \\
+    CorPipe 26 base & 73,96 & 70,11 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begingroup
+\small\raggedright
+Źródłem tabeli jest przypięty stan B
+\texttt{4c2e45ba06a4ef152cddd04204896e39851d6192}:
+\path{kod/runs/reinf_r7/frozen61_183/} zawiera rekordy
+\path{span.official.json}, \path{span_s1.official.json},
+\path{span_s2.official.json} i \path{r5.official.json}, a
+\path{kod/runs/reinf_r7/corpipe/} logi CorPipe.
+Rekordy przechowują dokładne polecenia, katalog roboczy, SHA-256 checkpointów i predykcji oraz straty eksportu.
+Gold to \path{kod/runs/dev61_183_original.conllu}, SHA-256
+\path{2f0d62c7612b6cdcca23bc00aefe3e623963d62947f42534e88da33f423c0bba}.
+Scorer jest przypięty do rewizji
+\texttt{4fd7b0e0c661aeeff88bc60c19ef507b84d1b590}.
+Niezależne wykonanie A zapisano w \path{wyniki/agent-debate/round-8/verification.json}
+i \path{ODPOWIEDZ_AGENT_A_RUNDA_8.md}, w commicie
+\texttt{cbd7a61067f27ba9d13a7c5e6debdfef521f0da0}; główne wywołania zakończyły się kodem 0,
+bez ostrzeżeń. Reprodukcja dotyczy ponownego ocenienia zapisanych predykcji, nie ponownej inferencji.
+Pełny rekord inferencji CorPipe znajduje się w przypiętym B pod
+\path{kod/runs/reinf_r6/corpipe/PROVENANCE.json}; model pochodzi z
+\path{ufal/corpipe26-onestage-corefud1.4-base-260702}, rewizja
+\texttt{cb62351dd97b58c95bb7e12258a669e471cb577d}.
+\par\endgroup
+
+Wyniki dotyczą oryginalnego golda bez transformacji: usunięto 0 z 11\,766 złotych wzmianek i 0 złotych klastrów. Predykcje B przeszły natomiast polityki \path{cross_sentence=drop} i \path{multi_membership=largest_cluster}. Tabela~\ref{tab:benchmark-b-loss} podaje straty predykcji original-token, nie myląc ich z licznikami subtokenowymi. Nie wystąpiły przypadki poza zakresem ani przycinanie spanów. Dla CorPipe oceniano bezpośrednio zapisany plik predykcji bez dodatkowego eksportera A/B; nie przypisuje się mu zerowych strat wewnętrznych, których analogiczny raport nie zawiera.
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \caption{Straty eksportu predykcji w historycznym benchmarku B. Kolumny: zachowane/wejściowe wzmianki, duplikaty, międzyzdaniowe, dodatkowe członkostwa i opróżnione klastry. Gold pozostaje niezmieniony.}
+  \label{tab:benchmark-b-loss}
+  \begin{tabular}{lrrrrr}
+    \toprule
+    Model & Zachowane/wejściowe & Dupl. & Międzyzd. & Członk. & Klastry \\
+    \midrule
+    v2 seed 42 & 11362/11389 & 4 & 8 & 15 & 19 \\
+    v2 seed 1 & 11828/11861 & 2 & 16 & 15 & 27 \\
+    v2 seed 2 & 11536/11556 & 1 & 9 & 10 & 15 \\
+    v1 seed 42 & 6878/6969 & 0 & 67 & 24 & 58 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Wejście zawiera złote drzewa UD i 1194 złote węzły puste. Modele przewidują etykiety koreferencji na tych pozycjach, nie wykrywają ich z surowego tekstu. Głowy predykcji CorefSeg wyznacza heurystyka drzewa UD; historyczny round-trip golda dla head-match wyniósł 99,94, a nie 100. V2 nadal nie zachowuje każdej wzmianki nieciągłej jako jednego klucza. Tabela jest więc wynikiem konkretnego, stratnego eksportu i zakresu zadania. Późniejszej sanityzacji samych głów nie należy włączać do niej jako nowego wyniku bez osobnego opisu transformacji, hashy i ponownego scoringu.
+
+Osobna ablacja B na dev60, zapisana w tym samym przypiętym stanie pod \path{kod/runs/reinf_r5/seeds_table.json}, obejmuje cztery seedy 42, 1, 2 i 3 wariantów R5 oraz R6 z DAE. Różnica exact-match bez singletonów zmienia znak między seedami; nie potwierdzono stabilnej korzyści DAE. Jest to wynik negatywny tych konkretnych konfiguracji na PCC, nie dowód nieskuteczności wszystkich autokoderów ani ocena domeny prawnej. Dokumenty 61--183 są już obejrzane i pozostają wyłącznie historycznym benchmarkiem zamrożonych modeli. Ilościowa odpowiedź na pytanie o teksty prawne nadal wymaga oddzielonego od silver/train, ręcznie zatwierdzonego i zamrożonego testu.
+
+\section{Pilot własny na naturalnym Polish-PCC}
 \label{sec:pilot-pcc-real}
 
 Tabela~\ref{tab:wyniki-pcc-real} zawiera wynik rzeczywistego uruchomienia na 500 niepokrywających się oknach dev, obejmujących 19,299 wzmianek. Granice wzmianek były złote, a każde okno wyeksportowano do projekcji mention-level i oceniono przypiętym oficjalnym scorerem CorefUD. Wyniku nie należy utożsamiać z oceną pełnych, niepodzielonych dokumentów ani z detekcją wzmianek end-to-end.
@@ -139,9 +208,9 @@ Wyraźnie błędne kandydatury lub połączenia objęły skróty jednostek \emph
 
 \section{Odpowiedzi możliwe na obecnym etapie}
 
-PB1, dotyczące poprawy po domenowym DAE, pozostaje nierozstrzygnięte. Naturalny pilot ogólnodomenowy wskazał spadek CoNLL F1 i LEA po dodaniu DAE, ale nie obejmuje domenowego pretrainingu, wielu seedów ani złotego testu prawnego. PB2 również pozostaje nierozstrzygnięte, ponieważ na danych naturalnych nie uruchomiono wariantu macierzowego i ablacji. PB3 nie może zostać ocenione bez rzeczywistych wywołań LLM i wspólnego kosztu.
+PB1, dotyczące poprawy po domenowym DAE na tekstach prawnych, pozostaje nierozstrzygnięte. Naturalny pilot własny wskazał spadek CoNLL F1 i LEA po dodaniu DAE, a cztery seedy odrębnej ablacji B nie potwierdziły stabilnego zysku na PCC. Żaden z tych wyników nie zastępuje złotego testu prawnego. PB2 również pozostaje nierozstrzygnięte: zewnętrzny benchmark B potwierdza działanie wariantu macierzowego na danych naturalnych, lecz nie jest kontrolowanym porównaniem z linkerem A ani pełnym zestawem ablacji. PB3 nie może zostać ocenione bez rzeczywistych wywołań LLM i wspólnego kosztu.
 
-Wyniki pozwalają natomiast sformułować trzy wnioski inżynierskie. Po pierwsze, cały potok od tensora do oficjalnego scorera jest wykonywalny i deterministycznie odtwarzalny. Po drugie, zaproponowane modele nie otrzymują sztucznie zagwarantowanej przewagi; w kontroli syntetycznej przegrywają z prostszymi wariantami. Po trzecie, analiza błędów może zostać przeprowadzona na wyrównanych dokumentach i wskazuje na potrzebę kalibracji progu oraz kontroli nadmiernych scaleń. Wnioski badawcze muszą poczekać na dane naturalne.
+Wyniki pozwalają natomiast sformułować trzy wnioski inżynierskie. Po pierwsze, cały potok od tensora do oficjalnego scorera jest wykonywalny i deterministycznie odtwarzalny. Po drugie, zaproponowane modele nie otrzymują sztucznie zagwarantowanej przewagi; w kontroli syntetycznej przegrywają z prostszymi wariantami. Po trzecie, analiza błędów może zostać przeprowadzona na wyrównanych dokumentach i wskazuje na potrzebę kalibracji progu oraz kontroli nadmiernych scaleń. Wnioski o jakości w domenie prawnej muszą poczekać na ręcznie zatwierdzony test tej domeny.
 
 \section{Podsumowanie}
 
