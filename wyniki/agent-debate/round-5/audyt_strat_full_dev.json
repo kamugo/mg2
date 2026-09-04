@@ -1,0 +1,107 @@
+{
+  "conllu": "data/corefud_pl/pl_pcc-corefud-dev.conllu",
+  "max_docs": 183,
+  "etap0_plik": {
+    "tokens_incl_empty": 55820,
+    "entity_opens": 19300,
+    "empty_nodes": 1872,
+    "zero_mentions": 1850,
+    "discontinuous_parts": 849,
+    "discontinuous_mentions": 396,
+    "documents": 183,
+    "reader_extra_part_mentions": 453,
+    "entities_if_part_suffix_kept": 13027,
+    "entities_true": 12478,
+    "spurious_entities_from_part_suffix": 549,
+    "zero_mentions_exported_as_surface_tokens": 1850,
+    "same_span_multi_cluster_unique_spans": 143,
+    "same_span_multi_cluster_extra_memberships": 170
+  },
+  "etap1_reader": {
+    "documents": 183,
+    "mentions": 18847,
+    "discontinuous_mentions": 396,
+    "segments": 19300,
+    "zero_mentions": 1828,
+    "clusters": 12478,
+    "tokens_incl_empty": 55820,
+    "empty_nodes": 1872,
+    "parser_warnings": 0,
+    "parser_warnings_sample": [],
+    "same_span_multi_cluster_unique_spans": 0,
+    "same_span_multi_cluster_extra_memberships": 0
+  },
+  "etap2_subtokeny": {
+    "mentions": 18847,
+    "subtokens": 67424,
+    "word_span_collisions_to_same_subtoken_span": 0,
+    "same_span_multi_cluster_unique_spans": 0,
+    "same_span_multi_cluster_extra_memberships": 0
+  },
+  "etap3_writer_gold": {
+    "keep_all": {
+      "mentions_in": 18847,
+      "mentions_kept": 18847,
+      "clusters_in": 12478,
+      "clusters_emptied": 0,
+      "out_of_range": 0,
+      "duplicate_span": 0,
+      "cross_sentence": 0,
+      "cross_sentence_clipped": 0,
+      "multi_membership_dropped": 0,
+      "multi_membership_unique_spans": 0,
+      "multi_membership_extra": 0
+    },
+    "largest_cluster": {
+      "mentions_in": 18847,
+      "mentions_kept": 18847,
+      "clusters_in": 12478,
+      "clusters_emptied": 0,
+      "out_of_range": 0,
+      "duplicate_span": 0,
+      "cross_sentence": 0,
+      "cross_sentence_clipped": 0,
+      "multi_membership_dropped": 0,
+      "multi_membership_unique_spans": 0,
+      "multi_membership_extra": 0
+    },
+    "files": [
+      "C:\\Users\\Kamil\\mg2\\wyniki\\agent-debate\\round-5\\audyt_gold_keep_all.conllu",
+      "C:\\Users\\Kamil\\mg2\\wyniki\\agent-debate\\round-5\\audyt_gold_largest_cluster.conllu"
+    ]
+  },
+  "etap4_scorer": {
+    "keep_all": {
+      "command": "C:\\Users\\Kamil\\Desktop\\mg\\kod\\ext\\venv-corpipe\\Scripts\\python.exe C:\\Users\\Kamil\\Desktop\\mg\\kod\\ext\\corefud-scorer\\corefud-scorer.py -x -s -m muc bcub ceafe lea -- C:\\Users\\Kamil\\mg2\\wyniki\\agent-debate\\round-5\\audyt_gold_keep_all.conllu C:\\Users\\Kamil\\mg2\\wyniki\\agent-debate\\round-5\\audyt_gold_keep_all.conllu",
+      "exit": 0,
+      "gold_vs_gold_conll": 100.0,
+      "already_indexed_warnings": 0,
+      "oracle_udapi": {
+        "file": "C:\\Users\\Kamil\\mg2\\wyniki\\agent-debate\\round-5\\audyt_gold_keep_all.conllu",
+        "documents": 183,
+        "entities": 12478,
+        "mentions": 18847,
+        "discontinuous": 396,
+        "segments": 19300,
+        "zero": 1828,
+        "empty_nodes": 1872
+      }
+    },
+    "largest_cluster": {
+      "command": "C:\\Users\\Kamil\\Desktop\\mg\\kod\\ext\\venv-corpipe\\Scripts\\python.exe C:\\Users\\Kamil\\Desktop\\mg\\kod\\ext\\corefud-scorer\\corefud-scorer.py -x -s -m muc bcub ceafe lea -- C:\\Users\\Kamil\\mg2\\wyniki\\agent-debate\\round-5\\audyt_gold_largest_cluster.conllu C:\\Users\\Kamil\\mg2\\wyniki\\agent-debate\\round-5\\audyt_gold_largest_cluster.conllu",
+      "exit": 0,
+      "gold_vs_gold_conll": 100.0,
+      "already_indexed_warnings": 0,
+      "oracle_udapi": {
+        "file": "C:\\Users\\Kamil\\mg2\\wyniki\\agent-debate\\round-5\\audyt_gold_largest_cluster.conllu",
+        "documents": 183,
+        "entities": 12478,
+        "mentions": 18847,
+        "discontinuous": 396,
+        "segments": 19300,
+        "zero": 1828,
+        "empty_nodes": 1872
+      }
+    }
+  }
+}

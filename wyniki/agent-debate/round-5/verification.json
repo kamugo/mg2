@@ -1,0 +1,101 @@
+{
+  "schema_version": "agent-debate-verification-1.0",
+  "round": 5,
+  "date": "2026-09-04",
+  "reply_to_sha": "f547e9cdd0401a35f63abcf47a263a8c9293fbfe",
+  "agent_a_prompt_sha": "dfdcc5781e66099eeb3e1f6be0e0a6729ff91a61",
+  "scorer_sha": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590",
+  "data": {
+    "pcc_dev_sha256": "e426f7d4fdd61ff633b04c685376e0153c3c3c092ab7a2a9cee0141ed1d0b1be",
+    "dev60_original_sha256": "ba4c881eb30bbaa5fe8f847a1196d323f99337e8178d96151faefd8105198665"
+  },
+  "checkpoint": {
+    "path": "C:/Users/Kamil/Desktop/mg/kod/runs/unet_long/best.pt",
+    "sha256": "4d714901bc64fb22dd431c1d82cc571cdc347cf62868de2ea5870c55f087c75d"
+  },
+  "checks": [
+    {
+      "name": "agent_b_script_tests",
+      "command": "$files = Get-ChildItem tests -Filter 'test_*.py'; foreach ($file in $files) { python $file.FullName }",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": "8/8 files passed"
+    },
+    {
+      "name": "manifest_verify",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r4.json",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": {"checked": 63, "problems": 0}
+    },
+    {
+      "name": "full_dev_segment_identity",
+      "command": "python scripts/audyt_strat.py --conllu data/corefud_pl/pl_pcc-corefud-dev.conllu --max-docs 183 --scorer ext/corefud-scorer/corefud-scorer.py --scorer-python ext/venv-corpipe/Scripts/python.exe --out C:/Users/Kamil/mg2/wyniki/agent-debate/round-5/audyt_strat_full_dev.json",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "artifact": "wyniki/agent-debate/round-5/audyt_strat_full_dev.json",
+      "result": {
+        "documents": 183,
+        "mentions": 18847,
+        "discontinuous_mentions": 396,
+        "segments": 19300,
+        "envelope_unique_collisions": 143,
+        "envelope_extra_memberships": 170,
+        "segment_identity_unique_collisions": 0,
+        "segment_identity_extra_memberships": 0,
+        "gold_self_conll": 100.0,
+        "warnings": 0
+      }
+    },
+    {
+      "name": "gold_on_original_roundtrip",
+      "command": "write_on_original(original PCC-dev, read_corefud clusters) then corefud-scorer.py -x -s -m muc bcub ceafe lea",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": {
+        "mentions_in": 18847,
+        "mentions_kept": 18847,
+        "losses": 0,
+        "conll": 100.0,
+        "warnings": 0
+      }
+    },
+    {
+      "name": "non_coref_preservation_dev60",
+      "command": "line-by-line comparison after stripping Entity/Bridge/SplitAnte from MISC",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": {
+        "lines": 24709,
+        "noncoref_differences": 0,
+        "coref_misc_lines_changed": 9036
+      }
+    },
+    {
+      "name": "official_long_keep_all",
+      "command": "ext/venv-corpipe/Scripts/python.exe ext/corefud-scorer/corefud-scorer.py -x -s -m muc bcub ceafe lea -- runs/dev60_original.conllu runs/reinf_r4/long.pred_on_original.dev.conllu",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "prediction_sha256": "682431bc319eb03a73350620544072f34c3879f73ba1f49b3fd4238159cc4678",
+      "scope": {"task_scope": "end_to_end", "zeros": "predicted", "match": "exact", "singletons": "on", "gold_transformed": false},
+      "result": {"conll": 39.28, "already_indexed_warnings": 13, "cross_sentence_dropped": 43}
+    },
+    {
+      "name": "official_long_largest_cluster",
+      "command": "python evaluate.py --checkpoint runs/unet_long/best.pt --split dev --max-docs 60 --device cpu --out C:/Users/Kamil/mg2/wyniki/agent-debate/round-5/long_largest.json --multi-membership-policy largest_cluster; then the same official scorer with -x -s",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "artifact": "wyniki/agent-debate/round-5/long_largest.json",
+      "prediction_sha256": "9985a56664a38a4c01654779a812e58f8ed5a03594a7ca41ed21446295d89789",
+      "scope": {"task_scope": "end_to_end", "zeros": "predicted", "match": "exact", "singletons": "on", "gold_transformed": false},
+      "result": {"conll": 39.31, "already_indexed_warnings": 0, "multi_membership_dropped": 13, "cross_sentence_dropped": 43}
+    }
+  ],
+  "unverified": [
+    "CorPipe depth 5/6/10 ablation",
+    "controlled DAE and copy baseline on the identical batch and mask",
+    "multi-seed final official scores",
+    "detector candidate recall",
+    "JSONL segment-preserving conversion in mg2"
+  ]
+}

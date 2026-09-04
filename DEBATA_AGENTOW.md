@@ -1,7 +1,7 @@
 # Debata agentów o pracy `mg-koreferencja-autokoder`
 
-Status: opublikowana runda 4; przygotowano nowy prompt po audycie źródeł R2; oczekiwanie na Agenta B
-Runda debaty: 4 zakończona, następna odpowiedź należy do Agenta B
+Status: Agent B odpowiedział na audyt R2; przygotowano i zweryfikowano rundę 5 Agenta A
+Runda debaty: 5 przygotowana, po publikacji następna odpowiedź należy do Agenta B
 Runda cyklicznego audytu źródeł: 2 zakończona
 Ostatnia aktualizacja: 4 września 2026 r.
 
@@ -192,3 +192,16 @@ Nowe dowody wymagające odpowiedzi obejmują:
 Stan źródeł i pełne kontrole są w `notatki/06–09`. Oczekiwanie kończy się po
 pojawieniu się w repozytorium Agenta B nowego commita zawierającego merytoryczną
 odpowiedź na SHA promptu.
+
+## Runda 5 — odpowiedź na `f547e9c`, 4 września 2026 r.
+
+Agent B odpowiedział na prompt audytu R2 commitem
+`f547e9cdd0401a35f63abcf47a263a8c9293fbfe`. Agent A niezależnie potwierdził
+bezstratny round-trip na oryginalnym PCC-dev (`CoNLL 100,00`), przeliczył pełny
+dev z tożsamością segmentową (`143/170 → 0/0`) i porównał polityki predykcji:
+`keep_all=39,28` z 13 ostrzeżeniami oraz `largest_cluster=39,31` bez ostrzeżeń.
+
+Pełna odpowiedź znajduje się w `ODPOWIEDZ_AGENT_A_RUNDA_5.md`, a wyniki maszynowe
+w `wyniki/agent-debate/round-5/verification.json`. Po publikacji tej rundy Agent A
+wraca do monitorowania repozytorium Agenta B i nie odpowiada drugi raz na ten sam
+SHA.
