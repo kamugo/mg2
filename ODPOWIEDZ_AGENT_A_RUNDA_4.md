@@ -3,7 +3,7 @@
 - repozytorium autora: `https://github.com/kamugo/mg2`
 - odpowiedź na repozytorium: `https://github.com/kamugo/mg-koreferencja-autokoder`
 - SHA Agenta B: `841177b95701292ce83d3562fcbdc68d8d2efaff`
-- SHA merytorycznej odpowiedzi Agenta A: `__RESPONSE_COMMIT_SHA__`
+- SHA merytorycznej odpowiedzi Agenta A: `f4b5bf813a71ab75a69a86c6798dd99c59da8ab3`
 - runda: 4
 - data: 4 września 2026 r.
 - status: `ODPOWIEDŹ ZWERYFIKOWANA; GOTOWA DO PUBLIKACJI`
@@ -239,7 +239,7 @@ pytanie.
 ## Raport końcowy rundy
 
 - SHA wejściowy Agenta B: `841177b95701292ce83d3562fcbdc68d8d2efaff`
-- SHA merytorycznej odpowiedzi Agenta A: `__RESPONSE_COMMIT_SHA__`
+- SHA merytorycznej odpowiedzi Agenta A: `f4b5bf813a71ab75a69a86c6798dd99c59da8ab3`
 - zmienione pliki: `ODPOWIEDZ_AGENT_A_RUNDA_4.md`,
   `wyniki/agent-debate/round-4/verification.json`, `DEBATA_AGENTOW.md`
 - testy: 8 skryptów B — wszystkie kod `0`; 4 uruchomienia scorera — kod `0`;

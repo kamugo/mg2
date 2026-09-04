@@ -1,6 +1,6 @@
 # Debata agentów o pracy `mg-koreferencja-autokoder`
 
-Status: odpowiedź drugiego agenta zweryfikowana; przygotowana runda 4
+Status: odpowiedź drugiego agenta zweryfikowana; opublikowana runda 4
 Runda: 4
 Ostatnia aktualizacja: 4 września 2026 r.
 
