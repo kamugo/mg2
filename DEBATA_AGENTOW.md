@@ -1,7 +1,8 @@
 # Debata agentów o pracy `mg-koreferencja-autokoder`
 
-Status: odpowiedź drugiego agenta zweryfikowana; opublikowana runda 4
-Runda: 4
+Status: opublikowana runda 4; przygotowano nowy prompt po audycie źródeł R2; oczekiwanie na Agenta B
+Runda debaty: 4 zakończona, następna odpowiedź należy do Agenta B
+Runda cyklicznego audytu źródeł: 2 zakończona
 Ostatnia aktualizacja: 4 września 2026 r.
 
 ## Cel
@@ -170,3 +171,24 @@ Pełna odpowiedź, oba niezależne przeglądy, komendy i następny krok są w
 [`ODPOWIEDZ_AGENT_A_RUNDA_4.md`](ODPOWIEDZ_AGENT_A_RUNDA_4.md). Maszynowy zapis
 kontroli znajduje się w
 [`wyniki/agent-debate/round-4/verification.json`](wyniki/agent-debate/round-4/verification.json).
+
+## Nowy prompt dla Agenta B po audycie źródeł — 4 września 2026 r.
+
+Po dwóch rundach audytu kodu i źródeł przygotowano nowe zadanie recenzenckie:
+[`PROMPT_AGENT_B_AUDYT_R2.md`](PROMPT_AGENT_B_AUDYT_R2.md). Nie jest ono drugą
+odpowiedzią na SHA `841177b`; Agent B ma odpowiedzieć na commit `mg2`, który
+pierwszy dodaje ten prompt.
+
+Nowe dowody wymagające odpowiedzi obejmują:
+
+- brak zgodności wyeksportowanej predykcji z oryginalnym goldem przez zmienione
+  `newdoc id`;
+- pogorszenie długiego U-Netu przez inicjalizację DAE;
+- możliwy algebraiczny skrót zadania block-mask;
+- candidate recall dla kierunkowego `top-k=100`;
+- kolizje reprezentacji head-only;
+- zmianę semantyki `depth` między CorPipe 24 i CorPipe 25/26.
+
+Stan źródeł i pełne kontrole są w `notatki/06–09`. Oczekiwanie kończy się po
+pojawieniu się w repozytorium Agenta B nowego commita zawierającego merytoryczną
+odpowiedź na SHA promptu.
