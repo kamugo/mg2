@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-09-04T07:10:00+02:00",
+  "agent_a_repo": "https://github.com/kamugo/mg2",
+  "agent_a_base_sha": "19f6454d4cf28de485c23ae2831d490318ff01b6",
+  "agent_b_repo": "https://github.com/kamugo/mg-koreferencja-autokoder",
+  "agent_b_sha": "841177b95701292ce83d3562fcbdc68d8d2efaff",
+  "fixed_point": "3f34c262b4d9410a175cd6b91506e6926964e469",
+  "environment": {
+    "python": "3.11.9",
+    "torch": "2.6.0+cu124",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU (4 GB)",
+    "corefud": "1.4 Polish-PCC dev",
+    "corefud_sha256": "e426f7d4fdd61ff633b04c685376e0153c3c3c092ab7a2a9cee0141ed1d0b1be",
+    "corefud_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590"
+  },
+  "agent_b_tests": {
+    "commands": [
+      "python -B tests/test_metrics.py",
+      "python -B tests/test_windowing.py",
+      "python -B tests/test_decoding.py",
+      "python -B tests/test_dataset_cache.py",
+      "python -B tests/test_training.py",
+      "python -B tests/test_corefud_reader.py",
+      "python -B tests/test_corefud_writer.py",
+      "python -B tests/test_smoke.py"
+    ],
+    "environment_variable": "COREFUD_SCORER=<absolute path to ufal/corefud-scorer@4fd7b0e>/corefud-scorer.py",
+    "exit_codes": [0, 0, 0, 0, 0, 0, 0, 0],
+    "status": "passed"
+  },
+  "official_scorer_reproduction": {
+    "base_command": "python .tmp-corefud-scorer/corefud-scorer.py -x [-s] -m muc bcub ceafe lea -- GOLD PRED",
+    "data_root_in_agent_b_repo": "kod/runs/reinf_r3_fix/drop_keep_all",
+    "results": {
+      "r5_without_singletons_percent": 22.79,
+      "r5_with_singletons_percent": 37.16,
+      "r6_dae_without_singletons_percent": 24.11,
+      "r6_dae_with_singletons_percent": 38.15
+    },
+    "exit_codes": [0, 0, 0, 0],
+    "already_indexed_warnings": {
+      "without_singletons": 34,
+      "with_singletons": 54
+    }
+  },
+  "bootstrap_reproduction": {
+    "command": "cd kod && python -B scripts/bootstrap_r5_r6.py --a runs/reinf_r3_fix/drop_keep_all/r6_dae.json --b runs/reinf_r3_fix/drop_keep_all/r5.json --out runs/review_agent_a_r4/bootstrap_r6_vs_r5.json --n 1000 --seed 42",
+    "exit_code": 0,
+    "n_documents": 60,
+    "diff": 0.010996985307566487,
+    "ci_low": 0.0034514832557183683,
+    "ci_high": 0.018373079793663427,
+    "p_value": 0.003996003996003996,
+    "tail_count": 1,
+    "all_summary_fields_identical_to_committed_artifact": true
+  },
+  "source_semantics_via_official_udapi_reader": {
+    "command": "PYTHONPATH=.tmp-corefud-scorer python -c <load CorefUD with scorer.corefud.reader.CorefUDReader; split_data_to_docs; count first 60 documents>",
+    "exit_code": 0,
+    "documents": 60,
+    "entities": 4662,
+    "mentions": 7081,
+    "detected_noncontiguous_mentions": 104,
+    "zero_mentions": 664,
+    "agent_b_reader_entities": 4662,
+    "agent_b_reader_mentions": 7241,
+    "extra_continuous_part_objects_in_agent_b_reader": 160,
+    "interpretation": "Removing [k/n] fixes entity identity but does not reconstruct a non-contiguous mention; the project reader still represents its parts as separate continuous Mention objects."
+  },
+  "audit_chain_check": {
+    "committed_audit_path_in_agent_b_repo": "kod/runs/reinf_r3/audyt_strat.json",
+    "reader_clusters": 4662,
+    "reader_mentions": 7241,
+    "scorer_log_referenced": "runs/reinf_r3/drop_keep_all/r5.official_singletons.log",
+    "scorer_log_state": "before reader fix; 4860 gold clusters",
+    "is_single_coherent_pipeline_run": false,
+    "script_scorer_behavior": "Counts the text 'already indexed' in a supplied log; does not invoke or structurally inspect the scorer."
+  },
+  "evaluation_policy_check": {
+    "drop_largest_cluster_warnings_r5_r6": [0, 0],
+    "clip_largest_cluster_warnings_r5_r6": [3, 3],
+    "cause": "multi-membership policy runs before clipping, and clipping can create new same-span collisions across clusters",
+    "one_span_one_cluster_guaranteed_for_all_policy_combinations": false
+  },
+  "manifest_validation": {
+    "path_in_agent_b_repo": "kod/runs/MANIFEST_reinf_r3.json",
+    "outputs_declared": 139,
+    "inputs_declared": 4,
+    "problems_after_clean_git_checkout_on_windows": 33,
+    "output_hash_mismatches": 32,
+    "mismatching_output_type": ".conllu",
+    "missing_external_input": "kod/ext/corefud-scorer/corefud-scorer.py",
+    "git_core_autocrlf": true,
+    "gitattributes_present": false,
+    "example": {
+      "path": "kod/runs/reinf_r3_fix/drop_keep_all/r5.gold.dev.conllu",
+      "manifest_bytes": 993005,
+      "checkout_bytes": 1020324,
+      "line_count": 27319,
+      "byte_delta": 27319
+    },
+    "portability_issue": "Manifest paths use Windows backslashes, which are not path separators on POSIX systems."
+  },
+  "mg2_answer": {
+    "converter_path": "kod/src/data/konwersja.py",
+    "converter_strips_part_suffix": true,
+    "unit_test_path": "kod/tests/test_data_conversion.py",
+    "first_60_documents": {
+      "entities": 4662,
+      "part_objects_counted_as_mentions": 7241,
+      "same_span_multi_cluster_unique_spans": 45,
+      "same_span_multi_cluster_extra_memberships": 54
+    },
+    "full_183_documents": {
+      "entities": 12478,
+      "official_reader_mentions": 18847,
+      "part_objects_counted_as_mentions": 19300,
+      "extra_continuous_part_objects": 453,
+      "same_span_multi_cluster_unique_spans": 143,
+      "same_span_multi_cluster_extra_memberships": 170
+    },
+    "known_shared_limitation": "mg2 also stores discontinuous parts as separate continuous mention records (7081 official mentions become 7241 part records on dev60; 18847 become 19300 on full dev); 45/54 and 143/170 therefore do not change after entity-id normalization."
+  },
+  "not_verified": [
+    "Effect of retraining R5/R6 after the entity-id fix.",
+    "Scores after lossless reconstruction of non-contiguous mentions and real CorefUD empty nodes.",
+    "Multi-seed training variance.",
+    "Canonical cache serialization for non-JSON tokenizer values handled through default=str."
+  ]
+}

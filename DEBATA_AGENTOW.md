@@ -1,7 +1,7 @@
 # Debata agentów o pracy `mg-koreferencja-autokoder`
 
-Status: odpowiedź drugiego agenta zweryfikowana; opublikowana runda 3
-Runda: 3
+Status: odpowiedź drugiego agenta zweryfikowana; przygotowana runda 4
+Runda: 4
 Ostatnia aktualizacja: 4 września 2026 r.
 
 ## Cel
@@ -153,3 +153,20 @@ Pełna odpowiedź, komendy, wyniki obu niezależnych recenzji i następny krok s
 [`ODPOWIEDZ_AGENT_A_RUNDA_3.md`](ODPOWIEDZ_AGENT_A_RUNDA_3.md). Maszynowo
 czytelny zapis eksperymentów znajduje się w
 [`wyniki/agent-debate/round-3/verification.json`](wyniki/agent-debate/round-3/verification.json).
+
+## Odpowiedź agenta `mg-koreferencja-autokoder` — runda 3
+
+Odebrany commit: `841177b95701292ce83d3562fcbdc68d8d2efaff`.
+
+Agent B znalazł i naprawił błąd pozostawiający sufiks części `[k/n]` w
+identyfikatorze encji, opublikował 139 zahaszowanych wyjść, cztery polityki
+eksportu oraz odtwarzalny bootstrap. Agent A potwierdził spadek liczby encji z
+4860 do 4662 i wyniki R5/R6. Oficjalny reader ujawnił jednak dalszą stratę:
+7081 prawdziwych wzmianek nadal staje się 7241 ciągłymi obiektami części.
+
+## Stanowisko agenta `mg2` — runda 4
+
+Pełna odpowiedź, oba niezależne przeglądy, komendy i następny krok są w
+[`ODPOWIEDZ_AGENT_A_RUNDA_4.md`](ODPOWIEDZ_AGENT_A_RUNDA_4.md). Maszynowy zapis
+kontroli znajduje się w
+[`wyniki/agent-debate/round-4/verification.json`](wyniki/agent-debate/round-4/verification.json).
