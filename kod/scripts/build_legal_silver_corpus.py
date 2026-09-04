@@ -13,6 +13,7 @@ import csv
 import hashlib
 import io
 import json
+import os
 import random
 import re
 import sys
@@ -98,6 +99,17 @@ def _sha256_file(path: Path) -> str:
     return _sha256_bytes(path.read_bytes())
 
 
+def _stored_text_bytes(text: str) -> bytes:
+    """Return exactly the platform-native bytes written to a document file."""
+    return (text + os.linesep).encode("utf-8")
+
+
+def _canonical_text_bytes(text: str) -> bytes:
+    """Return platform-independent UTF-8/LF bytes used to group exact texts."""
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n").rstrip("\n")
+    return (normalized + "\n").encode("utf-8")
+
+
 def _safe_text(value: object) -> str:
     return "" if value is None else str(value)
 
@@ -153,12 +165,18 @@ def _round_robin_candidates(
         groups[_safe_text(item.get("type")) or "inne"].append(item)
     rng = random.Random(seed)
     queues: dict[str, deque[dict[str, Any]]] = {}
-    for act_type, group in groups.items():
+    for act_type in sorted(groups, key=lambda key: (key.casefold(), key)):
+        group = groups[act_type]
+        # ELI response order is not part of the selection contract.  Sorting
+        # before the seeded shuffle keeps selection stable for the same set.
+        group.sort(key=lambda item: int(item["pos"]))
         rng.shuffle(group)
         queues[act_type] = deque(group)
     result: list[dict[str, Any]] = []
     # Prefer rare types first in every round so laws do not drown out decrees.
-    type_order = sorted(queues, key=lambda key: (len(queues[key]), key.casefold()))
+    type_order = sorted(
+        queues, key=lambda key: (len(queues[key]), key.casefold(), key)
+    )
     while type_order:
         next_order: list[str] = []
         for act_type in type_order:
@@ -185,6 +203,24 @@ def split_for_rank(stratum_index: int, rank: int, per_stratum: int = 25) -> str:
     return "dev" if rank < train_count + dev_count else "test"
 
 
+def _selection_strata(
+    years: Iterable[int], publishers: Iterable[str]
+) -> list[tuple[str, int]]:
+    """Return a canonical, path-safe order of unique publisher/year strata."""
+    unique_publishers = set(publishers)
+    for publisher in unique_publishers:
+        if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]*", publisher) is None:
+            raise ValueError(f"Unsafe ELI publisher identifier: {publisher!r}")
+    ordered_publishers = sorted(
+        unique_publishers, key=lambda value: (value.casefold(), value)
+    )
+    return [
+        (publisher, year)
+        for year in sorted(set(years))
+        for publisher in ordered_publishers
+    ]
+
+
 def excluded_document_ids(manifests: Iterable[Path]) -> set[str]:
     """Load document identifiers that must not be selected for a new corpus."""
     excluded: set[str] = set()
@@ -201,13 +237,123 @@ def excluded_document_ids(manifests: Iterable[Path]) -> set[str]:
     return excluded
 
 
+def _load_exclusion_index(
+    manifests: Iterable[Path],
+) -> tuple[
+    set[str],
+    dict[str, dict[str, str]],
+    dict[str, dict[str, str]],
+    dict[str, int],
+    list[dict[str, str]],
+]:
+    """Load ids plus canonical and legacy stored-byte hashes from manifests."""
+    excluded_ids: set[str] = set()
+    canonical_owners: dict[str, dict[str, str]] = {}
+    stored_owners: dict[str, dict[str, str]] = {}
+    stats = {
+        "excluded_records_loaded": 0,
+        "canonical_hashes_from_manifest": 0,
+        "canonical_hashes_derived_from_file": 0,
+        "legacy_stored_hashes_loaded": 0,
+        "exclusion_files_sha256_mismatch": 0,
+        "excluded_records_without_canonical_hash": 0,
+        "excluded_records_without_usable_hash": 0,
+    }
+    manifest_provenance: list[dict[str, str]] = []
+    for path in manifests:
+        resolved = path.resolve()
+        manifest_bytes = resolved.read_bytes()
+        payload = json.loads(manifest_bytes.decode("utf-8"))
+        manifest_provenance.append({
+            "path": str(path),
+            "sha256": _sha256_bytes(manifest_bytes),
+        })
+        records = payload.get("records")
+        if not isinstance(records, list):
+            raise RuntimeError(f"No records list in exclusion manifest: {path}")
+        for record_index, record in enumerate(records):
+            doc_id_value = record.get("doc_id") if isinstance(record, dict) else None
+            if not isinstance(doc_id_value, str) or not doc_id_value.strip():
+                raise RuntimeError(
+                    "Exclusion manifest record has invalid doc_id at index "
+                    f"{record_index}: {path}"
+                )
+            doc_id = doc_id_value
+            excluded_ids.add(doc_id)
+            stats["excluded_records_loaded"] += 1
+            owner = {
+                "doc_id": doc_id,
+                "source": "exclusion_manifest",
+                "manifest": str(path),
+            }
+
+            stored = record.get("sha256")
+            valid_stored = (
+                isinstance(stored, str)
+                and re.fullmatch(r"[0-9a-fA-F]{64}", stored) is not None
+            )
+            if valid_stored:
+                stored = stored.casefold()
+                stored_owners.setdefault(stored, owner)
+                stats["legacy_stored_hashes_loaded"] += 1
+
+            canonical = record.get("canonical_text_sha256")
+            valid_canonical = (
+                isinstance(canonical, str)
+                and re.fullmatch(r"[0-9a-fA-F]{64}", canonical) is not None
+            )
+            if valid_canonical:
+                canonical_owners.setdefault(canonical.casefold(), owner)
+                stats["canonical_hashes_from_manifest"] += 1
+            else:
+                file_value = record.get("file")
+                if isinstance(file_value, str):
+                    candidate = (resolved.parent / file_value).resolve()
+                    try:
+                        candidate.relative_to(resolved.parent)
+                    except ValueError:
+                        candidate = Path()
+                    if candidate.is_file() and valid_stored:
+                        candidate_bytes = candidate.read_bytes()
+                        if _sha256_bytes(candidate_bytes) == stored:
+                            canonical_digest = _sha256_bytes(
+                                _canonical_text_bytes(candidate_bytes.decode("utf-8"))
+                            )
+                            canonical_owners.setdefault(canonical_digest, owner)
+                            stats["canonical_hashes_derived_from_file"] += 1
+                            valid_canonical = True
+                        else:
+                            stats["exclusion_files_sha256_mismatch"] += 1
+            if not valid_canonical:
+                stats["excluded_records_without_canonical_hash"] += 1
+            if not valid_canonical and not valid_stored:
+                stats["excluded_records_without_usable_hash"] += 1
+    return (
+        excluded_ids,
+        canonical_owners,
+        stored_owners,
+        stats,
+        manifest_provenance,
+    )
+
+
 def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
     raw_dir = args.raw_dir.resolve()
     docs_dir = raw_dir / "documents"
     docs_dir.mkdir(parents=True, exist_ok=True)
     records: list[dict[str, Any]] = []
-    strata = [(publisher, year) for year in args.years for publisher in args.publishers]
-    excluded_ids = excluded_document_ids(args.exclude_manifest)
+    strata = _selection_strata(args.years, args.publishers)
+    selected_years = sorted({year for _, year in strata})
+    selected_publishers = list(dict.fromkeys(publisher for publisher, _ in strata))
+    (
+        excluded_ids,
+        canonical_owners,
+        legacy_stored_owners,
+        exclusion_hash_stats,
+        exclusion_manifest_provenance,
+    ) = _load_exclusion_index(args.exclude_manifest)
+    excluded_hashes_loaded = len(canonical_owners) + len(legacy_stored_owners)
+    duplicates_skipped: list[dict[str, str]] = []
 
     for stratum_index, (publisher, year) in enumerate(strata):
         print(f"Collecting {publisher}/{year} ...", flush=True)
@@ -246,10 +392,31 @@ def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
             excerpt, truncated = truncate_at_boundary(full_text, args.max_words)
             if len(excerpt) < args.min_chars:
                 continue
+            text_bytes = _stored_text_bytes(excerpt)
+            text_sha256 = _sha256_bytes(text_bytes)
+            canonical_text_sha256 = _sha256_bytes(_canonical_text_bytes(excerpt))
+            duplicate_owner = canonical_owners.get(canonical_text_sha256)
+            matched_on = "canonical_text_sha256"
+            if duplicate_owner is None:
+                duplicate_owner = legacy_stored_owners.get(text_sha256)
+                matched_on = "legacy_stored_sha256"
+            if duplicate_owner is not None:
+                duplicate = {
+                    "doc_id": doc_id,
+                    "sha256": text_sha256,
+                    "canonical_text_sha256": canonical_text_sha256,
+                    "duplicate_of_doc_id": duplicate_owner["doc_id"],
+                    "duplicate_source": duplicate_owner["source"],
+                    "matched_on": matched_on,
+                }
+                if "manifest" in duplicate_owner:
+                    duplicate["duplicate_manifest"] = duplicate_owner["manifest"]
+                duplicates_skipped.append(duplicate)
+                continue
             split = split_for_rank(stratum_index, accepted, args.per_stratum)
             text_path = docs_dir / f"{doc_id}.txt"
             metadata_path = docs_dir / f"{doc_id}.metadata.json"
-            text_path.write_text(excerpt + "\n", encoding="utf-8")
+            text_path.write_bytes(text_bytes)
             enriched = {
                 "doc_id": doc_id,
                 "split": split,
@@ -281,14 +448,19 @@ def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
                 "metadata_file": str(metadata_path.relative_to(raw_dir)).replace("\\", "/"),
                 "characters": len(excerpt),
                 "whitespace_tokens": len(excerpt.split()),
-                "sha256": _sha256_file(text_path),
+                "sha256": text_sha256,
+                "canonical_text_sha256": canonical_text_sha256,
                 "source_format": source_format,
                 "source_sha256": _sha256_bytes(source_bytes),
             })
+            canonical_owners[canonical_text_sha256] = {
+                "doc_id": doc_id,
+                "source": "current_run",
+            }
             accepted += 1
         if accepted != args.per_stratum:
             raise RuntimeError(
-                f"Could only collect {accepted}/{args.per_stratum} usable documents for {publisher}/{year}"
+                f"Could only collect {accepted}/{args.per_stratum} usable unique documents for {publisher}/{year}"
             )
 
     expected = len(strata) * args.per_stratum
@@ -298,22 +470,42 @@ def collect_documents(args: argparse.Namespace) -> list[dict[str, Any]]:
         "schema_version": SCHEMA_VERSION,
         "created_at": datetime.now(UTC).isoformat(),
         "selection": {
-            "years": args.years,
-            "publishers": args.publishers,
+            "policy_version": 2,
+            "candidate_ordering": "act-type frequency/casefold; position-sorted then seeded shuffle within type",
+            "years": selected_years,
+            "publishers": selected_publishers,
             "per_stratum": args.per_stratum,
             "seed": args.seed,
                 "max_words": args.max_words,
                 "personal_title_exclusions": PERSONAL_TITLE_PATTERNS,
                 "excluded_document_ids": len(excluded_ids),
-                "exclusion_manifests": [
-                    {
-                        "path": str(path),
-                        "sha256": _sha256_file(path.resolve()),
-                    }
-                    for path in args.exclude_manifest
-                ],
+                "exclusion_manifests": exclusion_manifest_provenance,
         },
         "license_note": "Official acts from Sejm ELI; verify the current reuse rules and personal-data policy before redistribution.",
+        "deduplication": {
+            "policy_version": 1,
+            "algorithm": "sha256",
+            "primary_key": "canonical_text_sha256",
+            "record_field": "records[].canonical_text_sha256",
+            "stored_file_hash_field": "records[].sha256",
+            "scope": "all strata plus exclusion manifests with a canonical or compatible legacy hash",
+            "retention": "first in deterministic candidate order",
+            "backfill": "within stratum",
+            "canonicalization": {
+                "encoding": "utf-8",
+                "line_separator": "LF",
+                "terminal_newline": True,
+                "stored_file_line_separator": "CRLF" if os.linesep == "\r\n" else "LF",
+            },
+            "excluded_hashes_loaded": excluded_hashes_loaded,
+            "exclusion_hash_stats": exclusion_hash_stats,
+            "exclusion_hash_coverage_complete": (
+                exclusion_hash_stats["excluded_records_without_canonical_hash"] == 0
+            ),
+            "duplicates_skipped_count": len(duplicates_skipped),
+            "duplicates_skipped": duplicates_skipped,
+            "near_duplicates": "not evaluated",
+        },
         "records": records,
     }
     (raw_dir / "manifest.json").write_text(
@@ -329,6 +521,82 @@ def load_records(raw_dir: Path) -> list[dict[str, Any]]:
     if not isinstance(records, list):
         raise RuntimeError(f"No records in {manifest_path}")
     return records
+
+
+def _raw_manifest_provenance(
+    raw_dir: Path,
+    processed_dir: Path,
+    expected_records: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Bind processed outputs to the exact raw selection manifest."""
+    manifest_path = raw_dir.resolve() / "manifest.json"
+    manifest_bytes = manifest_path.read_bytes()
+    payload = json.loads(manifest_bytes.decode("utf-8"))
+    records = payload.get("records")
+    if not isinstance(records, list):
+        raise RuntimeError(f"No records in {manifest_path}")
+    if expected_records is not None and records != expected_records:
+        raise RuntimeError(
+            "Raw manifest records changed between loading and annotation start: "
+            f"{manifest_path}"
+        )
+    deduplication = payload.get("deduplication")
+    deduplication_summary = None
+    if isinstance(deduplication, dict):
+        deduplication_summary = {
+            key: value
+            for key, value in deduplication.items()
+            if key != "duplicates_skipped"
+        }
+    try:
+        display_path = os.path.relpath(
+            manifest_path, processed_dir.resolve()
+        ).replace("\\", "/")
+        path_kind = "relative_to_processed_manifest"
+    except ValueError:
+        display_path = manifest_path.as_posix()
+        path_kind = "absolute_cross_volume_fallback"
+    return {
+        "path": display_path,
+        "path_kind": path_kind,
+        "sha256": _sha256_bytes(manifest_bytes),
+        "schema_version": payload.get("schema_version"),
+        "records": len(records),
+        "deduplication": deduplication_summary,
+    }
+
+
+def _verify_raw_manifest_unchanged(raw_dir: Path, expected_sha256: str) -> None:
+    manifest_path = raw_dir.resolve() / "manifest.json"
+    observed_sha256 = _sha256_file(manifest_path)
+    if observed_sha256 != expected_sha256:
+        raise RuntimeError(
+            "Raw manifest changed during annotation; processed provenance would be invalid: "
+            f"expected {expected_sha256}, got {observed_sha256}"
+        )
+
+
+def _read_verified_raw_text(raw_dir: Path, record: dict[str, Any]) -> str:
+    """Read the exact raw bytes named and hashed by a selection record."""
+    raw_root = raw_dir.resolve()
+    text_path = (raw_root / str(record["file"])).resolve()
+    try:
+        text_path.relative_to(raw_root)
+    except ValueError as exc:
+        raise RuntimeError(f"Raw document path escapes raw directory: {text_path}") from exc
+    expected_sha256 = record.get("sha256")
+    if not isinstance(expected_sha256, str) or not re.fullmatch(
+        r"[0-9a-fA-F]{64}", expected_sha256
+    ):
+        raise RuntimeError(f"Missing or invalid raw text sha256 for {record.get('doc_id')}")
+    text_bytes = text_path.read_bytes()
+    observed_sha256 = _sha256_bytes(text_bytes)
+    if observed_sha256 != expected_sha256.casefold():
+        raise RuntimeError(
+            f"Raw text sha256 mismatch for {record.get('doc_id')}: "
+            f"expected {expected_sha256.casefold()}, got {observed_sha256}"
+        )
+    return text_bytes.decode("utf-8").strip()
 
 
 def normalize_mention(text: str) -> str:
@@ -410,8 +678,7 @@ def annotate_document(
     record: dict[str, Any],
     raw_dir: Path,
 ) -> tuple[dict[str, Any], str, list[dict[str, str]]]:
-    text_path = raw_dir / str(record["file"])
-    text_value = text_path.read_text(encoding="utf-8").strip()
+    text_value = _read_verified_raw_text(raw_dir, record)
     document = nlp(text_value)
     sentences = list(document.sentences)
 
@@ -584,6 +851,9 @@ def annotate_documents(args: argparse.Namespace, records: list[dict[str, Any]]) 
     raw_dir = args.raw_dir.resolve()
     processed_dir = args.processed_dir.resolve()
     processed_dir.mkdir(parents=True, exist_ok=True)
+    raw_manifest_provenance = _raw_manifest_provenance(
+        raw_dir, processed_dir, expected_records=records
+    )
     print("Loading Stanza Polish coreference model ...", flush=True)
     nlp = stanza.Pipeline(
         "pl",
@@ -647,6 +917,7 @@ def annotate_documents(args: argparse.Namespace, records: list[dict[str, Any]]) 
     year_counts = Counter(str(record["year"]) for record in records)
     model_path = Path(stanza.resources.common.DEFAULT_MODEL_DIR) / "pl" / "coref" / "udcoref_xlm-roberta-lora.pt"
     output_files = [jsonl_path, conllu_path, processed_dir / "review_chains.csv", processed_dir / "review_documents.csv"]
+    _verify_raw_manifest_unchanged(raw_dir, raw_manifest_provenance["sha256"])
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "created_at": datetime.now(UTC).isoformat(),
@@ -668,6 +939,9 @@ def annotate_documents(args: argparse.Namespace, records: list[dict[str, Any]]) 
         },
         "totals": dict(sorted(totals.items())),
         "review_priority_bands": dict(sorted(by_band.items())),
+        "provenance": {
+            "raw_manifest": raw_manifest_provenance,
+        },
         "outputs": [
             {"file": path.name, "bytes": path.stat().st_size, "sha256": _sha256_file(path)}
             for path in output_files
@@ -696,7 +970,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         action="append",
         default=[],
-        help="Raw corpus manifest whose document ids must be excluded; repeatable.",
+        help="Raw corpus manifest whose ids and available exact text hashes are excluded; repeatable.",
     )
     parser.add_argument("--cpu", action="store_true")
     return parser

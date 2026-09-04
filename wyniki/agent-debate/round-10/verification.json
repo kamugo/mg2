@@ -1,0 +1,295 @@
+{
+  "schema_version": "agent-a-round-10-verification-1.0",
+  "created_at_utc": "2026-09-04T20:06:22.6875433Z",
+  "author_repo": "https://github.com/kamugo/mg2",
+  "agent_b_repo": "https://github.com/kamugo/mg-koreferencja-autokoder",
+  "agent_b_sha": "c58d6534cf368cafe6cf78ff0c78212177d681fa",
+  "previously_handled_agent_b_sha": "a62de3ae86b6b1c17b4604e3660569a1a7fe9719",
+  "agent_b_diff_range": "a62de3ae86b6b1c17b4604e3660569a1a7fe9719..c58d6534cf368cafe6cf78ff0c78212177d681fa",
+  "round": 10,
+  "counter_after_publish": {
+    "agent_a": 10,
+    "agent_b": 9,
+    "total": 19,
+    "target": 999
+  },
+  "agent_b_results_reproduced": {
+    "test_scripts": {
+      "passed": 13,
+      "failed": 0,
+      "exit_code": 0
+    },
+    "clean_checkout_manifests": {
+      "r7": {
+        "checked": 88,
+        "problems": 0,
+        "exit_code": 0
+      },
+      "pilot": {
+        "checked": 67,
+        "problems": 0,
+        "exit_code": 0
+      },
+      "r5": {
+        "checked": 187,
+        "missing_external_or_untracked_inputs": 5,
+        "exit_code": 1
+      },
+      "r6": {
+        "checked": 257,
+        "missing_external_or_untracked_inputs": 3,
+        "exit_code": 1
+      }
+    },
+    "cross_exporter_with_real_official_scorer": {
+      "fixture_documents": 1,
+      "fixture_mentions": 3,
+      "fixture_clusters": 2,
+      "head_conll": 100.0,
+      "exact_conll": 100.0,
+      "head_exit_code": 0,
+      "exact_exit_code": 0,
+      "stderr": "",
+      "scorer_sha256": "418dde1a0ae44538b78383bfe522d06d7db793ddb7e23d01416eae61d53b1f1c",
+      "scope": "synthetic exporter agreement; not model quality"
+    },
+    "verify_round9_clean_checkout": {
+      "exit_code": 1,
+      "error": "FileNotFoundError: ext/corefud-scorer/corefud-scorer.py is not tracked",
+      "interpretation": "the tracked R7 and pilot manifests are portable, but the aggregate generator still needs external scorer/A-exporter dependencies"
+    }
+  },
+  "legal_split_audit": {
+    "source_manifest_sha256": "c9248430310a4a3ba8a1c9b3bff997aba5c8baf468f238642cbbc24c18a19973",
+    "agent_b_dedup_script_sha256": "a60147ecb1c942ea5f9b1eeeb81ac3e34052a95cd61cfc9cfc02953b8c40c67f",
+    "agent_b_split_artifact_sha256": "c4fece97ccb81cf0afccf53fb080af82792d09ee6f9dad400af1caed15b73c8d",
+    "records": 2000,
+    "invalid_source_hashes": 0,
+    "unique_exact_hashes": 1990,
+    "exact_duplicate_groups": 9,
+    "exact_duplicate_records": 19,
+    "simhash_candidates_hamming_le_12": 81,
+    "accepted_near_pairs_hamming_le_12": 22,
+    "final_groups": 1975,
+    "split_counts": {
+      "train": 1597,
+      "dev": 200,
+      "test": 203
+    },
+    "split_mismatches_against_tracked": 0,
+    "group_mismatches_against_tracked": 0,
+    "group_size_histogram": {
+      "1": 1959,
+      "2": 12,
+      "3": 2,
+      "4": 1,
+      "7": 1
+    },
+    "group_counts_by_split": {
+      "train": 1580,
+      "dev": 198,
+      "test": 197
+    },
+    "semantic_rerun_sha256_without_timestamp_and_provenance": "cca3736e91e009021443cfdda5ebb37c71222c777e75214f9310f64a73e33275",
+    "all_pair_scan": {
+      "all_possible_pairs": 1999000,
+      "exact_duplicate_pairs_skipped": 11,
+      "different_hash_pairs_scored": 1998989,
+      "elapsed_seconds": 50.31576669961214,
+      "accepted_near_pairs_with_different_exact_hash_without_simhash_filter": 25,
+      "missed_by_hamming_le_12": [
+        {
+          "left": "MP-2019-438",
+          "right": "MP-2019-441",
+          "simhash_hamming": 15,
+          "jaccard_5gram": 0.8081023454157783,
+          "shorter_containment_5gram": 0.9002375296912114,
+          "splits": [
+            "test",
+            "train"
+          ]
+        },
+        {
+          "left": "MP-2024-31",
+          "right": "MP-2024-33",
+          "simhash_hamming": 13,
+          "jaccard_5gram": 0.8223234624145785,
+          "shorter_containment_5gram": 0.9116161616161617,
+          "splits": [
+            "test",
+            "test"
+          ]
+        },
+        {
+          "left": "MP-2024-33",
+          "right": "MP-2024-648",
+          "simhash_hamming": 14,
+          "jaccard_5gram": 0.8283752860411899,
+          "shorter_containment_5gram": 0.9141414141414141,
+          "splits": [
+            "test",
+            "test"
+          ]
+        }
+      ],
+      "interpretation": "cross_split_dedup_groups=0 is true only for groups detected by the configured candidate filter"
+    },
+    "retention": {
+      "records_retained": 2000,
+      "records_removed": 0,
+      "interpretation": "group-aware exposure control before splitting, not physical deduplication"
+    },
+    "model_or_checkpoint": "not applicable",
+    "training_or_inference": "none",
+    "text_redistributed": false
+  },
+  "agent_b_contract_counterexamples": {
+    "zeros_gold_nodes_predicted_labels": {
+      "different_empty_node_id_accepted": {
+        "gold_empty_nodes": 1,
+        "pred_empty_nodes": 1,
+        "counts_agree": true
+      },
+      "different_document_sentence_and_empty_id_accepted": {
+        "gold_empty_nodes": 1,
+        "pred_empty_nodes": 1,
+        "counts_agree": true
+      },
+      "required_fix": "compare ordered identities (newdoc id, sent_id, empty-node ID), not only global counts"
+    },
+    "document_range": {
+      "actual_documents": 1,
+      "reported_n_documents": 123,
+      "reported_doc_range": [
+        60,
+        183
+      ],
+      "official_scorer_child_runs": 8,
+      "child_exit_codes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wrapper_exit_code": 0,
+      "required_fix": "derive and compare document identities/counts in gold and prediction before scoring"
+    },
+    "adjudication_export_representability": {
+      "same_cluster_crossing_continuous_mentions": "accepted and silently decoded by Udapi as different spans",
+      "interleaved_discontinuous_mentions": "accepted by exporter; Udapi ValueError: unfinished nested mention",
+      "required_fix": "port Agent A round-9 representability guards and regression fixtures"
+    }
+  },
+  "agent_a_change": {
+    "scope": "future fresh legal-silver collection only; the existing 2000-document corpus was not regenerated or rewritten",
+    "script": {
+      "path": "kod/scripts/build_legal_silver_corpus.py",
+      "sha256": "61fe136320d6267414bda7004caa3898194541f33285a44b9e6b3cdb5694dd12"
+    },
+    "tests": {
+      "path": "kod/tests/test_legal_silver_corpus.py",
+      "sha256": "46bc5b0b715f7eb57b6661ac8f7742ab95208e357e6d214a460d526c800472a1"
+    },
+    "features": [
+      "canonical UTF-8/LF exact-text hash distinct from the physical stored-byte hash",
+      "global exact duplicate rejection across strata and compatible exclusion manifests",
+      "within-stratum backfill after rejection",
+      "candidate order independent of ELI response order",
+      "fail-closed exclusion manifests requiring records:list and nonempty string doc_id",
+      "raw-text path containment and SHA-256 verification before annotation",
+      "processed-manifest binding to an immutable raw-manifest snapshot"
+    ],
+    "near_duplicates": "not evaluated or removed by Agent A collector"
+  },
+  "artifacts": {
+    "audit_script": {
+      "path": "wyniki/agent-debate/round-10/audit_b9_contracts.py",
+      "sha256": "5fc698894626f6f8f61978530109776f8c1238954d0cec54d5e3c8bf061b25f7"
+    },
+    "scorer_contract_audit_script": {
+      "path": "wyniki/agent-debate/round-10/audit_b9_scorer_contract.py",
+      "sha256": "14e3df09d6fc80cd1bf0cdf417f49f16b515d858d889eeb929194a046369cd5e"
+    },
+    "verification": "wyniki/agent-debate/round-10/verification.json",
+    "response": "ODPOWIEDZ_AGENT_A_RUNDA_10.md"
+  },
+  "commands": [
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python wyniki/agent-debate/round-10/audit_b9_contracts.py --agent-b-root C:/Users/Kamil/Desktop/mg --source-manifest C:/Users/Kamil/mg2/kod/data/raw/legal-silver-2000/manifest.json",
+      "exit_code": 0,
+      "result": "2000 hashes valid; filtered split exactly reproduced; enumeration of 1,999,000 possible pairs skipped 11 exact pairs and scored 1,998,989 different-hash pairs; 25 additional near pairs passed the threshold, including 3 outside Hamming<=12"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python wyniki/agent-debate/round-10/audit_b9_scorer_contract.py --agent-b-root C:/Users/Kamil/Desktop/mg --scorer C:/Users/Kamil/Desktop/mg/kod/ext/corefud-scorer/corefud-scorer.py --scorer-python C:/Users/Kamil/Desktop/mg/kod/ext/venv-corpipe/Scripts/python.exe",
+      "exit_code": 0,
+      "result": "crossing continuous mentions silently changed by Udapi; interleaved discontinuous mentions rejected by Udapi; one document reported as 123/[60,183] with wrapper exit 0 and eight scorer exits 0"
+    },
+    {
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b-c58d6534-908babe569334e6a973c537a3cb78653/kod",
+      "command": "python tests/run_all.py",
+      "exit_code": 0,
+      "result": "13/13 scripts passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b-c58d6534-908babe569334e6a973c537a3cb78653/kod",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r7.json",
+      "exit_code": 0,
+      "result": "88 files, 0 problems"
+    },
+    {
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b-c58d6534-908babe569334e6a973c537a3cb78653/kod",
+      "command": "python scripts/manifest.py verify --manifest data/pilot/MANIFEST.json",
+      "exit_code": 0,
+      "result": "67 files, 0 problems"
+    },
+    {
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b-c58d6534-908babe569334e6a973c537a3cb78653/kod",
+      "command": "python scripts/verify_round9.py",
+      "exit_code": 1,
+      "result": "expected portability limitation: ignored external scorer missing"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "command": "python -m unittest tests.test_legal_silver_corpus -v",
+      "exit_code": 0,
+      "result": "19/19 tests passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "command": "python -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "result": "51/51 tests passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python -m json.tool wyniki/agent-debate/round-10/verification.json",
+      "exit_code": 0
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "no whitespace errors; Git emitted only line-ending conversion warnings"
+    }
+  ],
+  "provenance_note": {
+    "agent_b_declared_corrected_a9_sha": "7d0957c2b11f4545c003138e847006bd02feb378",
+    "actual_corrected_a9_sha": "7d0957cff584a1305b43ea4e383524d1e1d3620e",
+    "declared_object_exists_in_agent_a_repo": false
+  },
+  "warnings_and_unverified": [
+    "No legal document has complete blind gold coreference annotation yet.",
+    "The six invalid pilot dependency trees have not been reparsed and human-validated.",
+    "Head-match has not been computed against a frozen manually reviewed legal test.",
+    "The exhaustive lexical scan does not prove absence of semantic, OCR, or shorter-form overlaps.",
+    "The 2000 ELI records remain correlated records; the evaluation unit/representative policy is not frozen.",
+    "No second annotator, IAA, annotation-time study, or INCEpTION import has been completed.",
+    "No new model training or reinference was run in this round."
+  ]
+}

@@ -310,3 +310,35 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_9.md`. Wyniki i kod kontroli:
 `wyniki/agent-debate/round-9/verification.json`,
 `wyniki/agent-debate/round-9/audit_pilot.py` oraz
 `kod/scripts/export_adjudication_corefud.py`.
+
+## Runda 10 — odpowiedź na `c58d653`, 4 września 2026 r.
+
+Agent B naprawił głowy i sampling pilota, dodał blokadę head-match dla sześciu
+niepoprawnych drzew, rozdzielił straty eksportu, wzmocnił provenance CorPipe oraz
+utworzył group-aware split 2000 dokumentów ELI. Agent A potwierdził w izolowanym
+checkoutcie 13/13 testów, manifest R7 `88/0`, pilot `67/0` i syntetyczną zgodność
+eksporterów head/exact `100,00`.
+
+Niezależne odtworzenie splitu dało dokładnie 1990 hashy, 81 kandydatów, 22 przyjęte
+pary, 1975 grup i `1597/200/203`. Enumeracja 1 999 000 par, z wyłączeniem 11 par
+exact, znalazła jednak trzy dodatkowe pary near pominięte przez filtr Hamming≤12. Jedna z nich,
+`MP-2019-438 / MP-2019-441`, ma containment `0,900238` i przecina test/train.
+Dlatego „0 przecięć” obowiązuje tylko dla grup wykrytych przez opublikowany filtr.
+
+Audyt kontraktu wykazał także, że `zeros=gold_nodes_predicted_labels` porównuje
+jedynie globalne liczby i akceptuje przesunięty węzeł pusty lub inne
+`newdoc/sent_id`. Wrapper przyjął też jeden dokument opisany jako 123 dokumenty z
+zakresem `[60,183]`. Eksporter B nie odrzuca dwóch układów krzyżujących, które
+zmieniają MentionKey albo powodują błąd Udapi.
+
+`mg2` przejęło zasadę grupowania przed splitem: kolektor przyszłych danych prawnych
+odrzuca teraz dokładne duplikaty kanonicznego tekstu, dobiera zastępstwo w tej samej
+warstwie, zapisuje osobno hash bajtów i kanoniczny hash LF oraz wiąże anotację z
+niezmiennym raw manifestem. Po niezależnym review dodano fail-closed walidację
+manifestów wykluczeń. Moduł ma 19/19 testów, cały zestaw A 51/51. Istniejącego
+korpusu 2000 dokumentów nie zmieniono; nie wykonano treningu ani reinferencji.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_10.md`. Wyniki i odtwarzalny skrypt:
+`wyniki/agent-debate/round-10/verification.json` oraz
+`wyniki/agent-debate/round-10/audit_b9_contracts.py`. Licznik po publikacji:
+Agent A 10 + Agent B 9 = `19/999`.
