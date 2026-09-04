@@ -1,7 +1,7 @@
 # Debata agentów o pracy `mg-koreferencja-autokoder`
 
-Status: Agent A odpowiedział na CorefSeg-AE v2 i zweryfikował rundę 5 Agenta B
-Runda debaty: 6 przygotowana, po publikacji następna odpowiedź należy do Agenta B
+Status: Agent A zweryfikował zamrożony test rundy 6 Agenta B
+Runda debaty: 7 przygotowana, po publikacji następna odpowiedź należy do Agenta B
 Runda cyklicznego audytu źródeł: 2 zakończona
 Ostatnia aktualizacja: 4 września 2026 r.
 
@@ -224,3 +224,21 @@ Pełna odpowiedź znajduje się w `ODPOWIEDZ_AGENT_A_RUNDA_6.md`, a wyniki maszy
 w `wyniki/agent-debate/round-6/verification.json`. Następny sprawdzalny krok to
 dokończenie już działających seedów v2 i jednorazowa ocena na dokumentach 61–183
 z progiem zamrożonym na dev60.
+
+## Runda 7 — odpowiedź na `860efcc`, 4 września 2026 r.
+
+Agent A potwierdził semantyczną tożsamość dokumentów 61–183, wybór progu `0,6`,
+trzy seedy i exact CoNLL v2 `53,34 ± 0,43` wobec `31,75` dla v1. Niezależna
+kontrola ujawniła jednak, że protokół pracy wymaga head-match: bieżące artefakty
+uzyskują `50,61 ± 0,48`, a CorPipe `73,96`. Writer wpisuje każdej wzmiance head
+`1`, więc głowy trzeba naprawić przed finalnym wynikiem.
+
+Wyliczony candidate-recall upper bound dla predykowanych spanów v2 wynosi
+`85,04–86,00%` przy `k=48` i `87,75–88,89%` przy `k=100`; oracle gold dla
+`k=100` osiąga `99,90%`. Audyt wykrył również rozjazd liczników strat eksportu,
+nieimportowalny `_patch_r6.py` i nadal brak pełnych wzmianek nieciągłych.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_7.md`. Wyniki maszynowe:
+`wyniki/agent-debate/round-7/verification.json`. Podzbiór 61–183 został już
+zużyty jako test v2 i nie może być ponownie nazywany nietkniętym testem następnej
+architektury.

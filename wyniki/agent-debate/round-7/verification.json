@@ -1,0 +1,96 @@
+{
+  "round": 7,
+  "date": "2026-09-04",
+  "author_repo": "kamugo/mg2",
+  "input_repo": "kamugo/mg-koreferencja-autokoder",
+  "input_sha": "860efcc524c02900990187a9a3cbeeec0ca34e9d",
+  "dataset": {
+    "path": "runs/dev61_183_original.conllu",
+    "documents": 123,
+    "semantic_match_to_full_dev_tail": true,
+    "mentions": 11766,
+    "clusters": 7816,
+    "empty_nodes": 1194,
+    "discontinuous_mentions": 252,
+    "cross_cluster_start_collision_mentions": 1455,
+    "cross_cluster_start_collision_rate": 0.1236613972463029
+  },
+  "checks": [
+    {
+      "name": "agent_b_tests",
+      "command": "python tests/run_all.py",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": "8/8 scripts passed"
+    },
+    {
+      "name": "manifest_r6",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r6.json",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": "260 files, 0 problems"
+    },
+    {
+      "name": "manifest_r5",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r5.json",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 0,
+      "result": "192 files, 0 problems"
+    },
+    {
+      "name": "patch_script_import",
+      "command": "python -c import scripts/_patch_r6.py via importlib",
+      "cwd": "C:/Users/Kamil/Desktop/mg/kod",
+      "exit_code": 1,
+      "result": "AssertionError at module import after attempting top-level patch logic"
+    }
+  ],
+  "official_scores": {
+    "exact_no_singletons": {
+      "v2_seed42": 53.65,
+      "v2_seed1": 53.64,
+      "v2_seed2": 52.73,
+      "v2_mean": 53.34,
+      "v2_population_sd": 0.43135445594854793,
+      "v1_seed42": 31.75,
+      "corpipe_depth5": 70.11
+    },
+    "head_no_singletons": {
+      "v2_seed42": 50.96,
+      "v2_seed1": 50.94,
+      "v2_seed2": 49.94,
+      "v2_mean": 50.61333333333333,
+      "v2_population_sd": 0.4761885714247627,
+      "v1_seed42": 31.56,
+      "corpipe_depth5": 73.96
+    },
+    "head_singletons": {
+      "v2_seed42": 61.88,
+      "corpipe_depth5": 82.88
+    }
+  },
+  "candidate_recall_upper_bound": {
+    "definition": "gold anaphor and an earlier same-cluster mention both detected exact; antecedent among previous k predicted mentions",
+    "denominator_gold_anaphors": 3950,
+    "k48": {"v2_seed42": 0.850379746835443, "v2_seed1": 0.8584810126582278, "v2_seed2": 0.86, "gold_oracle": 0.9683544303797469},
+    "k100": {"v2_seed42": 0.8774683544303797, "v2_seed1": 0.8888607594936709, "v2_seed2": 0.8888607594936709, "gold_oracle": 0.9989873417721519}
+  },
+  "export_loss_mismatch": {
+    "span_official_record_kept": 11381,
+    "span_actual_original_export_kept": 11362,
+    "mentions_in": 11389,
+    "actual_original_duplicate_span": 4,
+    "actual_original_cross_sentence": 8,
+    "actual_original_multi_membership_dropped": 15
+  },
+  "findings": [
+    "published main score uses exact match although the thesis protocol specifies head match as primary",
+    "writer hardcodes predicted mention head to relative position 1",
+    "documents 61-183 are now consumed and cannot remain a one-time test for the next architecture",
+    "official JSON records subtoken export loss instead of the loss of pred_on_original actually scored",
+    "12.37 percent collision exposure does not by itself prove an 87.6 percent separability ceiling",
+    "discontinuous mentions remain unsupported as composite MentionKeys",
+    "CorPipe inference is not fully reproducible from tracked files",
+    "_patch_r6.py mutates files on import and currently raises AssertionError"
+  ]
+}
