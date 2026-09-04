@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "audit": "legal-silver-2000-readiness-and-gold-protocol",
+  "date": "2026-09-04",
+  "repository": "kamugo/mg2",
+  "audit_repository_head": "7d0957cff584a1305b43ea4e383524d1e1d3620e",
+  "python": "3.11.9",
+  "counter_increment": false,
+  "counter_remains": "17/999",
+  "data_scope": "local untracked files; no texts or annotations are included in this artifact",
+  "raw": {
+    "path": "kod/data/raw/legal-silver-2000",
+    "files": 4001,
+    "bytes": 9311878,
+    "manifest_sha256": "c9248430310a4a3ba8a1c9b3bff997aba5c8baf468f238642cbbc24c18a19973",
+    "records": 2000,
+    "unique_text_sha256": 1990,
+    "exact_duplicate_groups": 9,
+    "records_in_exact_duplicate_groups": 19,
+    "split": {
+      "train": 1600,
+      "dev": 200,
+      "test": 200
+    },
+    "publisher": {
+      "DU": 1000,
+      "MP": 1000
+    },
+    "year_min": 2005,
+    "year_max": 2024,
+    "records_per_year": 100,
+    "excerpt": 1032,
+    "full": 968,
+    "act_type_counts": {
+      "Oświadczenie rządowe": 265,
+      "Obwieszczenie": 260,
+      "Umowa międzynarodowa": 230,
+      "Orzeczenie": 163,
+      "Uchwała": 145,
+      "Rozporządzenie": 139,
+      "Zarządzenie": 132,
+      "Postanowienie": 128,
+      "Ustawa": 127,
+      "Ogłoszenie": 127,
+      "Komunikat": 122,
+      "Protokół": 45,
+      "Porozumienie": 42,
+      "Konwencja": 33,
+      "Dokument wypowiedzenia": 12,
+      "Rezolucja": 7,
+      "Traktat": 4,
+      "Oświadczenie": 3,
+      "Apel": 3,
+      "Sprawozdanie": 3,
+      "Akt": 2,
+      "Stanowisko": 2,
+      "Deklaracja": 1,
+      "Regulamin": 1,
+      "Statut": 1,
+      "Układ": 1,
+      "Decyzja": 1,
+      "Informacja": 1
+    },
+    "seed": 20260903,
+    "max_words": 450
+  },
+  "cross_split_exact_duplicates": [
+    {
+      "text_sha256": "86f924dab1add22d299889dace6a51939e2f22021284cc0d338fd3078c059120",
+      "records": [
+        {
+          "doc_id": "MP-2007-322",
+          "split": "train"
+        },
+        {
+          "doc_id": "MP-2007-323",
+          "split": "test"
+        }
+      ]
+    },
+    {
+      "text_sha256": "0c61370372ea6a940ecefac3aaa21d228db1484d485defabcd07abc126a960de",
+      "records": [
+        {
+          "doc_id": "MP-2008-226",
+          "split": "train"
+        },
+        {
+          "doc_id": "MP-2008-224",
+          "split": "train"
+        },
+        {
+          "doc_id": "MP-2008-222",
+          "split": "dev"
+        }
+      ]
+    }
+  ],
+  "processed": {
+    "path": "kod/data/processed/legal-silver-2000",
+    "files": 2,
+    "bytes": 52845687,
+    "documents": 247,
+    "split": {
+      "train": 200,
+      "dev": 25,
+      "test": 22
+    },
+    "year_min": 2005,
+    "year_max": 2007,
+    "tokens": 121270,
+    "mentions": 38427,
+    "clusters": 27560,
+    "zeros": 0,
+    "conllu_sha256": "966187d38ee8af88983a842d6d0fa15d052c43d319ec94bbdd9399e350de04fd",
+    "jsonl_sha256": "a560c6515938ee27aee35bc20f1f33ecf6d9214a068d141b51759022df75fb1b",
+    "complete_against_raw": false
+  },
+  "leakage": {
+    "cross_split_exact_duplicate_groups": 2,
+    "near_duplicates_checked": false,
+    "affected_raw_splits": [
+      "train",
+      "dev",
+      "test"
+    ],
+    "affected_records_currently_present_in_processed": 0,
+    "required_action": "global exact and near deduplication before recomputing train/dev/test"
+  },
+  "licensing": {
+    "dataset_specific_license_present": false,
+    "manifest_note": "Official acts from Sejm ELI; verify the current reuse rules and personal-data policy before redistribution.",
+    "redistribution_verified": false,
+    "lowest_risk_publication_pending_legal_review": "IDs, URLs, hashes, scripts, and aggregate counts; assess stand-off annotations separately from full text redistribution and PII"
+  },
+  "git_safety": {
+    "raw_tracked": false,
+    "processed_tracked": false,
+    "covered_by_gitignore": false,
+    "warning": "Do not stage either local data directory with a broad git add."
+  },
+  "proposed_pilot_scale_test": {
+    "population": "mixed ELI DU/MP publications with 28 act_type labels; separate from SAOS common-court judgments",
+    "documents": 32,
+    "source_split": "recomputed raw test after global deduplication",
+    "separate_du_mp_pilot_excluded": true,
+    "saos_pilot_is_outside_this_population": true,
+    "sample_size_status": "provisional minimum; justify final size by estimation precision and report confidence intervals",
+    "strata": {
+      "publishers": [
+        "DU",
+        "MP"
+      ],
+      "periods": [
+        "2005-2009",
+        "2010-2014",
+        "2015-2019",
+        "2020-2024"
+      ],
+      "documents_per_publisher_period": 4
+    },
+    "challenge_set_reported_separately": true,
+    "blind_first_pass_without_predictions": true,
+    "double_annotated_documents_provisional_minimum": 8,
+    "report_inter_annotator_agreement": true,
+    "primary_metric": "CorefUD head match without singletons",
+    "secondary_metric": "CorefUD exact match without singletons"
+  },
+  "commands": [
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "Get-FileHash -Algorithm SHA256 kod/data/raw/legal-silver-2000/manifest.json,kod/data/processed/legal-silver-2000/*",
+      "exit_code": 0,
+      "stderr": "",
+      "result": "manifest=c9248430310a4a3ba8a1c9b3bff997aba5c8baf468f238642cbbc24c18a19973; conllu=966187d38ee8af88983a842d6d0fa15d052c43d319ec94bbdd9399e350de04fd; jsonl=a560c6515938ee27aee35bc20f1f33ecf6d9214a068d141b51759022df75fb1b"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python -c \"import json,pathlib,collections; p=pathlib.Path(r'kod/data/raw/legal-silver-2000/manifest.json'); x=json.loads(p.read_text(encoding='utf-8')); rec=x['records']; g=collections.defaultdict(list); [g[r['sha256']].append((r['doc_id'],r['split'],r['publisher'],r['year'])) for r in rec]; d=[(h,v) for h,v in g.items() if len(v)>1]; print('records',len(rec),'unique_text_sha',len(g),'duplicate_groups',len(d),'duplicate_records',sum(len(v) for _,v in d)); print('cross_split',[(h,v) for h,v in d if len({q[1] for q in v})>1])\"",
+      "exit_code": 0,
+      "stderr": "",
+      "result": "records=2000; unique_text_sha=1990; duplicate_groups=9; duplicate_records=19; cross_split_groups=2"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python -c \"import json,pathlib,collections; p=pathlib.Path(r'kod/data/processed/legal-silver-2000/legal-silver-2000.jsonl'); rows=[json.loads(l) for l in p.read_text(encoding='utf-8').splitlines() if l.strip()]; print('processed',len(rows)); print('split',dict(collections.Counter(r['split'] for r in rows))); print('years',min(r['source']['year'] for r in rows),max(r['source']['year'] for r in rows)); print('tokens',sum(len(r['tokens']) for r in rows)); print('mentions',sum(len(r['mentions']) for r in rows)); print('clusters',sum(len(r['clusters']) for r in rows)); print('zeros',sum(sum(1 for m in r['mentions'] if m.get('is_empty')) for r in rows))\"",
+      "exit_code": 0,
+      "stderr": "",
+      "result": "processed=247; split=200/25/22; years=2005-2007; tokens=121270; mentions=38427; clusters=27560; zeros=0"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "$rawFiles = Get-ChildItem -LiteralPath 'kod/data/raw/legal-silver-2000' -Recurse -File; $processedFiles = Get-ChildItem -LiteralPath 'kod/data/processed/legal-silver-2000' -Recurse -File; [pscustomobject]@{scope='raw';files=$rawFiles.Count;bytes=($rawFiles | Measure-Object Length -Sum).Sum}; [pscustomobject]@{scope='processed';files=$processedFiles.Count;bytes=($processedFiles | Measure-Object Length -Sum).Sum}",
+      "exit_code": 0,
+      "stderr": "",
+      "result": "raw=4001 files/9311878 bytes; processed=2 files/52845687 bytes"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2",
+      "command": "python -c \"import json,pathlib,collections; r=json.loads(pathlib.Path(r'kod/data/raw/legal-silver-2000/manifest.json').read_text(encoding='utf-8'))['records']; print(collections.Counter(x['act_type'] for x in r).most_common())\"",
+      "exit_code": 0,
+      "stderr": "",
+      "result": "28 act_type labels; counts recorded in raw.act_type_counts"
+    }
+  ],
+  "unverified": [
+    "dataset reuse and redistribution rights",
+    "near-duplicate leakage",
+    "completeness and quality of 1753 unprocessed records",
+    "manual quality of any legal coreference document",
+    "annotation time and inter-annotator agreement",
+    "representativeness of the proposed 32 documents after deduplication",
+    "model scores on a frozen legal gold test"
+  ]
+}
