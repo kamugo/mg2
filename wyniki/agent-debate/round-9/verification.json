@@ -293,9 +293,34 @@
     "scripts_przeglad50_porownaj_generates_these_fields": false,
     "warning": "Re-running porownaj overwrites the manually enriched summary without pooled link metrics and export-loss counters."
   },
+  "post_publication_correction": {
+    "original_agent_a_commit": "a15ec8acfcea41d9e86ecabf3cf4d47c718c69c3",
+    "counter_increment": false,
+    "counter_remains": "17/999",
+    "reason": "Independent review found unsafe serializer edge cases in the first published converter version.",
+    "reproduced_defects": [
+      "crossing mentions of one base entity could silently change boundaries",
+      "overlapping envelopes of multiple discontinuous mentions of one entity were ambiguous to strict Udapi",
+      "old Entity/Bridge/SplitAnte values could leak from empty nodes",
+      "equal local cluster ids from different documents shared one eid",
+      "full_document_review alone did not prove that candidate records were not truncated",
+      "duplicate document and sentence ids and incompatible global.Entity schemas were not rejected"
+    ],
+    "correction": [
+      "reject crossing emitted subspans across continuous and discontinuous mentions of one base entity",
+      "reject overlapping envelopes of multiple discontinuous mentions of one entity",
+      "sanitize coreference MISC keys on surface, range, and empty-node rows",
+      "namespace entity ids per physical document and reject duplicate newdoc ids",
+      "require one full_document_review and one adjudication_manifest per document",
+      "verify counts and SHA-256 of sorted candidate and random-window ids",
+      "require exactly one eid-etype-head-other schema, unique sent_id values, and exactly ten CoNLL-U columns per document",
+      "reject any accepted mention whose segments span more than one sentence"
+    ],
+    "manifest_threat_model": "The embedded manifest catches accidental truncation while it remains unchanged. A tracked external artifact hash or Git commit must anchor the manifest itself against coordinated edits."
+  },
   "agent_a_converter": {
     "path": "kod/scripts/export_adjudication_corefud.py",
-    "sha256": "dfbccb6fed3f8cc70d78cfbc88132f74cfbbddc83775f67a1224a570e5e0f84e",
+    "sha256": "df47afeb8a08f8354c2a79768c839bd27369bacb34cc0fb44c982d5b3a65a9b8",
     "contract": {
       "gold_span": "false rejects; true accepts candidate; list of [start,end] supplies corrected canonical segments",
       "accepted_mention_requires": [
@@ -303,13 +328,54 @@
         "gold_head"
       ],
       "random_window_requires": "gold_mentions list, including an explicit empty list after review",
-      "final_gold_requires": "one full_document_review record per document; random windows alone are insufficient",
+      "final_gold_requires": "one full_document_review and one adjudication_manifest with candidate/window counts and id hashes per document; random windows alone are insufficient",
+      "corefud_schema": "exactly one # global.Entity = eid-etype-head-other and exactly ten columns per row",
+      "unrepresentable_mentions": "crossing subspans, overlapping envelopes of multiple discontinuous mentions in one entity, and cross-sentence mention segments are rejected",
+      "old_coreference_cleanup": "Entity, Bridge, and SplitAnte are removed from all input rows, including empty nodes",
+      "cluster_namespace": "document-index prefix",
       "lossy_or_implicit_acceptance": false
     },
     "focused_tests": {
-      "tests": 4,
+      "tests": 17,
       "failures": 0,
       "exit_code": 0
+    },
+    "official_roundtrip": {
+      "script": "wyniki/agent-debate/round-9/verify_converter_official.py",
+      "script_sha256": "9ad303c6c891227afa4fd2e4c1a11759a9e7eb4c03a2800458ea5bd848e76e54",
+      "actual_equals_independently_written_expected": true,
+      "udapi_mention_word_orders": [
+        [
+          "1"
+        ],
+        [
+          "2",
+          "3"
+        ],
+        [
+          "3",
+          "5"
+        ]
+      ],
+      "expected_mention_word_orders": [
+        [
+          "1"
+        ],
+        [
+          "2",
+          "3"
+        ],
+        [
+          "3",
+          "5"
+        ]
+      ],
+      "includes_discontinuous_mention": true,
+      "head_conll": 100.0,
+      "exact_conll": 100.0,
+      "head_exit_code": 0,
+      "exact_exit_code": 0,
+      "stderr": ""
     },
     "current_pilot_attempt": {
       "exit_code": 1,
@@ -318,7 +384,7 @@
     }
   },
   "agent_a_tests": {
-    "tests": 26,
+    "tests": 39,
     "failures": 0,
     "exit_code": 0
   },
@@ -410,13 +476,19 @@
       "cwd": "C:/Users/Kamil/mg2/kod",
       "command": "python -m unittest tests.test_export_adjudication_corefud -v",
       "exit_code": 0,
-      "result": "4/4 tests passed"
+      "result": "17/17 tests passed"
     },
     {
       "cwd": "C:/Users/Kamil/mg2/kod",
       "command": "python -m unittest discover -s tests -v",
       "exit_code": 0,
-      "result": "26/26 tests passed"
+      "result": "39/39 tests passed"
+    },
+    {
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "command": "python ../wyniki/agent-debate/round-9/verify_converter_official.py --agent-b-root C:/Users/Kamil/Desktop/mg",
+      "exit_code": 0,
+      "result": "byte-identical to an independently written expected file; strict Udapi mention word orders [[1],[2,3],[3,5]]; head and exact CoNLL 100.00; empty stderr"
     },
     {
       "cwd": "C:/Users/Kamil/mg2/kod",

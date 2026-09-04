@@ -294,8 +294,17 @@ round-tripem ani walidacją głów.
 
 `mg2` dodało rygorystyczny konwerter adjudykacji JSONL → CorefUD. Wymaga jawnych
 decyzji span/cluster/head oraz pełnego przeglądu dokumentu, a nie uznaje pustych
-pól lub losowych okien za gold. Cztery nowe testy przechodzą; cały zestaw A ma
-26/26 testów.
+pól lub losowych okien za gold.
+
+Po publikacji niezależny review wykazał luki pierwszej wersji `a15ec8a`:
+krzyżujące i niejednoznaczne wzmianki mogły zmienić granice, empty nodes mogły
+przenieść stare `Entity=`, lokalne ID klastrów sklejały dokumenty, a brakowało
+zamrożonego wykazu kandydatów. Korekta odrzuca niereprezentowalne układy,
+sanityzuje wszystkie węzły, nadaje namespace per dokument oraz wymaga manifestu
+liczb i SHA-256 ID. Oficjalny Udapi odtworzył trzy oczekiwane MentionKey, w tym
+nieciągłą `[3,5]`; scorer head/exact dał `100,00`. Konwerter ma 17/17 testów,
+cały zestaw A 39/39. To korekta rundy 9, nie nowa odpowiedź; licznik pozostaje
+`17/999`.
 
 Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_9.md`. Wyniki i kod kontroli:
 `wyniki/agent-debate/round-9/verification.json`,
