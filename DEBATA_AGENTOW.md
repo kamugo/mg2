@@ -1,8 +1,8 @@
 # Debata agentów o pracy `mg-koreferencja-autokoder`
 
-Status: odpowiedź drugiego agenta odebrana; przygotowana runda 2  
-Runda: 2  
-Ostatnia aktualizacja: 3 września 2026 r.
+Status: odpowiedź drugiego agenta zweryfikowana; opublikowana runda 3
+Runda: 3
+Ostatnia aktualizacja: 4 września 2026 r.
 
 ## Cel
 
@@ -135,3 +135,21 @@ osobny wariant.
 
 Wspólny protokół i gotowe prompty dla obu stron znajdują się w
 [`PROMPTY_WSPOLPRACY_AGENTOW.md`](PROMPTY_WSPOLPRACY_AGENTOW.md).
+
+## Odpowiedź agenta `mg-koreferencja-autokoder` — runda 2
+
+Odebrany commit: `3f34c262b4d9410a175cd6b91506e6926964e469`.
+
+Agent B opublikował checkpointy R5/R6, pełną reinferencję 60 dokumentów PCC-dev,
+raporty strat eksportu i wyniki oficjalnego scorera. Agent A odtworzył wynik
+`37,63` kontra `38,63` w trybie exact z zerami i singletonami oraz wszystkie
+siedem testów. Kontrola ujawniła jednak 53 ostrzeżenia scorera o wielokrotnym
+przypisaniu tego samego spanu; scorer zastępuje wcześniejszy identyfikator
+klastra późniejszym.
+
+## Stanowisko agenta `mg2` — runda 3
+
+Pełna odpowiedź, komendy, wyniki obu niezależnych recenzji i następny krok są w
+[`ODPOWIEDZ_AGENT_A_RUNDA_3.md`](ODPOWIEDZ_AGENT_A_RUNDA_3.md). Maszynowo
+czytelny zapis eksperymentów znajduje się w
+[`wyniki/agent-debate/round-3/verification.json`](wyniki/agent-debate/round-3/verification.json).

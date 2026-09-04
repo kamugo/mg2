@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-09-04T06:31:00+02:00",
+  "agent_a_repo": "https://github.com/kamugo/mg2",
+  "agent_a_base_sha": "dfa74191130fe17332e4b2828c42a1d919fbae95",
+  "agent_b_repo": "https://github.com/kamugo/mg-koreferencja-autokoder",
+  "agent_b_sha": "3f34c262b4d9410a175cd6b91506e6926964e469",
+  "environment": {
+    "python": "3.11.9",
+    "torch": "2.6.0+cu124",
+    "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU (4 GB)",
+    "corefud": "1.4 Polish-PCC dev",
+    "corefud_sha256": "e426f7d4fdd61ff633b04c685376e0153c3c3c092ab7a2a9cee0141ed1d0b1be",
+    "corefud_bytes": 6543659,
+    "corefud_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590",
+    "encoder": "allegro/herbert-base-cased",
+    "encoder_revision": "50e33e0567be0c0b313832314c586e3df0dc2297"
+  },
+  "checkpoints": {
+    "r5": {
+      "path_in_agent_b_repo": "kod/runs/unet_small_full/best.pt",
+      "sha256": "c12a1a4700cc1270fa4a0f175762ae7b744db16e03fcce7c682cd4ad098afc46",
+      "bytes": 7989974
+    },
+    "r6_dae": {
+      "path_in_agent_b_repo": "kod/runs/unet_small_full_dae/best.pt",
+      "sha256": "79081de35a552e8c7e8db6034eed13d21d5fae66ec5dcf9b313fdd2246509178",
+      "bytes": 7989974
+    },
+    "dae_pretraining": {
+      "path_in_agent_b_repo": "kod/runs/dae_small/best.pt",
+      "sha256": "00ec87700ac865f8632ca143d5abfa73d8e35946521b99ada425dfe756d83fa4",
+      "bytes": 7989974
+    }
+  },
+  "agent_b_reinference": {
+    "commands": [
+      "cd kod && python -B evaluate.py --checkpoint runs/unet_small_full/best.pt --split dev --max-docs 60 --device cuda --out runs/review_agent_a_r3/r5.json",
+      "cd kod && python -B evaluate.py --checkpoint runs/unet_small_full_dae/best.pt --split dev --max-docs 60 --device cuda --out runs/review_agent_a_r3/r6_dae.json"
+    ],
+    "exit_codes": [0, 0],
+    "r5": {
+      "documents": 60,
+      "threshold": 0.5,
+      "internal_conll_f1": 0.37503826960367803,
+      "metrics_json_sha256": "927020c7d11a115fbbbf1d6ace5ed06b216e46e3437ca9dfd060b7cc04c18396",
+      "metrics_json_byte_identical_to_committed_artifact": true,
+      "pred_mentions_in": 3929,
+      "pred_mentions_kept": 3887,
+      "pred_cross_sentence_dropped": 42,
+      "pred_clusters_emptied": 37,
+      "gold_mentions_in": 7241,
+      "gold_mentions_kept": 7241
+    },
+    "r6_dae": {
+      "documents": 60,
+      "threshold": 0.5,
+      "internal_conll_f1": 0.3848975791659635,
+      "metrics_json_sha256": "541565bd0f932d949f2e2c7478f2a295cf584cab2a2d13cff2e88bad3d75d31b",
+      "metrics_json_byte_identical_to_committed_artifact": true,
+      "pred_mentions_in": 3953,
+      "pred_mentions_kept": 3911,
+      "pred_cross_sentence_dropped": 42,
+      "pred_clusters_emptied": 36,
+      "gold_mentions_in": 7241,
+      "gold_mentions_kept": 7241
+    }
+  },
+  "agent_b_official_scorer": {
+    "commands": [
+      "python .tmp-corefud-scorer/corefud-scorer.py -x -s -m muc bcub ceafe lea -- kod/runs/review_agent_a_r3/r5.gold.dev.conllu kod/runs/review_agent_a_r3/r5.pred.dev.conllu",
+      "python .tmp-corefud-scorer/corefud-scorer.py -x -s -m muc bcub ceafe lea -- kod/runs/review_agent_a_r3/r6_dae.gold.dev.conllu kod/runs/review_agent_a_r3/r6_dae.pred.dev.conllu"
+    ],
+    "exit_codes": [0, 0],
+    "r5_conll_score_percent": 37.63,
+    "r6_dae_conll_score_percent": 38.63,
+    "delta_percentage_points": 1.0,
+    "duplicate_mention_map_warnings_per_run": 53,
+    "warning_effect": "The scorer logs a repeated mention span and then overwrites mention_to_clusterid[m] with the later cluster id."
+  },
+  "mg2_duplicate_span_audit": {
+    "command": "$path = 'kod/data/processed/corefud-1.4/pl_pcc-dev.jsonl'; Get-Content $path | Select-Object -First 60 | ConvertFrom-Json per line; group mentions by start,end and count distinct entity_id values",
+    "exit_code": 0,
+    "first_60_documents": {
+      "duplicate_span_groups": 45,
+      "extra_cluster_memberships": 54
+    },
+    "full_dev_183_documents": {
+      "duplicate_span_groups": 143,
+      "extra_cluster_memberships": 170
+    }
+  },
+  "mg2_singleton_probe": {
+    "commands": [
+      "python kod/vendor/corefud-scorer/corefud-scorer.py -x -s -m muc bcub ceafe lea -- wyniki/real-pcc/baseline/evaluation/dev.gold.conllu wyniki/real-pcc/baseline/evaluation/dev.system.conllu",
+      "python kod/vendor/corefud-scorer/corefud-scorer.py -x -s -m muc bcub ceafe lea -- wyniki/real-pcc/dae/evaluation/dev.gold.conllu wyniki/real-pcc/dae/evaluation/dev.system.conllu"
+    ],
+    "exit_codes": [0, 0],
+    "baseline_conll_score_percent": 79.69,
+    "dae_conll_score_percent": 79.32,
+    "cross_document_entity_split_warnings": {
+      "baseline": 28519,
+      "dae": 28735
+    },
+    "interpretation": "Diagnostic only: this is a gold-mention, 500-window projection with local entity ids reused across synthetic documents. It is not comparable to Agent B's end-to-end evaluation and is not adopted as a thesis result."
+  },
+  "tests_in_agent_b_repo": {
+    "commands": [
+      "python -B tests/test_metrics.py",
+      "python -B tests/test_windowing.py",
+      "python -B tests/test_decoding.py",
+      "python -B tests/test_dataset_cache.py",
+      "python -B tests/test_training.py",
+      "python -B tests/test_corefud_writer.py",
+      "python -B tests/test_smoke.py"
+    ],
+    "exit_codes": [0, 0, 0, 0, 0, 0, 0],
+    "status": "passed"
+  },
+  "not_verified": [
+    "Paired bootstrap p=0.004: no exact command or machine-readable result artifact was committed.",
+    "Evaluation on an explicitly defined common unchanged mention subset.",
+    "Multi-seed variance of the R5 versus R6 training comparison.",
+    "Loss of original CorefUD semantics before write_corefud receives its simplified Document objects."
+  ]
+}
