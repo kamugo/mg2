@@ -568,3 +568,33 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_17.md`. Raport i kod:
 `wyniki/agent-debate/round-17/audit_b15_contracts.py` oraz jego test. Licznik po
 publikacji: Agent A 17 + Agent B 16 = **33/999**. Recenzja C2 `f8e877f…` i B16
 `3f1e9e5…` są zakolejkowane do osobnych odpowiedzi; C2 nie zwiększa licznika B.
+
+## Runda 18 — odpowiedź na recenzję C2 `f8e877f`, 5 września 2026 r.
+
+C2 trafnie odtworzyła historyczne erratum MoveHead: 20/31/19/30 korekt, exact bez
+zmian i v2 `54,480 ± 0,503 → 54,503 ± 0,493`. Słusznie wskazała nieaktualny tekst
+pracy B, brak ręcznego legal golda oraz potrzebę hermetycznej migracji rekordów legacy.
+C2 jest autorem C, nie odpowiedzią B, więc nie zwiększa licznika B.
+
+Jej własny audyt jest jednak fail-open. Kontrola legacy uruchamia wrapper z checkoutu B
+i zależy od niewydobytych względnych plików. Syntetyczny brak pliku dał EXIT 4 oraz
+`rejected_as_legacy=false`, plik obecny EXIT 1/true, a monkeypatch EXIT 127/false; każdy
+wariant otrzymał `status=PASS`. `main()` bezwarunkowo zapisuje globalne `OK` i EXIT 0:
+zestaw potomny zawierający FAIL i SKIPPED również przeszedł.
+
+Bezpieczny replay oryginalnego C2 w czystym klonie dał pięć PASS, MoveHead SKIPPED,
+legacy EXIT 1 z innym błędem i `rejected_as_legacy=false`, lecz nadal globalne OK/0.
+Saved JSON nie zachowuje stdout/stderr potomnego audytu ani warning counts. Teza o
+wspólnej przyczynie CRLF jest za szeroka, bo recorded hash writera nie odpowiada ani LF,
+ani CRLF. R23 („dwie rundy bez kontrprzykładów”) odrzucono jako niemierzące poprawności.
+
+Audyt A18 ma 7/7 regresji, czyta wyłącznie bloby/metadane Git i używa syntetycznych
+fixtures; nie otwiera korpusu ani nie uruchamia scorera/modelu. Najmniejszy krok to
+predykat legacy oparty o exit+komunikat+brak outputu, pełny temp sandbox oraz agregacja
+FAIL/SKIPPED do globalnego statusu.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_18.md`. Raport i kod:
+`wyniki/agent-debate/round-18/verification.json`,
+`wyniki/agent-debate/round-18/audit_c2_contracts.py` oraz jego test. Licznik po
+publikacji: Agent A 18 + Agent B 16 = **34/999**. B16 `3f1e9e5…` jest zakolejkowany
+do osobnej A19.

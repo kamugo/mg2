@@ -1,0 +1,154 @@
+{
+  "schema_version": "agent-a-round-18-reviewer-c2-contract-audit-1.0",
+  "target_revision": "f8e877fe5449d2589aec5fbe1531a25ecbd1fdb4",
+  "input_boundary": {
+    "agent_b_access": "pinned Git blobs and commit metadata only",
+    "isolated_clone": {
+      "path": "C:\\Users\\Kamil\\AppData\\Local\\Temp\\mg-c2-f8e877f-a18",
+      "head": "f8e877fe5449d2589aec5fbe1531a25ecbd1fdb4",
+      "clean": true
+    },
+    "corpus_blobs_read": false,
+    "executable_fixtures": "synthetic or monkeypatched only"
+  },
+  "committed_artifacts": {
+    "changed_paths": [
+      "POSTEP.md",
+      "recenzje/OS_CZASU.md",
+      "recenzje/RECENZJA_C_02.md",
+      "recenzje/REJESTR_REKOMENDACJI.md",
+      "recenzje/skrypty/audyt_c02.py",
+      "recenzje/wyniki/RECENZJA_C_02.json"
+    ],
+    "changed_path_count": 6,
+    "expected_changed_paths": [
+      "POSTEP.md",
+      "recenzje/OS_CZASU.md",
+      "recenzje/RECENZJA_C_02.md",
+      "recenzje/REJESTR_REKOMENDACJI.md",
+      "recenzje/skrypty/audyt_c02.py",
+      "recenzje/wyniki/RECENZJA_C_02.json"
+    ],
+    "missing_paths": [],
+    "blob_provenance": {
+      "POSTEP.md": {
+        "sha256": "9084b423124cc2a02d099a675bbf2558166bee0236756d8996bb8e3350db3009",
+        "bytes": 37195
+      },
+      "recenzje/OS_CZASU.md": {
+        "sha256": "f2067f0df5ac6517c0ed52dda3115ecfca8bb28cdfbb0619157943e900b036c2",
+        "bytes": 10234
+      },
+      "recenzje/RECENZJA_C_02.md": {
+        "sha256": "6a841d465604e606098b9ce5c855898704af92bbf81dfaab104c32e080efa049",
+        "bytes": 29462
+      },
+      "recenzje/REJESTR_REKOMENDACJI.md": {
+        "sha256": "1f2545e6645f18cf8f8ebee8d1a49ac2cdb440ae949a79ef48b1fb3f48d6e3a7",
+        "bytes": 8689
+      },
+      "recenzje/skrypty/audyt_c02.py": {
+        "sha256": "e5d458861953caffe9123fb04a75f1ae8193064f8e696b03cffbe7f996b33f5e",
+        "bytes": 13654
+      },
+      "recenzje/wyniki/RECENZJA_C_02.json": {
+        "sha256": "24029dccb1c25a7d95e066a1329a3b4797509ab15858a2fd2186594ac47d4c57",
+        "bytes": 3995
+      }
+    },
+    "result_schema": "recenzja-c-02-audyt-1.0",
+    "result_status": "OK",
+    "recorded_sha_b": "65bbd965d62d3f4d374b6b31754c0d898a493d59",
+    "recorded_sha_a": "3e40fa5edae5364af58506b7704e5bba074d22c1",
+    "recorded_pins_resolve_exactly": true
+  },
+  "legacy_cwd_dependency": {
+    "reproduced": true,
+    "uses_repo_b_kod_as_cwd": true,
+    "unextracted_relative_path": "runs/dev61_183_original.conllu",
+    "without_file": {
+      "status": "PASS",
+      "exit": 4,
+      "rejected_as_legacy": false
+    },
+    "with_file": {
+      "status": "PASS",
+      "exit": 1,
+      "rejected_as_legacy": true
+    },
+    "fixture_scope": "synthetic paths and bytes only; no R7 or corpus blob was read"
+  },
+  "legacy_acceptance_predicate": {
+    "missing_dependency_status": "PASS",
+    "missing_dependency_rejected_as_legacy": false,
+    "unexpected_command_exit": 127,
+    "unexpected_command_rejected_as_legacy": false,
+    "unexpected_command_status": "PASS",
+    "has_effective_acceptance_predicate": false
+  },
+  "main_status_aggregation": {
+    "reproduced": true,
+    "main_exit": 0,
+    "report_status": "OK",
+    "child_statuses": [
+      "FAIL",
+      "SKIPPED",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS"
+    ],
+    "all_child_checks_pass": false
+  },
+  "movehead_public_claims": {
+    "source": "recenzje/wyniki/RECENZJA_C_02.json at f8e877fe5449d2589aec5fbe1531a25ecbd1fdb4",
+    "score_count": 16,
+    "v2_head_before_values": [
+      54.79,
+      54.88,
+      53.77
+    ],
+    "v2_head_after_values": [
+      54.79,
+      54.91,
+      53.81
+    ],
+    "v2_head_before": {
+      "mean": 54.48,
+      "sd_pop": 0.503
+    },
+    "v2_head_after": {
+      "mean": 54.503,
+      "sd_pop": 0.493
+    },
+    "published_v2_head_before": {
+      "mean": 54.48,
+      "sd_pop": 0.503
+    },
+    "published_v2_head_after": {
+      "mean": 54.503,
+      "sd_pop": 0.493
+    },
+    "published_summary_matches_recalculation": true,
+    "two_decimal_claim_matches": true,
+    "all_exact_scores_invariant": true,
+    "performed_reinference": false,
+    "evidence_boundary": "arithmetic over the committed public C2 result only"
+  },
+  "chronology": {
+    "b14_commit": "65bbd965d62d3f4d374b6b31754c0d898a493d59",
+    "b15_implementation": "20e05853bf85147466bf8c5874ba29f6bdb6bed4",
+    "b15_final": "32a564cdc3c6b6301897df094ee062019b7b5705",
+    "c2_commit": "f8e877fe5449d2589aec5fbe1531a25ecbd1fdb4",
+    "c2_parent": "32a564cdc3c6b6301897df094ee062019b7b5705",
+    "report_created_utc": "2026-09-05T01:41:51.093886+00:00",
+    "report_created_before_b15_implementation": true,
+    "b15_final_precedes_c2_commit": true,
+    "c2_directly_descends_from_b15": true,
+    "review_contains_in_progress_claim": true,
+    "review_snapshot_claim_is_historical": true,
+    "narrowed_interpretation": "The claim can describe the report-generation instant, but not the committed C2 snapshot: the published C2 commit directly follows final B15.",
+    "a15_state_claim": "NOT_PROVABLE_FROM_PINNED_C2_ARTIFACTS"
+  },
+  "audit_status": "PASS"
+}
