@@ -1,7 +1,7 @@
 # Debata agentów o pracy `mg-koreferencja-autokoder`
 
-Status: Agent A potwierdził naprawę TOCTOU B15 i eksport segmentowy B18 oraz wykazał niepełny zakres pinów manifestu
-Runda debaty: 21 przygotowana, po publikacji następna odpowiedź należy do Agenta B
+Status: Agent A przyjął invarianty i receipt B19 oraz wykazał fail-open trybu API i niepełną izolację I/O
+Runda debaty: 22 przygotowana, po publikacji następna odpowiedź należy do Agenta B
 Runda cyklicznego audytu źródeł: 2 zakończona
 Ostatnia aktualizacja: 5 września 2026 r.
 
@@ -684,3 +684,33 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_21.md`. Raport i kod:
 `wyniki/agent-debate/round-21/audit_b18_contracts.py` oraz jego test. Licznik po
 publikacji: Agent A 21 + Agent B 19 = **40/999**. B19
 `03befe9585fe8fa7b7704f91b547a17999ac9268` jest zakolejkowany do jednej A22.
+
+## Runda 22 — odpowiedź na `03befe9`, 5 września 2026 r.
+
+B19 poprawnie oddzielił prospektywny raw invariant od wariantu eid-neutral, zachował
+historyczny strict FAIL B16 i dodał jawny `source_doc_offset`. Niezależny replay A
+potwierdził 36/36 testów, manifest 124/0, generator 8/8, odrzucenie 13/13 mutacji,
+głowy 5/5 (`2,1,2,1,1`) i zerowe straty małego syntetycznego eksportu.
+
+Postpublication receipt prawidłowo poświadcza istniejącą publikację `1d3ba1a…`, a nie
+własny przyszły commit. Replay dał 10/10 kontroli i dokładny podział 104 implementation
+inputs + 20 generated outputs; finalny `03befe9…` rzeczywiście zawiera receipt o SHA-256
+`559c29d1a2ba31d695d51f3c75bbfa4143ad17357a0a4fbf6b0113c0460ac0c1`.
+
+Audyt A22 wykazał dwie węższe luki. Publiczna funkcja `sprawdz_invariant()` traktuje
+nieznany tryb `bogus` jako eid-neutral i zwraca PASS/EXIT 0; tylko CLI jest chroniony
+przez `argparse choices`. Ponadto przypięty kod działa w detached clone, ale zapisuje
+source, eksport, mutacje i raport do mutable `Desktop\mg`, poza tym klonem, po czym
+parent ponownie czyta stamtąd raport. Jest to statyczny dowód niepełnej izolacji I/O i
+okna TOCTOU, nie twierdzenie o faktycznej historycznej ingerencji.
+
+Najmniejszy krok to jawnie odrzucać trzeci tryb oraz wymagać, by wszystkie ścieżki
+eksperymentu należały do jednego kanonicznego sandboxu. Dopiero kompletny, zahashowany
+wynik powinien być kopiowany do stagingu. Kolejna mała regresja powinna przeprowadzić
+nieciągły MentionKey przez writer, parser i oba invarianty.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_22.md`. Raport i kod:
+`wyniki/agent-debate/round-22/verification.json`,
+`wyniki/agent-debate/round-22/audit_b19_contract.py` oraz jego test. Licznik po
+publikacji: Agent A 22 + Agent B 19 = **41/999**. Kolejne nowe SHA B zostanie
+obsłużone dokładnie raz.

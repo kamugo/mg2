@@ -1,0 +1,108 @@
+{
+  "schema_version": "agent-a-round-22-b19-contract-audit-1.0",
+  "target_revision": "03befe9585fe8fa7b7704f91b547a17999ac9268",
+  "publication_revision": "1d3ba1abcc1eb0112433e73701da88576f73ba17",
+  "implementation_revision": "09d7cfb9136403dba1f78ebe7cf48cda2eb08fe0",
+  "protocol_revision": "18c21b1c868f7f06bdc98097da8c24501b4e14b4",
+  "base_revision": "e1d9d4ba94c9bdc52553bb14cc7f01d7113f0101",
+  "lineage": {
+    "logical_commits": [
+      "18c21b1c868f7f06bdc98097da8c24501b4e14b4",
+      "09d7cfb9136403dba1f78ebe7cf48cda2eb08fe0",
+      "1d3ba1abcc1eb0112433e73701da88576f73ba17",
+      "03befe9585fe8fa7b7704f91b547a17999ac9268"
+    ]
+  },
+  "input_boundary": {
+    "agent_b_artifact_access": "pinned Git blobs only",
+    "single_executed_probe": "verified clean-checkout synthetic code",
+    "initial_head_is_target": true,
+    "initial_worktree_clean": true,
+    "final_head_is_target": true,
+    "final_worktree_clean": true,
+    "network_real_data_scorer_model_or_gpu_used": false,
+    "raw_conllu_content_persisted_or_displayed": false
+  },
+  "invalid_mode_probe": {
+    "requested_mode": "bogus",
+    "executed_source_matches_target_blob": true,
+    "executed_source_sha256": "a063d34e2226c0c8ad8eb8596ee276b7151c21e4d7e290150aea7f241ab10a4a",
+    "process": {
+      "exit_code": 0,
+      "stdout_sha256": "2bf7c20d3214fcb24269368e4ec7ee50cfae60d724a6d7928c3a6a771e5e048a",
+      "stdout_bytes": 51,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_bytes": 0
+    },
+    "observed": {
+      "accepted": true,
+      "reported_mode": "eid-neutral"
+    },
+    "expected_safe_contract": {
+      "accepted": false,
+      "reject_unknown_mode": true,
+      "nonzero_or_exception": true
+    },
+    "gap_reproduced": true
+  },
+  "publication_receipt": {
+    "final_blob_is_json": true,
+    "final_blob_sha256": "559c29d1a2ba31d695d51f3c75bbfa4143ad17357a0a4fbf6b0113c0460ac0c1",
+    "target_commit_added_paths": [
+      "kod/data/agent-debate/round-19/publication_receipt.json"
+    ],
+    "receipt_present_at_publication": false,
+    "receipt_present_at_final": true,
+    "declared_publication_commit": "1d3ba1abcc1eb0112433e73701da88576f73ba17",
+    "declared_attested_commit": "1d3ba1abcc1eb0112433e73701da88576f73ba17",
+    "final_receipt_commit": "03befe9585fe8fa7b7704f91b547a17999ac9268",
+    "attestation_blob_in_attested_commit": false,
+    "own_future_commit_intentionally_excluded": true,
+    "check_count": 10,
+    "true_check_count": 10,
+    "declared_passed": true,
+    "manifest_sha_matches_prepublication_receipt": true,
+    "receipt_partition_counts": {
+      "implementation": 104,
+      "generated": 20
+    },
+    "independent_partitions": {
+      "manifest_entry_count": 124,
+      "implementation_count": 104,
+      "generated_count": 20,
+      "complete_and_disjoint": true,
+      "implementation_mismatches": [],
+      "generated_present_at_implementation": [],
+      "publication_mismatches": []
+    },
+    "independent_structure_passed": true
+  },
+  "mutable_output_probe": {
+    "status": "PARTIAL_STATIC_EVIDENCE",
+    "evidence_kind": "PINNED_GIT_BLOB_AND_RECORDED_PATH_CLASSIFICATION",
+    "verify_script_sha256": "eb13cffc4d66991e6c4beb383d86cadea248313e1482a51cf06c0dd204f54650",
+    "line_evidence": {
+      "mutable_output_root": 68,
+      "detached_child_with_external_output": 105,
+      "parent_report_read": 107,
+      "manifest_from_mutable_output": 134
+    },
+    "detached_code_execution": true,
+    "recorded_output_path_count": 5,
+    "all_recorded_outputs_outside_detached_clone": true,
+    "parent_reads_report_from_mutable_output": true,
+    "manifest_built_from_mutable_output": true,
+    "prepublication_checkout_reported_clean": false,
+    "prepublication_status_stdout_bytes": 2286,
+    "dynamic_mutation_attempted": false,
+    "limitation": "Dowod statyczny wykazuje rozdzielenie pinned code i mutable I/O; nie twierdzi, ze w historycznym przebiegu wystapila mutacja.",
+    "expected_safe_contract": {
+      "all_experiment_io_inside_detached_sandbox": true,
+      "reject_hash_change_before_manifest": true,
+      "receipt_passed_on_mismatch": false,
+      "final_outputs_on_mismatch": false
+    }
+  },
+  "b19_contract_status": "FAIL",
+  "audit_status": "PASS"
+}
