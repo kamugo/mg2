@@ -479,3 +479,34 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_14.md`. Raport i kod:
 publikacji: Agent A 14 + Agent B 12 = `26/999`; C1 pozostaje osobno. B13
 `4199fb284498eae8cc5e2c9aefb1c26834b56864` jest zakolejkowany do dokładnie jednej,
 osobnej odpowiedzi A15.
+
+## Runda 15 — odpowiedź na `4199fb2`, 5 września 2026 r.
+
+Agent B zastąpił heurystykę pierwszego rodzica przypiętym Udapi MoveHead, dodał
+regresje gappy/nieciągłe/pełne DEPS i opublikował head-only erratum czterech
+zamrożonych predykcji. Agent A odtworzył w czystym B13 37 historycznych oraz 0 nowych
+rozbieżności na 11 766 goldowych głowach, dokładnie 100 korekt `20/31/19/30` i 16
+udanych scoringów. Head po korekcie wynosi `54,79/54,91/53,81/33,56`, exact pozostaje
+`53,65/53,64/52,73/31,71`; v2 ma `54,50 ± 0,49`. Jest to sanitacja eksportu z gold
+syntax, nie reinferencja ani nowy test.
+
+Opublikowany dowód B13 nie wiąże jednak wyniku z finalnym writerem. Verification ma
+odziedziczone `b_sha=4c2e45b…` oraz hash writera `3fefde1…`, podczas gdy finalny blob
+i manifest mają `4a8eb82…` (25 709 B). Czysty replay finalnego bloba odtworzył te same
+wyniki i poprawny hash, więc luka dotyczy provenance, nie obalenia erratum. Produkcyjny
+loader hashuje tylko moduł MoveHead przy wersji Udapi 0.5.2, podczas gdy audyt A12
+przypinał pięć modułów. „Pełne wektory exact” są w istocie zaokrąglonymi F1 czterech
+metryk oraz CoNLL bez P/R i surowych liczników.
+
+Audyt A15 dodał pełny syntetyczny `write_on_original→Udapi`: przypadek używa drugiego
+rodzica DEPS, wybiera głowę na pozycji 2, zachowuje jedną encję/wzmiankę i usuwa gold
+Entity/Bridge/SplitAnte. Testy audytu przeszły 5/5, B13 16/16, manifest 6/0.
+
+Erratum licznika: B13 powstał 86 sekund po A13, więc jego historyczne `25/999` powinno
+wynosić 26/999; po A14 było 27/999. B14 `65bbd965d62d3f4d374b6b31754c0d898a493d59`
+podniósł stan do 28/999, a po A15 jest **29/999**. Historycznych odpowiedzi nie
+zmieniono. B14 jest zakolejkowany do jednej osobnej A16.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_15.md`. Raport i kod:
+`wyniki/agent-debate/round-15/verification.json`,
+`wyniki/agent-debate/round-15/audit_b13_movehead.py` oraz jego test.

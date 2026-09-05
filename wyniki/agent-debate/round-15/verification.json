@@ -1,0 +1,177 @@
+{
+  "schema_version": "agent-a-round-15-verification-1.0",
+  "created_at_utc": "2026-09-05T01:40:00Z",
+  "status": "ACCEPT_B13_HEAD_ERRATUM_WITH_UNPINNED_COMMITTED_PROOF",
+  "agent_b": {
+    "sha": "4199fb284498eae8cc5e2c9aefb1c26834b56864",
+    "parent_sha": "73b7a5e0e9988bf267fdfa736aafb72175b7ff52",
+    "reply_to_agent_a_sha": "2f0a7ca6e38ec84285947ae3f47304c3bec83c25",
+    "isolated_checkout": "C:/Users/Kamil/AppData/Local/Temp/mg-b13-4199fb-a15",
+    "checkout_clean_before_tests": true
+  },
+  "counter": {
+    "agent_a_after_publish": 15,
+    "agent_b_current": 14,
+    "combined_after_publish": "29/999",
+    "independent_reviewer_c_not_counted": 1,
+    "handled_b13_before_a15": 0,
+    "handled_b13_after_a15": 1,
+    "queued_unhandled_agent_b_sha": "65bbd965d62d3f4d374b6b31754c0d898a493d59",
+    "historical_responses_modified": false,
+    "chronology": [
+      {"sha": "5c1276149861c2a146595552e6e5dba0f552de84", "time": "2026-09-05T02:54:06+02:00", "stored": "25/999", "correct": "25/999"},
+      {"sha": "4199fb284498eae8cc5e2c9aefb1c26834b56864", "time": "2026-09-05T02:55:32+02:00", "stored": "25/999", "correct": "26/999"},
+      {"sha": "3e40fa5edae5364af58506b7704e5bba074d22c1", "time": "2026-09-05T03:21:57+02:00", "stored": "26/999", "correct": "27/999"},
+      {"sha": "65bbd965d62d3f4d374b6b31754c0d898a493d59", "time": "2026-09-05T03:27:19+02:00", "stored": null, "correct": "28/999"}
+    ]
+  },
+  "environment": {
+    "python": "3.11.9",
+    "gpu_used": false,
+    "training": false,
+    "inference": false,
+    "model_selection": false,
+    "official_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590",
+    "official_scorer_sha256": "418dde1a0ae44538b78383bfe522d06d7db793ddb7e23d01416eae61d53b1f1c",
+    "udapi_version": "0.5.2",
+    "movehead_sha256": "0bd50896d39dcc4ef472c0414ab150cf6e587af88e0159c4b146c748409449e1"
+  },
+  "clean_reproduction": {
+    "command": "python -X utf8 scripts/verify_round13.py --repo-a C:/Users/Kamil/mg2 --scorer C:/Users/Kamil/Desktop/mg/kod/ext/corefud-scorer/corefud-scorer.py --output C:/Users/Kamil/AppData/Local/Temp/a15-b13-verify-replay.json",
+    "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b13-4199fb-a15/kod",
+    "exit_code": 0,
+    "passed": true,
+    "output": {
+      "path": "C:/Users/Kamil/AppData/Local/Temp/a15-b13-verify-replay.json",
+      "bytes": 33713,
+      "sha256": "e83226748e407a87e97c340ab9d054bae8a1e2ab708f3ad259f1094bb03e23a6",
+      "published": false
+    },
+    "gold": {
+      "git_path": "kod/runs/dev61_183_original.conllu",
+      "sha256": "2f0d62c7612b6cdcca23bc00aefe3e623963d62947f42534e88da33f423c0bba",
+      "mentions": 11766,
+      "discontinuous_mentions": 252,
+      "empty_nodes": 1194,
+      "historical_writer_head_mismatches": 37,
+      "final_writer_head_mismatches": 0
+    },
+    "models": {
+      "v2_seed42": {"mentions": 11362, "changed_heads": 20, "head_before": 54.79, "head_after": 54.79, "exact": 53.65},
+      "v2_seed1": {"mentions": 11828, "changed_heads": 31, "head_before": 54.88, "head_after": 54.91, "exact": 53.64},
+      "v2_seed2": {"mentions": 11536, "changed_heads": 19, "head_before": 53.77, "head_after": 53.81, "exact": 52.73},
+      "v1_seed42": {"mentions": 6878, "changed_heads": 30, "head_before": 33.55, "head_after": 33.56, "exact": 31.71}
+    },
+    "changed_heads_total": 100,
+    "changed_head_category": {"gappy": 100},
+    "v2_head_mean_after": 54.50,
+    "v2_head_population_sd_after": 0.49,
+    "scorer_runs": 16,
+    "scorer_failures": 0,
+    "stderr_bytes": 0,
+    "already_indexed_warnings": 0,
+    "exact_invariant_at_reported_precision": true,
+    "current_writer_sha256": "4a8eb82841e35b285cda80659c5259ec99b1ab5269e9671c7384e96d75b48226"
+  },
+  "committed_b13_provenance_gap": {
+    "committed_verification_sha256": "2a46e2f957a6e4d2c9db147625578c2fc2891ff0a9d40a3f642c4ecf77dffad5",
+    "committed_verification_b_sha": "4c2e45ba06a4ef152cddd04204896e39851d6192",
+    "committed_verification_current_writer_sha256": "3fefde186bd486f1749f8597a96cf9e3f09cce1644dc04411cfc146b445dd022",
+    "final_b13_writer_sha256_lf": "4a8eb82841e35b285cda80659c5259ec99b1ab5269e9671c7384e96d75b48226",
+    "final_b13_writer_bytes_lf": 25709,
+    "manifest_writer_sha256_lf": "4a8eb82841e35b285cda80659c5259ec99b1ab5269e9671c7384e96d75b48226",
+    "generator_has_b13_pin": false,
+    "generator_asserts_checked_revision": false,
+    "clean_replay_semantic_results_match": true
+  },
+  "portable_audit": {
+    "command": "python -B wyniki/agent-debate/round-15/audit_b13_movehead.py --agent-b-root C:/Users/Kamil/Desktop/mg --output C:/Users/Kamil/AppData/Local/Temp/a15-b13-audit.json",
+    "cwd": "C:/Users/Kamil/mg2",
+    "exit_code": 0,
+    "output": {
+      "path": "C:/Users/Kamil/AppData/Local/Temp/a15-b13-audit.json",
+      "bytes": 4593,
+      "sha256": "8f0c49858ca8fea0252fce9ec97a4d40d6f72fdac7720632e8e9f5b912d3a6d3",
+      "published": false
+    },
+    "test": {
+      "command": "python -B wyniki/agent-debate/round-15/test_audit_b13_movehead.py --agent-b-root C:/Users/Kamil/Desktop/mg",
+      "exit_code": 0,
+      "result": "5/5"
+    },
+    "synthetic_round_trip": {
+      "source": "three-token synthetic CoNLL-U extracted final B13 package",
+      "used_second_enhanced_parent": true,
+      "head_position_in_mention": 2,
+      "entity_count": 1,
+      "mention_count": 1,
+      "gold_coreference_removed": true,
+      "losses": 0,
+      "passed": true
+    },
+    "exact_metric_record": {
+      "exact_runs": 8,
+      "stored_metrics": ["muc_f1", "bcub_f1", "ceafe_f1", "lea_f1", "conll"],
+      "precision_recall_present": false,
+      "raw_counts_present": false,
+      "rounded_to_two_decimals": true
+    },
+    "udapi_pin_scope": {
+      "production_hashed_modules": ["udapi.block.corefud.movehead"],
+      "production_imported_unhashed_modules": ["udapi.core.document"],
+      "a12_audit_hashed_module_count": 5
+    }
+  },
+  "historical_original_export_losses": {
+    "v2_seed42": {"mentions_in": 11389, "mentions_kept": 11362, "duplicate_span": 4, "cross_sentence": 8, "multi_membership_dropped": 15},
+    "v2_seed1": {"mentions_in": 11861, "mentions_kept": 11828, "duplicate_span": 2, "cross_sentence": 16, "multi_membership_dropped": 15},
+    "v2_seed2": {"mentions_in": 11556, "mentions_kept": 11536, "duplicate_span": 1, "cross_sentence": 9, "multi_membership_dropped": 10},
+    "v1_seed42": {"mentions_in": 6969, "mentions_kept": 6878, "duplicate_span": 0, "cross_sentence": 67, "multi_membership_dropped": 24}
+  },
+  "head_only_transformation_losses": {
+    "mentions_removed": 0,
+    "clusters_removed": 0,
+    "spans_changed": 0,
+    "zero_class_changes": 0,
+    "non_head_bytes_changed": 0
+  },
+  "tests": [
+    {"name": "Agent B writer", "command": "python -B tests/test_corefud_writer.py", "cwd": "isolated B13/kod", "exit_code": 0, "result": "PASS"},
+    {"name": "Agent B full suite", "command": "python -B tests/run_all.py", "cwd": "isolated B13/kod", "exit_code": 0, "result": "16/16"},
+    {"name": "Agent B round-13 manifest", "command": "python -B scripts/manifest.py verify --manifest data/agent-debate/round-13/MANIFEST.json", "cwd": "isolated B13/kod", "exit_code": 0, "result": "6 files, 0 problems"},
+    {"name": "Agent A round-15 audit", "command": "python -B wyniki/agent-debate/round-15/test_audit_b13_movehead.py --agent-b-root C:/Users/Kamil/Desktop/mg", "cwd": "C:/Users/Kamil/mg2", "exit_code": 0, "result": "5/5"},
+    {"name": "Agent A full suite", "command": "python -m unittest discover -s tests -v", "cwd": "C:/Users/Kamil/mg2/kod", "exit_code": 0, "result": "51/51"}
+  ],
+  "two_axis_review": {
+    "standards": {
+      "high": ["committed verification hashes a mutable working-tree writer and does not pin final B13"],
+      "medium": ["verify_round13 functions lack type hints and its module docstring is not Polish as required by SPEC"],
+      "low": ["unused current _ud_parents historical helper remains in production writer"]
+    },
+    "spec": {
+      "accepted": [
+        "official MoveHead semantics with gappy, discontinuous and full DEPS handling",
+        "gold coreference removed before syntax parsing",
+        "head-only erratum with explicit scope and historical loss counters",
+        "clean reproduction of 100 changes and 16 successful scorer runs"
+      ],
+      "open": [
+        "final B13 revision and writer are not bound by committed verifier",
+        "metric vectors are rounded F1 only, not full P/R/F1 or raw counts",
+        "production dependency pin is narrower than five-module A12 audit",
+        "four complete predictions were not rewritten through final write_on_original"
+      ]
+    }
+  },
+  "artifacts": {
+    "wyniki/agent-debate/round-15/audit_b13_movehead.py": {"sha256": "1ae3a0fd1c3846431950780fc6387bebc42a7a3be904c578962384f26c7afddb", "bytes": 13269},
+    "wyniki/agent-debate/round-15/test_audit_b13_movehead.py": {"sha256": "a94941b14a36ea6e5f1020562b090c5a150c0efef7d97f575b4dd9f59a740e8e", "bytes": 3928}
+  },
+  "limitations": [
+    "No model inference, training, threshold tuning or new PCC test was performed.",
+    "The synthetic round-trip tests writer mechanics, not model quality.",
+    "The clean replay uses frozen predictions and gold syntax from the already exposed PCC 61-183 benchmark.",
+    "No legal corpus, legal gold, IAA, license clearance or PII review was produced.",
+    "B14 arrived during A15 validation and is deliberately queued for exactly one separate A16 response."
+  ]
+}
