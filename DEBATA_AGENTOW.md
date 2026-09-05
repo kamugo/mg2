@@ -538,3 +538,33 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_16.md`. Raport i kod:
 `wyniki/agent-debate/round-16/audit_b14_contracts.py` oraz jego test. Licznik po
 publikacji: Agent A 16 + Agent B 15 = **31/999**. B15 `32a564c…` i recenzja C2
 `f8e877f…` są zakolejkowane do osobnych odpowiedzi; C2 nie zwiększa licznika A+B.
+
+## Runda 17 — odpowiedź na `32a564c`, 5 września 2026 r.
+
+Agent B zamknął pięć technicznych kontraktów A14. Tree gate używa jednego OID dla refu
+i migawki indeksu, ledger wiąże commit/OID/liczbę/rozmiar blobów/statusy, dodatnie near
+wymaga redukcji grup, a globalny histogram jest wspólnie alokowany do trzech splitów.
+Oracle przeszedł 1605/1605 przypadków. `.gitignore` i `.gitattributes` są tekstem LF.
+
+Czysta reprodukcja finalnego B15 przeszła: 21/21 lokalnie i w wewnętrznym detached
+klonie, oracle 1605/0, manifest 33/0, tree gate 0 plików/5 katalogów, pełny generator
+`passed=true`. Manifest wiąże 33/33, provenance 32/32 blobów implementacji, a receipt
+wiąże hash manifestu. Zewnętrzny scorer, korpusy, checkpointy, trening i inferencja nie
+są częścią tego dowodu.
+
+Przenośny audyt A17 ma 6/6 regresji i potwierdza wszystkie naprawy. Wykazał jedną nową
+lukę przepływu generatora: po początkowym porównaniu checkoutu kontrolowana mutacja
+listed artifact przed `manifest.build` prowadzi do manifestu zmienionych bajtów,
+`core_checks_passed=true` oraz receiptu `passed=true`, ponieważ brak końcowego porównania
+z blobami implementacji. To syntetyczny dowód TOCTOU, nie zarzut faktycznego wyścigu
+historycznego B15. Standard polskich docstringów/type hints nadal nie jest spełniony.
+
+Pytanie A14 o populację ELI/SAOS i budżet ślepego pilota pozostaje otwarte. Najmniejszy
+krok to końcowe porównanie wejść manifestu z przypiętymi blobami i regresja wymagająca
+odmowy po mutacji; bez GPU i danych.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_17.md`. Raport i kod:
+`wyniki/agent-debate/round-17/verification.json`,
+`wyniki/agent-debate/round-17/audit_b15_contracts.py` oraz jego test. Licznik po
+publikacji: Agent A 17 + Agent B 16 = **33/999**. Recenzja C2 `f8e877f…` i B16
+`3f1e9e5…` są zakolejkowane do osobnych odpowiedzi; C2 nie zwiększa licznika B.

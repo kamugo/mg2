@@ -1,0 +1,88 @@
+{
+  "schema_version": "agent-a-round-17-b15-contract-audit-1.0",
+  "target_revision": "32a564cdc3c6b6301897df094ee062019b7b5705",
+  "implementation_revision": "20e05853bf85147466bf8c5874ba29f6bdb6bed4",
+  "input_boundary": {
+    "agent_b_access": "pinned Git objects only",
+    "isolated_clone": {
+      "path": "C:\\Users\\Kamil\\AppData\\Local\\Temp\\mg-b15-32a564c-a17",
+      "head": "32a564cdc3c6b6301897df094ee062019b7b5705",
+      "clean": true,
+      "status_scope": "full porcelain status; corpus contents were not opened"
+    },
+    "synthetic_mutations_only": true
+  },
+  "final_manifest": {
+    "entry_count": 33,
+    "matched_blob_count": 33,
+    "mismatches": [],
+    "implementation_commit": "20e05853bf85147466bf8c5874ba29f6bdb6bed4"
+  },
+  "final_receipt": {
+    "manifest_sha256": "7bac3105dc3498c3ac944d5cbff02d1dceb0b960ea33f505e8ae2e5b078f222b",
+    "actual_manifest_sha256": "7bac3105dc3498c3ac944d5cbff02d1dceb0b960ea33f505e8ae2e5b078f222b",
+    "manifest_sha256_matches": true,
+    "manifest_passed": true,
+    "passed": true,
+    "result": "sprawdzono 33 plikow, problemow: 0"
+  },
+  "verification_provenance": {
+    "artifact_count": 32,
+    "mismatches": [],
+    "revisions": [
+      "20e05853bf85147466bf8c5874ba29f6bdb6bed4"
+    ],
+    "all_checks_true": true,
+    "core_checks_passed": true,
+    "clean_revision_output_hash_matches": true
+  },
+  "tree_gate_fixes": {
+    "ref_snapshot": {
+      "reproduced": true,
+      "resolved_oid": "2da0dc8458d5bddb49ef14c90444d49a974b4ada",
+      "moved_ref_oid": "7dda36cf4fa92eace66a7a7bccf9d4a4da58bc73",
+      "passed_clean_snapshot": true,
+      "tracked_files": 0
+    },
+    "index_snapshot": {
+      "reproduced": true,
+      "scanned_tree_oid": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+      "mutated_index_oid": "99fc5e7c156b5e9490530657605efa86d6bc3787",
+      "tracked_files": 0
+    },
+    "ledger": {
+      "baseline_accepted": true,
+      "mutation_rejected": {
+        "audit_revision": true,
+        "tree_oid": true,
+        "file_count": true,
+        "byte_count": true,
+        "status": true
+      }
+    }
+  },
+  "release_gate_fixes": {
+    "baseline_v1_accepted": true,
+    "baseline_v2_accepted": true,
+    "near_no_reduction_rejected_v1": true,
+    "near_no_reduction_rejected_v2": true,
+    "joint_split_allocation_rejected": true,
+    "split_oracle_cases": 1605,
+    "split_oracle_discrepancies": 0
+  },
+  "generator_toctou": {
+    "reproduced": true,
+    "method": "pinned generator with deterministic system-boundary monkeypatch; synthetic files only",
+    "initial_candidate_matches_implementation": true,
+    "mutation_after_initial_check": true,
+    "implementation_sha256": "db1d29ef9c829a09ef491f3353c36c7235cc65adfa315b0f63dc9387dd8ee8f8",
+    "mutated_sha256": "32bd5f854ee2b49336743b40cd7a66491cbb3777e81cece56aa4fced460e5b9a",
+    "manifest_sha256": "32bd5f854ee2b49336743b40cd7a66491cbb3777e81cece56aa4fced460e5b9a",
+    "reported_core_checks": true,
+    "manifest_verification_passed": true,
+    "receipt_passed": true,
+    "post_manifest_final_blob_comparison": false,
+    "boundary": "This proves the generator control-flow gap under a controlled boundary mutation; it does not claim that the historical B15 run was actually raced."
+  },
+  "passed": true
+}
