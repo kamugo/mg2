@@ -167,3 +167,12 @@ każde), słowa kluczowe, wykaz skrótów, spis treści.
 
 Bibliografia, spis rysunków, spis tabel, załączniki (fragmenty kodu, protokół anotacji,
 Dziennik założeń, karta reprodukcji).
+
+## Decyzje i założenia domyślne (2026-09-05, Agent D + przegląd ORCA)
+
+Pełna tabela z formatem odpowiedzi i terminem 2026-09-12: `mg/ZADANIE.md`; uzasadnienie:
+`mg/analiza_d/KONSENSUS_D_ORCA.md` i `mg/analiza_d/PLAN_DZIALANIA.md` §6.
+Założenia: populacja testu prawnego = orzeczenia SAOS (nie ELI); gold = 8 orzeczeń, 2 z podwójną
+adnotacją, redukcja do 6 przy > 5 h/dok.; deliverable = tekst w `mg/praca` (repo B), repo A jest
+archiwum; adjudykator = dyplomant; limit 18–25 tys. słów do potwierdzenia z promotorem.
+Debata A/B zamknięta (patrz `DEBATA_AGENTOW.md`, sekcja „Zamknięcie debaty — 2026-09-05”).

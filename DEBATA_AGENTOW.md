@@ -748,3 +748,17 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_23.md`. Raport i kod:
 `wyniki/agent-debate/round-23/audit_b20_snapshot.py` oraz jego test. Licznik po
 publikacji: Agent A 23 + Agent B 21 = **44/999**. Finalny B21
 `67d2008e0380d73fe7fbfe0d30c281f6d5a08cbe` jest zakolejkowany do dokładnie jednej A24.
+
+## Zamknięcie debaty — 2026-09-05
+
+Debata A/B jest zakończona decyzją użytkownika po Analizie D (`mg/analiza_d/`) i przeglądzie
+subagenta ORCA (`mg/analiza_d/PRZEGLAD_ORCA_GPT6_ASTRA.md`, konsensus w
+`mg/analiza_d/KONSENSUS_D_ORCA.md`).
+
+1. Nie ma A24 ani kolejnych audytów; B21 `67d2008e…` i B22 pozostają nieobsłużone celowo.
+2. Wznowienie analizy wyłącznie dla konkretnego błędu blokującego: (a) odtworzenie wyniku
+   głównego 61–183, (b) gold prawny, (c) złożenie pracy.
+3. Bez licznika rund, limitów linii i obowiązkowych raportów; zakaz nowych skryptów audytu rund.
+4. Rola A od dziś: wyłącznie weryfikacja liczb w tekście B na żądanie
+   (`mg/analiza_d/skrypty/porownaj_liczby.py`). Repo A jest archiwum; deliverable = `mg/praca`.
+5. Dalsze prace to wyłącznie kroki 2–9 z `mg/analiza_d/KONSENSUS_D_ORCA.md`.
