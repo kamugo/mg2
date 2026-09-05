@@ -1,0 +1,130 @@
+{
+  "schema_version": "agent-a-round-23-b20-snapshot-audit-1.0",
+  "target_revision": "b21a7c15cb0b8523a57683306d817664518355c0",
+  "publication_revision": "272a5c807e7bb562d4b35272ab320ff04e6a87a9",
+  "implementation_revision": "48358712e8bbd4bf3af8d88235cedaacb4e97999",
+  "protocol_revision": "119dc6d2281da90e651bbc929be74b66b97c3d97",
+  "base_revision": "03befe9585fe8fa7b7704f91b547a17999ac9268",
+  "lineage": {
+    "logical_commits": [
+      "119dc6d2281da90e651bbc929be74b66b97c3d97",
+      "48358712e8bbd4bf3af8d88235cedaacb4e97999",
+      "272a5c807e7bb562d4b35272ab320ff04e6a87a9",
+      "b21a7c15cb0b8523a57683306d817664518355c0"
+    ]
+  },
+  "input_boundary": {
+    "agent_b_artifact_access": "pinned Git blobs only",
+    "executed_runtime": "pinned blobs extracted to temporary directory",
+    "executed_runtime_sha256": {
+      "kod/tests/test_scoring_snapshot.py": "681ce93bd5fe82903d1c35648130e373db2e4b7e6e98c3a8afdb6c99b77746a0",
+      "kod/scripts/score_official.py": "1a1bce68cf9815142fabb7668baddb1816fbaf4374ccc1f30a5ede1e3e1dcb1c",
+      "kod/scripts/scoring_snapshot.py": "8a99407b57e66c3143a3d9ee192eea868683e9c3efdfe28aea680c76e6706cf9",
+      "kod/src/eval/alignment_provenance.py": "a9c861fb0dbc922abc03d992708938c8c4cb635bc123ebb792abd7c9075b1b30"
+    },
+    "initial_head_is_target": true,
+    "initial_worktree_clean": true,
+    "final_head_is_target": true,
+    "final_worktree_clean": true,
+    "network_real_data_scorer_model_or_gpu_used": false,
+    "raw_conllu_content_persisted_or_displayed": false
+  },
+  "publication_receipt": {
+    "final_blob_sha256": "a4ba6d423002cff8194f58a4dfc4771148d48b72c69f9f77803ca3f6185a3cf5",
+    "target_commit_added_paths": [
+      "kod/data/agent-debate/round-20/publication_receipt.json"
+    ],
+    "receipt_present_at_publication": false,
+    "receipt_present_at_final": true,
+    "declared_publication_commit": "272a5c807e7bb562d4b35272ab320ff04e6a87a9",
+    "declared_attested_commit": "272a5c807e7bb562d4b35272ab320ff04e6a87a9",
+    "attestation_blob_in_attested_commit": false,
+    "own_future_commit_intentionally_excluded": true,
+    "check_count": 10,
+    "true_check_count": 10,
+    "declared_passed": true,
+    "manifest_sha_matches_prepublication_receipt": true,
+    "receipt_partition_counts": {
+      "implementation": 109,
+      "generated": 3
+    },
+    "independent_partitions": {
+      "manifest_entry_count": 112,
+      "implementation_count": 109,
+      "generated_count": 3,
+      "complete_and_disjoint": true,
+      "implementation_mismatches": [],
+      "generated_present_at_implementation": [],
+      "publication_mismatches": []
+    },
+    "independent_structure_passed": true
+  },
+  "unpinned_prediction_probe": {
+    "synthetic_fixture": true,
+    "anchor_sha256_before": "9334913e8b6f425f96970b79cb15b79b4fcfea6e2a4bd2f99c5d88a18ca74d53",
+    "anchor_sha256_after": "9334913e8b6f425f96970b79cb15b79b4fcfea6e2a4bd2f99c5d88a18ca74d53",
+    "pred_original_sha256_before": "96e9ad8cab0b9cac01fdaa9cfa0429ab2d1cbf6824d403c7239eb501e89fa135",
+    "pred_original_sha256_after": "09c8dbfe071ab5f7ee165de5577724a0191f20fdc6653b01ac2de05d19b33991",
+    "report_pred_original_sha256": "09c8dbfe071ab5f7ee165de5577724a0191f20fdc6653b01ac2de05d19b33991",
+    "anchor_checked_input_keys": [
+      "alignment_sha256",
+      "checkpoint_sha256",
+      "gold_subtoken_sha256",
+      "original_gold_sha256",
+      "source_split_sha256"
+    ],
+    "main_return_value": 0,
+    "raised_type": null,
+    "scorer_call_count": 8,
+    "alignment_provenance_status": "VERIFIED_RECORDED_PROVENANCE",
+    "main_table_eligible": true,
+    "final_output_created": true,
+    "private_snapshot_cleaned": true,
+    "subject_main_table_contract": "FAIL",
+    "expected_safe_contract": {
+      "reject_unpinned_prediction": true,
+      "scorer_call_count": 0,
+      "main_table_eligible": false,
+      "final_output_created": false
+    },
+    "gap_reproduced": true
+  },
+  "transient_child_read_probe": {
+    "classification": "ACKNOWLEDGED_POINT_CHECK_LIMITATION",
+    "claimed_undisclosed_by_agent_b": false,
+    "synthetic_mocked_child": true,
+    "mutated_at_scorer_call": 5,
+    "mutated_role": "gold_subtoken",
+    "mutated_path_in_child_argv": true,
+    "child_observed_sha256": "5d8aa6ff44ebfef521937c7914180611a9bdfb5cb51f588b7d5be5d458d6a964",
+    "restored_snapshot_sha256": "96e9ad8cab0b9cac01fdaa9cfa0429ab2d1cbf6824d403c7239eb501e89fa135",
+    "report_scored_sha256": "96e9ad8cab0b9cac01fdaa9cfa0429ab2d1cbf6824d403c7239eb501e89fa135",
+    "main_return_value": 0,
+    "raised_type": null,
+    "scorer_call_count": 8,
+    "main_table_eligible": true,
+    "final_output_created": true,
+    "private_snapshot_cleaned": true,
+    "expected_safe_contract": {
+      "reject_child_digest_mismatch": true,
+      "scorer_call_count_before_rejection": 5,
+      "main_table_eligible": false,
+      "final_output_created": false
+    },
+    "gap_reproduced": true
+  },
+  "postep_static_audit": {
+    "postep_blob_sha256": "fdc6793ceabf9c981d1cee038127cae3e10a357014313a671a2b2b2369969243",
+    "b20_heading_found": true,
+    "b20_heading_line": 539,
+    "implementation_in_progress_marker_found": true,
+    "implementation_in_progress_marker_line": 539,
+    "open_tests_marker_found": true,
+    "open_tests_marker_line": 545,
+    "finish_verification_next_step_found": true,
+    "finish_verification_next_step_line": 546,
+    "stale_final_status_reproduced": true
+  },
+  "b20_main_table_contract_status": "FAIL",
+  "audit_status": "PASS"
+}
