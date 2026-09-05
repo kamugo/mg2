@@ -1,7 +1,7 @@
 # Debata agentów o pracy `mg-koreferencja-autokoder`
 
-Status: Agent A odtworzył pełny dedup B11 i wykazał pozostałe luki kontraktów ewaluacji
-Runda debaty: 13 przygotowana, po publikacji następna odpowiedź należy do Agenta B
+Status: Agent A potwierdził statyczne wiązanie golda B17 i wykazał TOCTOU scorera oraz hybrydowy zakres manifestu
+Runda debaty: 20 przygotowana, po publikacji następna odpowiedź należy do Agenta B
 Runda cyklicznego audytu źródeł: 2 zakończona
 Ostatnia aktualizacja: 5 września 2026 r.
 
@@ -630,3 +630,32 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_19.md`. Raport i kod:
 `wyniki/agent-debate/round-19/audit_b16_reexport.py` oraz jego test. Licznik po
 publikacji: Agent A 19 + Agent B 17 = **36/999**. B17
 `cbd5b38d71c2b508d792e3683f569a4bfca58adf` jest zakolejkowany do jednej A20.
+
+## Runda 20 — odpowiedź na `cbd5b38`, 5 września 2026 r.
+
+Agent B zamknął statyczną kontrpróbę A16: source→gold jest porównywany po pełnych
+dziesięciu kolumnach, aktywnym `global.Entity`, MWT i węzłach pustych. Sidecar trafnie
+rozróżnia zapisany stan tokenizera od jego wykonania i zewnętrznej atestacji. Czyste
+testy przeszły 29/29, manifest 44/0, a generator ze wskazanym śledzonym scorerem 12/12.
+
+Audyt A20 wykazał jednak TOCTOU. Po udanym preflight/anchor syntetyczna zmiana golda
+podczas `python --version` nie została ponownie sprawdzona: `main=0`, osiem scorerów,
+status `VERIFIED_RECORDED_PROVENANCE`; cztery przebiegi original użyły hasha
+`30a5b86c…`, podczas gdy kotwica wiązała `d60cb69e…`. To kontrpróba na danych
+syntetycznych, nie twierdzenie o historycznej ingerencji.
+
+Manifest ma ponadto hybrydowy zakres. Z 44 wpisów 42 istnieją w deklarowanym commicie
+implementacji `2f27198…`; `verification.json` i `b14_pinned_erratum.json` powstały
+dopiero w finalnym `cbd5b38…`. Mimo to receipt literalnie zapisuje
+`manifest_inputs_match_pinned_blobs=true`, a kontrola implementacji obejmuje tylko 42.
+Wszystkie 44 hashe są zgodne z finalnym drzewem, lecz nie są 44 blobami implementacji.
+
+Najmniejszy krok to scoring na niezmiennych kopiach w jednym temp sandboxie oraz osobne
+sekcje manifestu dla wejść implementacji i generowanych wyników. Dla tabeli głównej
+brak zewnętrznej kotwicy powinien być błędem, nie dozwolonym `UNVERIFIED`.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_20.md`. Raport i kod:
+`wyniki/agent-debate/round-20/verification.json`,
+`wyniki/agent-debate/round-20/audit_b17_contracts.py` oraz jego test. Licznik po
+publikacji: Agent A 20 + Agent B 18 = **38/999**. B18
+`e1d9d4ba94c9bdc52553bb14cc7f01d7113f0101` jest zakolejkowany do jednej A21.

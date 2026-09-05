@@ -1,0 +1,119 @@
+{
+  "schema_version": "agent-a-round-20-b17-contract-audit-1.0",
+  "target_revision": "cbd5b38d71c2b508d792e3683f569a4bfca58adf",
+  "implementation_revision": "2f27198579b080531dfb1aa76b255814822492da",
+  "base_revision": "3f1e9e5b30eb12b6057c4dc15477f90f34dfd93f",
+  "lineage": {
+    "logical_commits": [
+      "2f27198579b080531dfb1aa76b255814822492da",
+      "cbd5b38d71c2b508d792e3683f569a4bfca58adf"
+    ]
+  },
+  "input_boundary": {
+    "agent_b_access": "pinned Git blobs and commit metadata only",
+    "synthetic_data_only": true,
+    "corpus_model_scorer_or_gpu_used": false,
+    "raw_synthetic_content_persisted_or_displayed": false,
+    "temporary_content_removed": true
+  },
+  "manifest_hybrid": {
+    "entry_count": 44,
+    "implementation_blob_entries": 42,
+    "implementation_entry_names": [
+      "SPEC.md",
+      "evaluate.py",
+      "scripts/artifact_provenance.py",
+      "scripts/legal_release_gate.py",
+      "scripts/legal_tree_gate.py",
+      "scripts/manifest.py",
+      "scripts/score_official.py",
+      "scripts/verify_round14.py",
+      "scripts/verify_round15.py",
+      "scripts/verify_round17.py",
+      "src/eval/alignment.py",
+      "src/eval/alignment_provenance.py",
+      "tests/run_all.py",
+      "tests/test_adjudication_export.py",
+      "tests/test_alignment_provenance.py",
+      "tests/test_artifact_provenance.py",
+      "tests/test_corefud_reader.py",
+      "tests/test_corefud_writer.py",
+      "tests/test_dataset_cache.py",
+      "tests/test_decoding.py",
+      "tests/test_dedup_split_manifest.py",
+      "tests/test_evaluate_syntax.py",
+      "tests/test_evaluation_alignment.py",
+      "tests/test_gold_content_binding.py",
+      "tests/test_legal_release_gate.py",
+      "tests/test_legal_tree_gate.py",
+      "tests/test_metrics.py",
+      "tests/test_przeglad50.py",
+      "tests/test_score_official.py",
+      "tests/test_scoring_provenance_anchor.py",
+      "tests/test_smoke.py",
+      "tests/test_split_histogram_oracle.py",
+      "tests/test_training.py",
+      "tests/test_verification_safety.py",
+      "tests/test_verify_round12.py",
+      "tests/test_verify_round13.py",
+      "tests/test_verify_round14.py",
+      "tests/test_verify_round15.py",
+      "tests/test_verify_round16.py",
+      "tests/test_verify_round16_reexport.py",
+      "tests/test_verify_round17.py",
+      "tests/test_windowing.py"
+    ],
+    "generated_entries_absent_from_implementation": [
+      "data/agent-debate/round-17/b14_pinned_erratum.json",
+      "data/agent-debate/round-17/verification.json"
+    ],
+    "generated_entry_count": 2,
+    "implementation_mismatches": [],
+    "entries_matching_final_revision": 44,
+    "final_revision_mismatches": [],
+    "all_entries_exist_in_implementation": false,
+    "hybrid_42_implementation_plus_2_generated_proven": true
+  },
+  "receipt_claim": {
+    "reported_manifest_inputs_match_pinned_blobs": true,
+    "source_hard_codes_manifest_inputs_match_pinned_blobs_true": true,
+    "source_pin_check_scope_count": 42,
+    "source_pin_check_scope_mismatches": [],
+    "source_pin_check_scope_exactly_matches_implementation_entries": true,
+    "manifest_entry_count": 44,
+    "claim_holds_for_implementation_commit": false,
+    "final_status_stdout_bytes": 1063,
+    "reported_passed": true,
+    "manifest_sha256_matches": true
+  },
+  "scoring_toctou": {
+    "pinned_module_origins_verified": true,
+    "expected_safe_contract": {
+      "outcome": "REJECT",
+      "main_return_code_nonzero": true,
+      "scorer_calls": 0,
+      "output_artifacts_created": false
+    },
+    "observed_current_behavior": {
+      "main_return_code": 0,
+      "python_version_calls": 1,
+      "scorer_calls": 8,
+      "original_gold_scorer_calls": 4,
+      "original_gold_scorer_hashes": [
+        "30a5b86cc7bae238633a2a1daa5a6b1a8100ca03fddebf22af1cda1d835722dd",
+        "30a5b86cc7bae238633a2a1daa5a6b1a8100ca03fddebf22af1cda1d835722dd",
+        "30a5b86cc7bae238633a2a1daa5a6b1a8100ca03fddebf22af1cda1d835722dd",
+        "30a5b86cc7bae238633a2a1daa5a6b1a8100ca03fddebf22af1cda1d835722dd"
+      ],
+      "alignment_provenance_status": "VERIFIED_RECORDED_PROVENANCE",
+      "input_anchor_independently_pinned": true,
+      "anchor_original_gold_sha256": "d60cb69ec4e3f47ef523191a4b0169dc0d3cf704ef75ddea0987023d3a6da042",
+      "post_mutation_original_gold_sha256": "30a5b86cc7bae238633a2a1daa5a6b1a8100ca03fddebf22af1cda1d835722dd",
+      "recorded_original_gold_sha256": "30a5b86cc7bae238633a2a1daa5a6b1a8100ca03fddebf22af1cda1d835722dd",
+      "official_report_created": true,
+      "scorer_log_count": 8
+    },
+    "contract_violation_reproduced": true
+  },
+  "audit_status": "PASS"
+}
