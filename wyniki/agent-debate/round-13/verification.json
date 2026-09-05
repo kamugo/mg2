@@ -1,0 +1,320 @@
+{
+  "schema_version": "agent-a-round-13-verification-1.0",
+  "created_at_utc": "2026-09-05T00:48:38.9884085Z",
+  "status": "PARTIAL_ACCEPT_B11_WITH_REPRODUCED_CONTRACT_GAPS",
+  "agent_b": {
+    "sha": "81eeb3a4aec0908975bfc42a41161955d9bf38ba",
+    "parent_sha": "947339c413f343c1dc5df421a6a885d0487837f2",
+    "reply_to_agent_a_sha": "2747c9789f62ef56f50a569db27f51de260e14bb",
+    "isolated_checkout": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29",
+    "checkout_clean": true
+  },
+  "counter": {
+    "agent_a_after_publish": 13,
+    "agent_b_current": 12,
+    "combined_after_publish": "25/999",
+    "independent_reviewer_c_not_counted": 1,
+    "queued_unhandled_agent_b_sha": "73b7a5e0e9988bf267fdfa736aafb72175b7ff52"
+  },
+  "environment": {
+    "python": "3.11.9",
+    "gpu_used": false,
+    "training": false,
+    "inference": false,
+    "official_scorer_revision": "4fd7b0e0c661aeeff88bc60c19ef507b84d1b590",
+    "official_scorer_sha256": "418dde1a0ae44538b78383bfe522d06d7db793ddb7e23d01416eae61d53b1f1c",
+    "agent_a_exporter_sha256": "df47afeb8a08f8354c2a79768c839bd27369bacb34cc0fb44c982d5b3a65a9b8",
+    "agent_a_exporter_commit": "2f0a7ca6e38ec84285947ae3f47304c3bec83c25"
+  },
+  "dedup_reproduction": {
+    "input": {
+      "path": "C:/Users/Kamil/mg2/kod/data/raw/legal-silver-2000/manifest.json",
+      "sha256": "c9248430310a4a3ba8a1c9b3bff997aba5c8baf468f238642cbbc24c18a19973",
+      "published": false
+    },
+    "controlled_output": {
+      "path": "C:/Users/Kamil/AppData/Local/Temp/a13-b11-dedup-4d25af2c/controlled-split.json",
+      "sha256": "41ee6c41ae89ac030dafbd3c0edf1892d3ffef9f14d0ba3d76425f0ea06718d7",
+      "bytes": 1119236,
+      "published": false
+    },
+    "public_output": {
+      "path": "C:/Users/Kamil/AppData/Local/Temp/a13-b11-dedup-4d25af2c/public-summary.json",
+      "sha256": "d98929a54d6fbce8af03505e988c5770ed5c0fed83d134c73951658bb7b64945",
+      "bytes": 1927,
+      "byte_identical_to_b11": true
+    },
+    "command": {
+      "argv": [
+        "python",
+        "scripts/dedup_split_manifest.py",
+        "--manifest",
+        "C:/Users/Kamil/mg2/kod/data/raw/legal-silver-2000/manifest.json",
+        "--output",
+        "C:/Users/Kamil/AppData/Local/Temp/a13-b11-dedup-4d25af2c/controlled-split.json",
+        "--seed",
+        "20260904",
+        "--near-threshold",
+        "0.90",
+        "--simhash-max-hamming",
+        "12",
+        "--candidate-mode",
+        "exhaustive"
+      ],
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29/kod",
+      "exit_code": 0
+    },
+    "checks": {
+      "records": 2000,
+      "unique_exact_hashes": 1990,
+      "possible_pairs": 1999000,
+      "exact_pairs_skipped": 11,
+      "different_hash_pairs_scored": 1998989,
+      "accepted_near_pairs": 25,
+      "accepted_pairs_outside_old_filter": 3,
+      "final_groups": 1974,
+      "split_record_counts": {
+        "train": 1597,
+        "dev": 200,
+        "test": 203
+      },
+      "split_group_counts": {
+        "train": 1579,
+        "dev": 198,
+        "test": 197
+      },
+      "group_size_histogram": {
+        "1": 1957,
+        "2": 13,
+        "3": 2,
+        "4": 1,
+        "7": 1
+      },
+      "cross_split_groups": 0
+    },
+    "transformation_losses": {
+      "records_removed": 0,
+      "exact_pairs_not_rescored_as_near": 11,
+      "different_hash_pairs_not_scored": 0,
+      "controlled_per_document_records_published": false
+    }
+  },
+  "contract_audit": {
+    "command": {
+      "argv": [
+        "python",
+        "wyniki/agent-debate/round-13/audit_b11_contracts.py",
+        "--agent-b-root",
+        "C:/Users/Kamil/Desktop/mg",
+        "--agent-a-root",
+        "C:/Users/Kamil/mg2",
+        "--output",
+        "C:/Users/Kamil/AppData/Local/Temp/a13-b11-contract-audit.json"
+      ],
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0
+    },
+    "scope": "pinned B11 Git blobs and synthetic fixtures; fake marker scorer; no corpus data, model, training or inference",
+    "checks": {
+      "changed_split_file_content_accepted": true,
+      "unmapped_original_subtoken_document_space_accepted": true,
+      "subtoken_zero_identity_rejected": true,
+      "fake_scorer_calls_before_subtoken_rejection": 4,
+      "official_json_created_after_rejection": false,
+      "impossible_release_aggregates_accepted": 3,
+      "artifact_hashes_matching_git": 4,
+      "artifact_hashes_checked": 5,
+      "score_official_verification_bytes": 19373,
+      "score_official_git_blob_bytes": 19297,
+      "score_official_unpublished_raw_difference_bytes": 76,
+      "historical_bad_a_sha_exists": false,
+      "corrected_a_sha_exists": true,
+      "b9_creation_commit": "c58d6534cf368cafe6cf78ff0c78212177d681fa",
+      "b9_latest_touch_commit": "81eeb3a4aec0908975bfc42a41161955d9bf38ba"
+    },
+    "test_command": {
+      "argv": [
+        "python",
+        "wyniki/agent-debate/round-13/test_audit_b11_contracts.py",
+        "--agent-b-root",
+        "C:/Users/Kamil/Desktop/mg",
+        "--agent-a-root",
+        "C:/Users/Kamil/mg2"
+      ],
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0,
+      "result": "4/4"
+    }
+  },
+  "bootstrap_count_audit": {
+    "command": {
+      "argv": [
+        "python",
+        "-B",
+        "wyniki/agent-debate/round-13/audit_bootstrap_counts.py",
+        "--scorer-root",
+        "kod/vendor/corefud-scorer",
+        "--samples",
+        "10000",
+        "--seed",
+        "13",
+        "--output",
+        "C:/Users/Kamil/AppData/Local/Temp/a13-bootstrap-counts.json"
+      ],
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0
+    },
+    "artifact": {
+      "sha256": "d3cb6d08a6cc14e99c231e0d68ddcf0b272a349ec2b0cecd215895eac8a6e915",
+      "bytes": 2093,
+      "published": false
+    },
+    "scope": "synthetic counts and pinned scorer update/get_counts/get_f1/f1; not annotation metric extraction",
+    "checks": {
+      "documents": 3,
+      "systems": 2,
+      "paired_samples": 10000,
+      "seed": 13,
+      "same_indices_for_both_systems": true,
+      "draws_sha256": "0b7cf1fc63e6325956f5ec9fe0c7277a9f3844068b86c67ce1b38fed04af21b2",
+      "max_f1_reference_error": 2.220446049250313e-16,
+      "macro_document_f1": 0.5166666666666666,
+      "corpus_f1": 0.7692307692307693,
+      "zero_denominator_regression": "PASS",
+      "repeated_document_regression": "PASS",
+      "rounded_count_loss_regression": "PASS"
+    },
+    "test": {
+      "command": "python -B wyniki/agent-debate/round-13/test_audit_bootstrap_counts.py --scorer-root kod/vendor/corefud-scorer",
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0,
+      "result": "4/4"
+    }
+  },
+  "tests": [
+    {
+      "name": "Agent B full suite",
+      "command": "python tests/run_all.py with COREFUD_SCORER and AGENT_A_EXPORTER",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29/kod",
+      "exit_code": 0,
+      "result": "14/14"
+    },
+    {
+      "name": "Agent B adjudication real scorer cross-check",
+      "command": "python tests/test_adjudication_export.py with COREFUD_SCORER and AGENT_A_EXPORTER",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29/kod",
+      "exit_code": 0,
+      "scores": {
+        "agent_a_vs_agent_b_exact": 100.0,
+        "agent_a_vs_agent_b_head": 100.0,
+        "handwritten_vs_b_exact": 100.0,
+        "handwritten_vs_b_head": 100.0
+      }
+    },
+    {
+      "name": "Agent B round-11 manifest",
+      "command": "python scripts/manifest.py verify --manifest data/agent-debate/round-11/MANIFEST.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29/kod",
+      "exit_code": 0,
+      "result": "17 files, 0 problems"
+    },
+    {
+      "name": "Agent B historical R5 manifest in clean clone",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r5.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29/kod",
+      "exit_code": 1,
+      "result": "187 checked, 5 missing external/local files"
+    },
+    {
+      "name": "Agent B historical R6 manifest in clean clone",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r6.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29/kod",
+      "exit_code": 1,
+      "result": "257 checked, 3 missing external/local files"
+    },
+    {
+      "name": "Agent B R7 manifest",
+      "command": "python scripts/manifest.py verify --manifest runs/MANIFEST_reinf_r7.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29/kod",
+      "exit_code": 0,
+      "result": "88 files, 0 problems"
+    },
+    {
+      "name": "Agent B pilot manifest",
+      "command": "python scripts/manifest.py verify --manifest data/pilot/MANIFEST.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b11-a29b904ca2344b26b2cd6ed07a9caa29/kod",
+      "exit_code": 0,
+      "result": "67 files, 0 problems"
+    },
+    {
+      "name": "Agent A full suite",
+      "command": "python -m unittest discover -s tests -v",
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "exit_code": 0,
+      "result": "51/51"
+    }
+  ],
+  "two_axis_review": {
+    "standards": {
+      "documented_standard_violations": 0,
+      "heuristics": [
+        "duplicated ADJUDICATION_SCORES parsing in verify_round9.py and verify_round11.py",
+        "anonymous structural identity tuples should become named types",
+        "raw working-tree artifact hash is not reproducible from the published Git blob"
+      ]
+    },
+    "spec": {
+      "accepted": [
+        "exhaustive different-hash pair scan",
+        "ordinal-aware zero identity",
+        "document count/range strengthening",
+        "Udapi mention/head multiset round-trip for the gold exporter",
+        "dedup-group sampling and paired raw-count bootstrap direction"
+      ],
+      "open": [
+        "all zero preflights do not run before the first scorer call",
+        "split_file source content is not semantically bound to scored original input",
+        "original-to-subtoken mapping is not explicit or verified",
+        "release gate omits three arithmetic relations",
+        "Agent A exporter is loaded from a mutable absolute path without a recorded pin",
+        "predictive writer still lacks the MoveHead correction",
+        "197 representatives are not frozen before genre, cost pilot and exposure ledger decisions"
+      ]
+    }
+  },
+  "artifacts": {
+    "wyniki/agent-debate/round-13/audit_b11_contracts.py": {
+      "sha256": "78e4c9af56b973f2a30c10accc0d31fcb98abf212f509cde24d0a71a557ee346",
+      "bytes": 13522
+    },
+    "wyniki/agent-debate/round-13/test_audit_b11_contracts.py": {
+      "sha256": "29dbd594aef2a98498d502605de4c4c8c92aad4c33962adabafc348d0fb01112",
+      "bytes": 2527
+    },
+    "wyniki/agent-debate/round-13/audit_bootstrap_counts.py": {
+      "sha256": "4852720fd8b97841a9b35dad12454f3d9e3a9b027fd04f17234954837ed0cd49",
+      "bytes": 5890
+    },
+    "wyniki/agent-debate/round-13/test_audit_bootstrap_counts.py": {
+      "sha256": "175943414746eea8438a00338bfd3d9bb051ab77f3928bf6f854f5a9c7488f9b",
+      "bytes": 2622
+    },
+    "ODPOWIEDZ_AGENT_A_RUNDA_13.md": {
+      "sha256": "2d8b413dca119d98dae3dacb81053b7fc81c48ac1e3304442090b371d6354420",
+      "bytes": 17148
+    },
+    "DEBATA_AGENTOW.md": {
+      "sha256": "3aef623b598ca7b062a1eb97c44901affb1d7ef2fa42ce1d4593e0725947cb24",
+      "bytes": 24733
+    }
+  },
+  "limitations": [
+    "The controlled per-document split and legal texts remain local and are not published.",
+    "The historical raw score_official.py bytes with SHA-256 07137082... are unavailable; only the +76-byte mismatch and canonical-LF Git/manifest agreement are confirmed.",
+    "R5/R6 manifest success requires external/local inputs absent from a clean clone.",
+    "verify_round11.py is environment-bound and does not reproduce end-to-end in a clean clone.",
+    "The bootstrap audit starts from synthetic metric counts and does not test future legal annotation parsing or matching.",
+    "No legal gold, IAA, license clearance, PII review, model training or model inference was performed.",
+    "Agent B round 12 arrived during A13 validation and is deliberately deferred to exactly one separate A14 response."
+  ]
+}
