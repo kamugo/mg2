@@ -1,0 +1,445 @@
+{
+  "schema_version": "agent-a-round-16-b14-contract-audit-1.0",
+  "agent_b_sha": "65bbd965d62d3f4d374b6b31754c0d898a493d59",
+  "scope": "pinned final B14 Git blobs and synthetic temporary fixtures only",
+  "inputs": {
+    "manifest": {
+      "path": "kod/data/agent-debate/round-14/MANIFEST.json",
+      "sha256": "dd6c128fd33086493dc85461e4651e63d94823676b8ccd040429b6084473cccd",
+      "bytes": 3106
+    },
+    "verification": {
+      "path": "kod/data/agent-debate/round-14/verification.json",
+      "sha256": "91973be1d8a71ac47d67172592ca3441d9df65f2806cba326ea51f1bff8aaa72",
+      "bytes": 85108
+    },
+    "generator": {
+      "path": "kod/scripts/verify_round14.py",
+      "sha256": "e81dc9f2dbb52e4c63868f0038ba9353e0eaccf3c22c7036efaad84938c61e01",
+      "bytes": 9655
+    },
+    "artifact_provenance": {
+      "path": "kod/scripts/artifact_provenance.py",
+      "sha256": "7d4459d6588d75c23fe14960b2e0a262d95e06fb9b8b20a7d1b8cc773b158a03",
+      "bytes": 12656
+    },
+    "score_official": {
+      "path": "kod/scripts/score_official.py",
+      "sha256": "9f107dccc9301336246cf30c122c0fcb2644938a5b9ddf0ececf9d430f56bab5",
+      "bytes": 30376
+    },
+    "legal_release_gate": {
+      "path": "kod/scripts/legal_release_gate.py",
+      "sha256": "54937c0316deff5dadf4b8813fe072ce9277c092aa7e00a525136ac536b5a0cc",
+      "bytes": 30025
+    },
+    "legal_tree_gate": {
+      "path": "kod/scripts/legal_tree_gate.py",
+      "sha256": "0218ebaafbbd606b6a68072a101128e2d1f7fd36e74f3c4f8bd49347cfda9a7f",
+      "bytes": 7499
+    },
+    "release_ledger": {
+      "path": "kod/data/legal-audit/round-12/RELEASE_LEDGER.json",
+      "sha256": "bd663b78806b20ef8c08d11b8652cf8073573916b220e744a8656331897e22e7",
+      "bytes": 3493
+    },
+    "public_summary": {
+      "path": "kod/data/legal-audit/round-11/public_summary.json",
+      "sha256": "d98929a54d6fbce8af03505e988c5770ed5c0fed83d134c73951658bb7b64945",
+      "bytes": 1927
+    }
+  },
+  "manifest_provenance": {
+    "entry_count": 16,
+    "matched_blob_count": 16,
+    "mismatches": [],
+    "all_entries_match_final_b14": true,
+    "entries": [
+      {
+        "section": "inputs",
+        "manifest_path": "../ODPOWIEDZ_AGENT_B_RUNDA_14.md",
+        "git_path": "ODPOWIEDZ_AGENT_B_RUNDA_14.md",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "1eda4214f0a7ed92ea1545df4e6e5147a8c729071ac4ca2aa2e77c187b7a8f77",
+          "bytes_lf": 7634
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "1eda4214f0a7ed92ea1545df4e6e5147a8c729071ac4ca2aa2e77c187b7a8f77",
+          "bytes_lf": 7634
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "../ODPOWIEDZ_AGENT_B_RUNDA_9.md",
+        "git_path": "ODPOWIEDZ_AGENT_B_RUNDA_9.md",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "2f371419aaa07a33c846b9b7eeb9edb2c65160ee5f3f524b770168389d9e1452",
+          "bytes_lf": 13239
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "2f371419aaa07a33c846b9b7eeb9edb2c65160ee5f3f524b770168389d9e1452",
+          "bytes_lf": 13239
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "SPEC.md",
+        "git_path": "kod/SPEC.md",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "8a00e04bdaee1f61cad5f48c7fdf8392383661d4054a9340695c6dae5d8ac319",
+          "bytes_lf": 20893
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "8a00e04bdaee1f61cad5f48c7fdf8392383661d4054a9340695c6dae5d8ac319",
+          "bytes_lf": 20893
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "evaluate.py",
+        "git_path": "kod/evaluate.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "b8d8b499382edd4607fb46011cea15db7c33c7335f699b991c93c66513bd248f",
+          "bytes_lf": 34159
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "b8d8b499382edd4607fb46011cea15db7c33c7335f699b991c93c66513bd248f",
+          "bytes_lf": 34159
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "scripts/score_official.py",
+        "git_path": "kod/scripts/score_official.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "9f107dccc9301336246cf30c122c0fcb2644938a5b9ddf0ececf9d430f56bab5",
+          "bytes_lf": 30376
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "9f107dccc9301336246cf30c122c0fcb2644938a5b9ddf0ececf9d430f56bab5",
+          "bytes_lf": 30376
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "scripts/legal_release_gate.py",
+        "git_path": "kod/scripts/legal_release_gate.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "54937c0316deff5dadf4b8813fe072ce9277c092aa7e00a525136ac536b5a0cc",
+          "bytes_lf": 30025
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "54937c0316deff5dadf4b8813fe072ce9277c092aa7e00a525136ac536b5a0cc",
+          "bytes_lf": 30025
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "scripts/artifact_provenance.py",
+        "git_path": "kod/scripts/artifact_provenance.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "7d4459d6588d75c23fe14960b2e0a262d95e06fb9b8b20a7d1b8cc773b158a03",
+          "bytes_lf": 12656
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "7d4459d6588d75c23fe14960b2e0a262d95e06fb9b8b20a7d1b8cc773b158a03",
+          "bytes_lf": 12656
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "scripts/verify_round14.py",
+        "git_path": "kod/scripts/verify_round14.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "e81dc9f2dbb52e4c63868f0038ba9353e0eaccf3c22c7036efaad84938c61e01",
+          "bytes_lf": 9655
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "e81dc9f2dbb52e4c63868f0038ba9353e0eaccf3c22c7036efaad84938c61e01",
+          "bytes_lf": 9655
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "scripts/export_adjudication_corefud.py",
+        "git_path": "kod/scripts/export_adjudication_corefud.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "0613bd05f67ce6fd63ce8374b1f55e70a04443161b01efa44078e443cd350171",
+          "bytes_lf": 16473
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "0613bd05f67ce6fd63ce8374b1f55e70a04443161b01efa44078e443cd350171",
+          "bytes_lf": 16473
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "src/eval/alignment.py",
+        "git_path": "kod/src/eval/alignment.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "029611213121db56b913670bae76fd8aad2171b944c91a25dd5b11b69300252a",
+          "bytes_lf": 12675
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "029611213121db56b913670bae76fd8aad2171b944c91a25dd5b11b69300252a",
+          "bytes_lf": 12675
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "tests/test_score_official.py",
+        "git_path": "kod/tests/test_score_official.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "3d184e1719d81a9cbcbab8dab57d200709a4f8d7bc926c386d6830d3616e65f8",
+          "bytes_lf": 20820
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "3d184e1719d81a9cbcbab8dab57d200709a4f8d7bc926c386d6830d3616e65f8",
+          "bytes_lf": 20820
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "tests/test_legal_release_gate.py",
+        "git_path": "kod/tests/test_legal_release_gate.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "7efb99b20929348c0deef163d63af0ccd3a2eddcebafb517ade79280264c6abc",
+          "bytes_lf": 13692
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "7efb99b20929348c0deef163d63af0ccd3a2eddcebafb517ade79280264c6abc",
+          "bytes_lf": 13692
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "tests/test_artifact_provenance.py",
+        "git_path": "kod/tests/test_artifact_provenance.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "96082429d8037cabc5c2d3258a9dba223fe9116d4a448064280be2a59cbbff80",
+          "bytes_lf": 7032
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "96082429d8037cabc5c2d3258a9dba223fe9116d4a448064280be2a59cbbff80",
+          "bytes_lf": 7032
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "tests/test_adjudication_export.py",
+        "git_path": "kod/tests/test_adjudication_export.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "3490016ea77d0cd3da14a79f739de5c48a3360bc49925c90e36ff51fdd1a7274",
+          "bytes_lf": 10738
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "3490016ea77d0cd3da14a79f739de5c48a3360bc49925c90e36ff51fdd1a7274",
+          "bytes_lf": 10738
+        }
+      },
+      {
+        "section": "inputs",
+        "manifest_path": "tests/test_evaluation_alignment.py",
+        "git_path": "kod/tests/test_evaluation_alignment.py",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "0329f850e4f577f5d844e64da507f74df36cf2318b672806dd01473fbe7c099c",
+          "bytes_lf": 4710
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "0329f850e4f577f5d844e64da507f74df36cf2318b672806dd01473fbe7c099c",
+          "bytes_lf": 4710
+        }
+      },
+      {
+        "section": "outputs",
+        "manifest_path": "data/agent-debate/round-14/verification.json",
+        "git_path": "kod/data/agent-debate/round-14/verification.json",
+        "matches": true,
+        "expected": {
+          "mode": "text_lf",
+          "sha256_lf": "91973be1d8a71ac47d67172592ca3441d9df65f2806cba326ea51f1bff8aaa72",
+          "bytes_lf": 85108
+        },
+        "actual": {
+          "mode": "text_lf",
+          "sha256_lf": "91973be1d8a71ac47d67172592ca3441d9df65f2806cba326ea51f1bff8aaa72",
+          "bytes_lf": 85108
+        }
+      }
+    ]
+  },
+  "committed_verification_provenance": {
+    "reported_passed": true,
+    "reported_checks": {
+      "required_commands_succeeded": true,
+      "crosscheck_four_scores_100": true,
+      "crosscheck_four_run_records": true,
+      "historical_late_preflight_reproduced": true,
+      "historical_three_gate_gaps_reproduced": true,
+      "bootstrap_reference_passed": true,
+      "no_available_manifest_failed": true,
+      "scorer_file_matches_pinned_blob": true
+    },
+    "artifact_mismatch_paths": [
+      "src/eval/alignment.py",
+      "tests/test_evaluation_alignment.py"
+    ],
+    "artifact_git_revisions": [
+      "7d9a7f85f6288bbc5ff37598b54f607752140275"
+    ],
+    "expected_pre_final_revision_confirmed": true,
+    "artifact_equality_is_a_pass_check": false,
+    "passed_despite_artifact_mismatches": true,
+    "generator_contains_final_b14_sha": false,
+    "generator_asserts_final_b14_revision": false,
+    "main_artifacts_use_default_revision": true,
+    "describe_artifact_default_revision": "HEAD"
+  },
+  "release_gate_residuals": {
+    "baseline_accepted": true,
+    "accepted_near_pairs_with_f_equals_u": {
+      "accepted": false,
+      "rejection": "$.population.exact_pairs_skipped: niemożliwy dla hashy i histogramu grup",
+      "accepted_near_pairs": 1,
+      "final_groups": 1990,
+      "unique_exact_hashes": 1990,
+      "b14_closes_a14_residual": true,
+      "interpretation": "With F=U every exact class needs a separate final-group bin; B14 exact-pair feasibility rejects the contradictory near edge."
+    },
+    "split_five_records_one_group_without_size_five": {
+      "accepted": true,
+      "split": "test",
+      "split_record_count": 5,
+      "split_group_count": 1,
+      "global_histogram_sizes": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "7"
+      ]
+    }
+  },
+  "tree_gate_candidate_race": {
+    "reproduced": true,
+    "candidate": "HEAD",
+    "resolved_candidate": "cedd1cf185abffdabd94d877f650ae9e4e03639f",
+    "scanned_candidate": "f8454bc2075743fd43e4bb1e344059a7696e2827",
+    "tracked_controlled_files": 1,
+    "pass": false,
+    "move_timing": "after rev-parse returned and before first ls-tree"
+  },
+  "tree_gate_ledger_validation": {
+    "accepted": true,
+    "fake_revision_preserved": true,
+    "fake_tree_oids_preserved": true,
+    "fake_counts_preserved": true,
+    "fake_statuses_preserved": true,
+    "fake_objects_absent_from_git": true
+  },
+  "alignment_tokenizer_proof_boundary": {
+    "partition_sizes": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "accepted": [
+      true,
+      true
+    ],
+    "coverage_complete": [
+      true,
+      true
+    ],
+    "alignment_sha256": [
+      "7b43b5eead47855eaad124deb0fe48264e6f3c26d948410be99714675f402fe4",
+      "d8c2c229dd020375c06996573fd028f59864c47f71185683ea566830d227a3a3"
+    ],
+    "does_not_prove_tokenizer_boundary_authenticity": true,
+    "interpretation": "The validator proves explicit endpoint/order/coverage consistency, not that the partition came from the claimed tokenizer run."
+  },
+  "source_slice_semantic_gap": {
+    "accepted": true,
+    "source_slice_semantics_agree": true,
+    "source_vs_original_head_deps_equal": false,
+    "source_vs_original_gold_misc_equal": false,
+    "source_vs_original_entity_spans_equal": false,
+    "source_entity_token_ids": [
+      [
+        1,
+        2
+      ]
+    ],
+    "original_gold_entity_token_ids": [
+      [
+        2
+      ]
+    ],
+    "original_gold_and_pred_use_fabricated_entity": true,
+    "alignment_original_gold_hash_refreshed": true,
+    "scorer_invocations": 0,
+    "ignored_source_fields": [
+      "HEAD",
+      "DEPREL",
+      "DEPS",
+      "MISC.Entity"
+    ],
+    "severity": "HIGH"
+  },
+  "limitations": [
+    "No corpus, legal annotation, model, checkpoint, training or inference is read.",
+    "Synthetic alignment acceptance proves a validator boundary, not tokenizer output.",
+    "The score-contract counterexample invokes no scorer.",
+    "The Agent B working tree is never read; only pinned Git objects are used."
+  ]
+}

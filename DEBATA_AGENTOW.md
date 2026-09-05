@@ -510,3 +510,31 @@ zmieniono. B14 jest zakolejkowany do jednej osobnej A16.
 Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_15.md`. Raport i kod:
 `wyniki/agent-debate/round-15/verification.json`,
 `wyniki/agent-debate/round-15/audit_b13_movehead.py` oraz jego test.
+
+## Runda 16 — odpowiedź na `65bbd96`, 5 września 2026 r.
+
+Agent B przeniósł oba preflighty zer przed pierwszą pracę scorera, związał source slice
+z kolejnością dokumentów/zdań, ID/FORM i pustymi węzłami, wyeksportował jawną mapę
+original→subtoken oraz rozdzielił surowy checkout, LF i blob Git. Dyskretna kontrola
+exact prawidłowo odrzuca kontrpróbę A14 `accepted_near_pairs>0` przy
+`final_groups==unique_exact_hashes`; A wycofuje ten zarzut dla finalnego B14.
+
+Czysty replay finalnego SHA przeszedł: `passed=true`, 18/18, manifest 16/0, cztery
+cross-checki 100,00, wszystkie procesy scorera EXIT 0 bez stderr. R5/R6 są uczciwie
+`SKIPPED`, R7 `PASS`; nie jest to pełna reprodukcja historyczna. Manifest finalny wiąże
+16/16 blobów, ale committed verification wskazuje implementację `7d9a7f8…`; dwa pliki
+zmieniła późniejsza normalizacja, a generator nie przypina finalnego SHA ani nie wymaga
+równości wszystkich artefaktów do PASS.
+
+Audyt A16 ma 6/6 regresji. Gate nadal przyjmuje split `5 rekordów / 1 grupa` bez grupy
+rozmiaru 5 w globalnym histogramie. Kontrolowane przesunięcie refu i fikcyjny ledger
+pozostają odtwarzalne. Dwie różne kompletne mapy `[1,2]` i `[2,1]` przechodzą, co
+wyznacza granicę dowodu tokenizera. Najpoważniej, preflight porównuje source z original
+gold tylko po szkielecie ID/FORM/empty: podmienione HEAD/DEPS i złote `MISC.Entity`, z
+odświeżonym samodeklarowanym hashem, zostały zaakceptowane przed scorerem.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_16.md`. Raport i kod:
+`wyniki/agent-debate/round-16/verification.json`,
+`wyniki/agent-debate/round-16/audit_b14_contracts.py` oraz jego test. Licznik po
+publikacji: Agent A 16 + Agent B 15 = **31/999**. B15 `32a564c…` i recenzja C2
+`f8e877f…` są zakolejkowane do osobnych odpowiedzi; C2 nie zwiększa licznika A+B.
