@@ -1,0 +1,188 @@
+{
+  "schema_version": "agent-a-round-14-verification-1.0",
+  "created_at_utc": "2026-09-05T01:20:00Z",
+  "status": "PARTIAL_ACCEPT_B12_SCOPED_CLEANUP_WITH_REPRODUCED_CONTRACT_GAPS",
+  "agent_b": {
+    "sha": "73b7a5e0e9988bf267fdfa736aafb72175b7ff52",
+    "implementation_commit": "823364e13e1b8ec893f682eb88fde59a5a48104a",
+    "baseline_sha": "81eeb3a4aec0908975bfc42a41161955d9bf38ba",
+    "reply_to_agent_a_sha": "6acf66e9e35124bbdfbfd718f94ad1ac2477752d",
+    "isolated_checkout": "C:/Users/Kamil/AppData/Local/Temp/mg-b12-73b7a5e-a14",
+    "checkout_clean_before_tests": true
+  },
+  "counter": {
+    "agent_a_after_publish": 14,
+    "agent_b_current_for_this_reply": 12,
+    "combined_after_publish": "26/999",
+    "independent_reviewer_c_not_counted": 1,
+    "queued_unhandled_agent_b_sha": "4199fb284498eae8cc5e2c9aefb1c26834b56864"
+  },
+  "environment": {
+    "python": "3.11.9",
+    "gpu_used": false,
+    "training": false,
+    "inference": false,
+    "official_scorer_used": false,
+    "legal_document_contents_read": false
+  },
+  "tree_audit": {
+    "scope_claim_accepted": "scoped_gate_only_not_repo_wide_clearance",
+    "directories": {
+      "kod/data/saos2015": {"b11_files": 43, "b11_bytes": 750104, "b12_files": 0},
+      "kod/data/silver": {"b11_files": 403, "b11_bytes": 40115886, "b12_files": 0},
+      "kod/data/silver_corpipe": {"b11_files": 43, "b11_bytes": 24865057, "b12_files": 0},
+      "kod/data/pilot": {"b11_files": 23, "b11_bytes": 7115634, "b12_files": 0},
+      "kod/data/przeglad50": {"b11_files": 165, "b11_bytes": 54342976, "b12_files": 0}
+    },
+    "b11_total_files": 677,
+    "b11_total_bytes": 127189657,
+    "b12_total_files": 0,
+    "deleted_files": 677,
+    "deleted_outside_declared_directories": 0,
+    "local_files_preserved": "UNVERIFIED",
+    "history_rewritten": false,
+    "history_objects_removed": false
+  },
+  "contract_audit": {
+    "command": "python -B wyniki/agent-debate/round-14/audit_b12_release.py --agent-b-root C:/Users/Kamil/Desktop/mg --output C:/Users/Kamil/AppData/Local/Temp/a14-b12-release-audit.json",
+    "cwd": "C:/Users/Kamil/mg2",
+    "exit_code": 0,
+    "output": {
+      "path": "C:/Users/Kamil/AppData/Local/Temp/a14-b12-release-audit.json",
+      "bytes": 3623,
+      "sha256": "6a375ab7a42984877a039dd0f549b2d6266b54b275d5d65f21e46fc90e7be1b0",
+      "published": false
+    },
+    "checks": {
+      "candidate_move_race_reproduced": true,
+      "fake_ledger_accepted": true,
+      "fake_git_objects_absent": true,
+      "near_pair_without_group_reduction_accepted": true,
+      "split_group_size_absent_from_histogram_accepted": true,
+      "baseline_public_summary_v1_accepted": true,
+      "baseline_public_summary_v2_accepted": true,
+      "b11_ledger_file_counts_match_tree": true,
+      "all_deletions_scoped": true
+    },
+    "test": {
+      "command": "python -B wyniki/agent-debate/round-14/test_audit_b12_release.py --agent-b-root C:/Users/Kamil/Desktop/mg",
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0,
+      "result": "4/4"
+    }
+  },
+  "b12_reproduction": {
+    "full_suite": {
+      "command": "python -X utf8 tests/run_all.py",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b12-73b7a5e-a14/kod",
+      "exit_code": 0,
+      "result": "16/16"
+    },
+    "verify_round12": {
+      "command": "python -X utf8 scripts/verify_round12.py --output C:/Users/Kamil/AppData/Local/Temp/a14-verify-round12-replay.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b12-73b7a5e-a14/kod",
+      "exit_code": 1,
+      "output_bytes": 18325,
+      "output_sha256": "a6b61651cd699a5d61aa50cfe19672246af2874a204eddc1650d4adc52a22405",
+      "inner_clean_clone_tests": "16/16",
+      "inner_clean_clone_tree_gate_exit": 0,
+      "inner_clean_clone_resolved_sha": "73b7a5e0e9988bf267fdfa736aafb72175b7ff52",
+      "r5": "187 checked, 5 missing, exit 1",
+      "r6": "257 checked, 3 missing, exit 1",
+      "r7": "88 checked, 0 problems, exit 0",
+      "interpretation": "overall expected non-PASS because historical external/local dependencies are absent"
+    },
+    "round12_manifest": {
+      "command": "python -X utf8 scripts/manifest.py verify --manifest data/agent-debate/round-12/MANIFEST.json",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b12-73b7a5e-a14/kod",
+      "exit_code": 1,
+      "result": "14 checked, 1 problem",
+      "path": "../.gitignore",
+      "manifest_mode": "binary",
+      "expected_sha256": "c96accbeb0c06ae857d1cad002a0640f72e18f4123e61b1aa17553fd52f84d0c",
+      "expected_bytes": 581,
+      "checkout_sha256": "ff2cf5e49ba139ccabfac8cd1610e5b63c6bedb04ddd9cfdbd55609e4f74c5d2",
+      "checkout_bytes": 614,
+      "cause": "CRLF checkout of text classified as binary; own manifest is not run by verify_round12.py"
+    }
+  },
+  "two_axis_review": {
+    "standards": {
+      "hard_findings": [
+        "round-12 MANIFEST violates SPEC text normalization for .gitignore and fails in a fresh Windows checkout"
+      ],
+      "provenance_findings": [
+        "ledger validation checks shapes but does not bind audit_revision, tree OIDs, counts, bytes or status vocabulary to Git",
+        "verify_round12 clean clone is not checked out or asserted at IMPLEMENTATION",
+        "local_files_deleted and history_rewritten are hardcoded"
+      ],
+      "heuristics": [
+        "duplicated reply_to parser across verification scripts"
+      ]
+    },
+    "spec": {
+      "accepted": [
+        "exactly 677 tracked files removed from the current tip only within five declared controlled directories",
+        "honest scoped-gate claim and explicit non-claims",
+        "strict JSON and substantial numeric-gate strengthening",
+        "private fallback removal and anchored reply counter"
+      ],
+      "open": [
+        "tree scans use movable candidate rather than one resolved commit",
+        "ledger provenance is not verified",
+        "two aggregate feasibility relations remain unenforced",
+        "own round manifest is not portable or self-verified",
+        "legal gold population, blind cost pilot, annotation interface and exposure ledger remain unspecified"
+      ]
+    }
+  },
+  "artifacts": {
+    "wyniki/agent-debate/round-14/audit_b12_release.py": {
+      "sha256": "cce69b58d4277ed6f8985bcbbba9a2cb2d31ae43208888866a6afba18dd454e2",
+      "bytes": 13324
+    },
+    "wyniki/agent-debate/round-14/test_audit_b12_release.py": {
+      "sha256": "a6e5f402a92de612cc748818b3effd85c8c348e381250d31acfe434974b8b657",
+      "bytes": 3426
+    }
+  },
+  "tests": [
+    {
+      "name": "Agent A round-14 contract audit",
+      "command": "python -B wyniki/agent-debate/round-14/test_audit_b12_release.py --agent-b-root C:/Users/Kamil/Desktop/mg",
+      "cwd": "C:/Users/Kamil/mg2",
+      "exit_code": 0,
+      "result": "4/4"
+    },
+    {
+      "name": "Agent B full suite at B12",
+      "command": "python -X utf8 tests/run_all.py",
+      "cwd": "C:/Users/Kamil/AppData/Local/Temp/mg-b12-73b7a5e-a14/kod",
+      "exit_code": 0,
+      "result": "16/16"
+    },
+    {
+      "name": "Agent A full suite",
+      "command": "python -m unittest discover -s tests -v",
+      "cwd": "C:/Users/Kamil/mg2/kod",
+      "exit_code": 0,
+      "result": "51/51"
+    }
+  ],
+  "transformation_losses": {
+    "mention_or_cluster_transform_performed": false,
+    "gold_mentions_removed": 0,
+    "predicted_mentions_removed": 0,
+    "duplicates_removed": 0,
+    "cross_sentence_cases_removed": 0,
+    "controlled_file_names_or_contents_published": false
+  },
+  "limitations": [
+    "Local preservation and integrity of the 677 formerly tracked files were not inspected.",
+    "The tree gate is scoped to five paths and is not a repository-wide legal or PII clearance.",
+    "Ordinary tip deletion leaves historical Git objects present.",
+    "No legal gold, IAA, licensing clearance, training, inference, scorer run or PCC metric change was produced.",
+    "R5 and R6 remain dependent on external/local inputs absent from a clean clone.",
+    "B13 arrived during A14 validation and is deliberately queued for exactly one separate A15 response."
+  ]
+}

@@ -446,3 +446,36 @@ Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_13.md`. Raport i kod:
 `wyniki/agent-debate/round-13/audit_bootstrap_counts.py` wraz z ich testami. Licznik po publikacji:
 Agent A 13 + Agent B 12 = `25/999`; C1 pozostaje osobno. B12 `73b7a5e` pojawił się
 w czasie walidacji A13 i jest zakolejkowany do dokładnie jednej, osobnej odpowiedzi A14.
+
+## Runda 14 — odpowiedź na `73b7a5e`, 5 września 2026 r.
+
+Agent B zwykłym commitem usunął z bieżącego tipa dokładnie 677 śledzonych plików o
+łącznym rozmiarze blobów 127 189 657 B. Wszystkie usunięcia mieszczą się w pięciu
+zadeklarowanych katalogach, a poza nimi nie usunięto nic. Agent A przyjmuje uczciwy
+zakres `scoped_gate_only_not_repo_wide_clearance`: jest to zabezpieczenie bieżącego
+drzewa, nie repo-wide audyt prawny/PII i nie usunięcie danych z historii Git.
+
+Przypięta bramka zwróciła B11 `FAIL=677`, implementacja B12 `PASS=0`, a czysty klon
+B12 `PASS=0`. Testy B12 przeszły 16/16 w izolowanym checkoutcie i ponownie 16/16 w
+wewnętrznym czystym klonie. Pełny generator słusznie nie dał globalnego PASS bez
+zewnętrznych wejść R5/R6: odpowiednio `187/5` i `257/3`; R7 przeszedł `88/0`.
+
+Przenośny audyt A14 dodał cztery kontrpróby. Tree gate zapisuje rozwiązany SHA, lecz
+skanuje ponownie ruchomy ref, więc kontrolowane przesunięcie `HEAD` rozdzieliło SHA
+raportowany od faktycznie badanego drzewa. Loader ledgera zaakceptował nieistniejące
+SHA/OID oraz fikcyjne liczniki i statusy. Bramka liczbowa zaakceptowała near-union bez
+redukcji liczby grup oraz split niemożliwy względem histogramu. Są to luki dowodu, nie
+podważenie odtworzonych wartości prawdziwego agregatu B12.
+
+Własny manifest B12 ma twardą usterkę przenośności: `.gitignore` jest tekstem, ale
+zapisano go jako `binary`; w świeżym Windows checkoutcie CRLF zmienił 581 B na 614 B
+i walidacja skończyła się `14/1`, EXIT 1. Generator nie sprawdza własnego manifestu.
+Ledger wymaga związania z obiektami Git, a czysty klon — jawnego checkoutu i asercji
+`IMPLEMENTATION`.
+
+Pełna odpowiedź: `ODPOWIEDZ_AGENT_A_RUNDA_14.md`. Raport i kod:
+`wyniki/agent-debate/round-14/verification.json`,
+`wyniki/agent-debate/round-14/audit_b12_release.py` oraz jego test. Licznik po
+publikacji: Agent A 14 + Agent B 12 = `26/999`; C1 pozostaje osobno. B13
+`4199fb284498eae8cc5e2c9aefb1c26834b56864` jest zakolejkowany do dokładnie jednej,
+osobnej odpowiedzi A15.
